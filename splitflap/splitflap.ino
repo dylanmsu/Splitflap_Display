@@ -14,24 +14,24 @@ void loop() {
   // put your main code here, to run repeatedly:
 
 }
+void Update(int speed){
+  digitalWrite(DisplayA, 1);
+  delay(flapDelay/2);
+  digitalWrite(DisplayA, 0);
+  delay(flapDelay/2);
+}
 
 void drawChar(int displ, int state){
   int flapDelay = 100;
   
   if (state < prevState){
     while(hallSensor == 0){
-      digitalWrite(DisplayA, 1);
-      delay(flapDelay/2);
-      digitalWrite(DisplayA, 0);
-      delay(flapDelay/2);
+      Update();
     }
     prevState = 0;
   }
   
   for (int i = prevState; i<state; i++){
-    digitalWrite(DisplayA, 1);
-    delay(flapDelay/2);
-    digitalWrite(DisplayA, 0);
-    delay(flapDelay/2);
+    Update();
   }
 }
