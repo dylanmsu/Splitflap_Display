@@ -1,22 +1,34 @@
 #include <EEPROM.h>
 
-//int numDisplays = 3;
-int updateDelay = 100;
-byte Bit = false;
+int updateDelay = 80; //delay between each flap
+byte Bit = false; //used by "Update" function
 
 void setup() {
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
-  pinMode(A0, INPUT_PULLUP);
+  pinMode(A0, INPUT);
   EEPROM.write(0,0);
 }
 
 void loop() {
-  //Update(0, 100);
-  increase(0,5);
+  Zero(0); 
+  jumpTo(0,8);
+  delay(1000);
+  Zero(0);
+  jumpTo(0,5);
+  delay(1000);
+  Zero(0);
+  jumpTo(0,12);
+  delay(1000);
+  Zero(0);
+  jumpTo(0,12);
+  delay(1000);
+  Zero(0);
+  jumpTo(0,15);
   delay(1000);
 }
 
+//jump to a character on the display
 void jumpTo(byte Display, int num){
   int prev = EEPROM.read(Display);
   if (num < prev){
@@ -29,8 +41,10 @@ void jumpTo(byte Display, int num){
       Update(Display, updateDelay);
     }
   }
+  EEPROM.write(Display,num);
 }
 
+//flap once
 void Update(byte Display, int flapDelay){
   digitalWrite(12, Bit);
   digitalWrite(13, Bit);
@@ -38,6 +52,7 @@ void Update(byte Display, int flapDelay){
   Bit = !Bit;
 }
 
+//flaps until it reaches the first display-segment
 void Zero(byte Display){
   while(digitalRead(A0)){
     Update(Display, updateDelay);
@@ -45,6 +60,7 @@ void Zero(byte Display){
   EEPROM.write(0,0);
 }
 
+//flaps a cirtain amount of times
 void increase(byte Display, int num){
   int prev = EEPROM.read(Display);
   if (num+prev < 54){
@@ -53,23 +69,8 @@ void increase(byte Display, int num){
       Update(Display, updateDelay);
     }
     
-    EEPROM.write(Display, num+prev%53);
+    EEPROM.write(Display, (num+prev)%54);
   }else{
     //error code: reached segment limit
   }
 }
-
-/*void drawChar(int displ, int state){
-  int flapDelay = 100;
-  
-  if (state < prevState){
-    while(hallSensor == 0){
-      Update();
-    }
-    prevState = 0;
-  }
-  
-  for (int i = prevState; i<state; i++){
-    Update();
-  }
-}*/
