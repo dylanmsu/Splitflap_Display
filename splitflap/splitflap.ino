@@ -1,7 +1,10 @@
 #include <EEPROM.h>
 
-int updateDelay = 80; //delay between each flap
+int updateDelay = 60; //delay between each flap
 byte Bit = false; //used by "Update" function
+
+//                D  A  G  _  T   I  J   L
+int message[8] = {4, 1, 7, 0, 20, 9, 10, 12};
 
 void setup() {
   pinMode(12, OUTPUT);
@@ -11,32 +14,22 @@ void setup() {
 }
 
 void loop() {
-  Zero(0); 
-  jumpTo(0,8);
-  delay(1000);
   Zero(0);
-  jumpTo(0,5);
-  delay(1000);
-  Zero(0);
-  jumpTo(0,12);
-  delay(1000);
-  Zero(0);
-  jumpTo(0,12);
-  delay(1000);
-  Zero(0);
-  jumpTo(0,15);
-  delay(1000);
+  for (int i=0;i<8;i++){
+    jumpTo(0,message[i]);
+    delay(1000);
+  }
 }
 
 //jump to a character on the display
 void jumpTo(byte Display, int num){
   int prev = EEPROM.read(Display);
+  
   if (num < prev){
     Zero(Display);
-    for (int i=0; i<num;i++){
-      Update(Display, updateDelay);
-    }
-  }else if (num > prev){
+    increase(Display,num);
+  }
+  else if (num > prev){
     for (int i=prev; i<num;i++){
       Update(Display, updateDelay);
     }
@@ -60,10 +53,10 @@ void Zero(byte Display){
   EEPROM.write(0,0);
 }
 
-//flaps a cirtain amount of times
+//flaps a certain amount of times
 void increase(byte Display, int num){
   int prev = EEPROM.read(Display);
-  if (num+prev < 54){
+  if (num+prev < 60){
     
     for (int i=0; i<num; i++){
       Update(Display, updateDelay);
