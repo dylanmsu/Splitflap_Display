@@ -3,7 +3,7 @@
 int updateDelay = 60; //delay between each flap
 byte Bit = false; //used by "Update" function
 
-//                H E  L L  O  []  W  O R  L  D
+//               H E L  L  O  [] W  O  R  L  D
 int message[] = {8,5,12,12,10,30,53,45,48,42,34};
 
 void setup() {
@@ -21,6 +21,11 @@ void loop() {
   }
 }
 
+void stringToIdexArray(){
+  //TODO
+  //convert a string to a list of segment numbers
+}
+
 //jump to a character on the display
 void jumpTo(byte Display, int num){
   int prev = EEPROM.read(Display);
@@ -29,6 +34,7 @@ void jumpTo(byte Display, int num){
     Zero(Display);
     increase(Display,num);
   }
+  
   else if (num > prev){
     for (int i=prev; i<num;i++){
       Update(Display, updateDelay);
@@ -62,7 +68,7 @@ void increase(byte Display, int num){
       Update(Display, updateDelay);
     }
     
-    EEPROM.write(Display, (num+prev)%54);
+    EEPROM.write(Display, (num+prev)%60);
   }else{
     //error code: reached segment limit
   }
