@@ -4,11 +4,11 @@ int updateDelay = 70; //delay between each flap
 byte Bit = false; //used by "Update" function
 
 //               H E L  L  O  [] W  O  R  L  D
-int message[] = {8,5,12,12,10,30,53,45,48,42,34};
+//int message[] = {8,5,12,12,10,30,53,45,48,42,34};
+
+String message = "hello world";
 
 void setup() {
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(A0, INPUT);
@@ -17,7 +17,8 @@ void setup() {
 
 void loop() {
   int *text;
-  stringToIdexArray("HELLO WORLD",text,false);
+  message.toUpperCase();
+  stringToIdexArray(message,text,false);
   
   for (int i=0;i<sizeof(text);i++){
     jumpTo(0,text[i],false);
@@ -26,8 +27,9 @@ void loop() {
 }
 
 void stringToIdexArray(String input, int *output, boolean red){
-  //TODO
-  //convert a string to a list of segment numbers
+
+  
+  
   for (int i=0;i<sizeof(input);i++){
     switch(input[i]){
       case 'A':   output[i] = 1;    break;
