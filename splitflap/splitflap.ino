@@ -3,8 +3,8 @@
 int updateDelay = 60; //delay between each flap
 byte Bit = false; //used by "Update" function
 
-//                D  A  G  _  T   I  J   L
-int message[8] = {4, 1, 7, 0, 20, 9, 10, 12};
+//                H E  L L  O  []  W  O R  L  D
+int message[8] = {8,5,12,12,10,30,53,45,48,42,34};
 
 void setup() {
   pinMode(12, OUTPUT);
