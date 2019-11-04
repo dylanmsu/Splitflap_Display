@@ -4,7 +4,7 @@ int updateDelay = 60; //delay between each flap
 byte Bit = false; //used by "Update" function
 
 //                H E  L L  O  []  W  O R  L  D
-int message[8] = {8,5,12,12,10,30,53,45,48,42,34};
+int message[] = {8,5,12,12,10,30,53,45,48,42,34};
 
 void setup() {
   pinMode(12, OUTPUT);
@@ -15,7 +15,7 @@ void setup() {
 
 void loop() {
   Zero(0);
-  for (int i=0;i<8;i++){
+  for (int i=0;i<sizeof(message);i++){
     jumpTo(0,message[i]);
     delay(1000);
   }
