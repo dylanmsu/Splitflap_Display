@@ -16,8 +16,11 @@ void setup() {
 }
 
 void loop() {
-  for (int i=0;i<sizeof(message);i++){
-    jumpTo(0,message[i],false);
+  int *text;
+  stringToIdexArray("HELLO WORLD",text,false);
+  
+  for (int i=0;i<sizeof(text);i++){
+    jumpTo(0,text[i],false);
     delay(1000);
   }
 }
@@ -57,7 +60,7 @@ void stringToIdexArray(String input, int *output, boolean red){
       case '-':   output[i] = 24;    break;
       case '/':   output[i] = 25;    break;
       case ' ':   output[i] = 26;    break;
-      default:    output[i] = 57;    break;
+      default:    output[i] = 57;    break; //unknown character gets replaced with an "Ö"
     } 
     if (red){
       output[i] += 30;
