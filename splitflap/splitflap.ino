@@ -3,8 +3,8 @@
 int updateDelay = 70; //delay between each flap
 byte Bit = false; //used by "Update" function
 
-//                D  A  G  _  T   I  J   L
-int message[8] = {4, 1, 7, 0, 20, 9, 10, 12};
+//               H E L  L  O  [] W  O  R  L  D
+int message[] = {8,5,12,12,10,30,53,45,48,42,34};
 
 void setup() {
   pinMode(10, OUTPUT);
@@ -16,15 +16,15 @@ void setup() {
 }
 
 void loop() {
-  Zero(0);
-  for (int i=0;i<3;i++){
+  for (int i=0;i<sizeof(message);i++){
     jumpTo(0,message[i],false);
     delay(1000);
   }
-  for (int i=3;i<8;i++){
-    jumpTo(0,message[i],true);
-    delay(1000);
-  }
+}
+
+void stringToIdexArray(){
+  //TODO
+  //convert a string to a list of segment numbers
 }
 
 //jump to a character on the display
@@ -39,6 +39,7 @@ void jumpTo(byte Display, int num, boolean red){
       increase(Display,num);
     }
   }
+  
   else if (num > prev){
     for (int i=prev; i<num;i++){
       Update(Display, updateDelay);
@@ -74,7 +75,7 @@ void increase(byte Display, int num){
       Update(Display, updateDelay);
     }
     
-    EEPROM.write(Display, (num+prev)%54);
+    EEPROM.write(Display, (num+prev)%60);
   }else{
     //error code: reached segment limit
   }
