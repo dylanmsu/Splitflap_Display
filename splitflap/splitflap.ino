@@ -22,15 +22,46 @@ void loop() {
   }
 }
 
-void stringToIdexArray(String input, int *output){
+void stringToIdexArray(String input, int *output, boolean red){
   //TODO
   //convert a string to a list of segment numbers
   for (int i=0;i<sizeof(input);i++){
     switch(input[i]){
-      case 'A':
-      output[i] = 1;
-      break;
+      case 'A':   output[i] = 1;    break;
+      case 'B':   output[i] = 2;    break;
+      case 'C':   output[i] = 3;    break;
+      case 'D':   output[i] = 4;    break;
+      case 'E':   output[i] = 5;    break;
+      case 'F':   output[i] = 6;    break;
+      case 'G':   output[i] = 7;    break;
+      case 'H':   output[i] = 8;    break;
+      case 'I':   output[i] = 9;    break;
+      case 'J':   output[i] = 10;    break;
+      case 'K':   output[i] = 11;    break;
+      case 'L':   output[i] = 12;    break;
+      case 'M':   output[i] = 13;    break;
+      case 'N':   output[i] = 14;    break;
+      case 'O':   output[i] = 15;    break;
+      case 'P':   output[i] = 16;    break;
+      case 'Q':   output[i] = 17;    break;
+      case 'R':   output[i] = 18;    break;
+      case 'S':   output[i] = 19;    break;
+      case 'T':   output[i] = 20;    break;
+      case 'U':   output[i] = 21;    break;
+      case 'V':   output[i] = 22;    break;
+      case 'W':   output[i] = 23;    break;
+      case 'X':   output[i] = 24;    break;
+      case 'Y':   output[i] = 25;    break;
+      case 'Z':   output[i] = 26;    break;
+      case '—':   output[i] = 23;    break;
+      case '-':   output[i] = 24;    break;
+      case '/':   output[i] = 25;    break;
+      case ' ':   output[i] = 26;    break;
+      default:    output[i] = 57;    break;
     } 
+    if (red){
+      output[i] += 30;
+    }
   }
 }
 
