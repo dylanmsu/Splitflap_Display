@@ -22,9 +22,16 @@ void loop() {
   }
 }
 
-void stringToIdexArray(){
+void stringToIdexArray(String input, int *output){
   //TODO
   //convert a string to a list of segment numbers
+  for (int i=0;i<sizeof(input);i++){
+    switch(input[i]){
+      case 'A':
+      output[i] = 1;
+      break;
+    } 
+  }
 }
 
 //jump to a character on the display
