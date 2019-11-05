@@ -3,9 +3,11 @@
 int updateDelay = 64; //delay between each flap
 byte Bit = false; //used by "Update" function
 
-String message = "";
+String message = "hello world"; //read from serial
+String temp = "";
 
 void setup() {
+  pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(A0, INPUT);
@@ -18,11 +20,11 @@ void loop() {
   Zero(0);
 
   //Serial.write(int(sizeof(message)/sizeof(message[0])));
-  while (Serial.available()) {
+  /*while (Serial.available()) {
     delay(20);
     char c = Serial.read();
-    message += c;
-  }
+    temp += c;
+  }*/
 
   for (int i=0;i<message.length(); i++){
     jumpTo(0,lookup(message[i],false));
@@ -91,8 +93,15 @@ void jumpTo(byte Display, int num){
 
 //flap once
 void Update(byte Display, int flapDelay){
-  digitalWrite(12, Bit);
-  digitalWrite(13, Bit);
+  //switch(Display){
+  //  case 0:
+      digitalWrite(12, Bit);
+      digitalWrite(13, Bit);
+  //  break;
+  //  case 1:
+      digitalWrite(11, Bit);
+  //  break;
+  //}
   delay(flapDelay);
   Bit = !Bit;
 }
