@@ -3,10 +3,7 @@
 int updateDelay = 64; //delay between each flap
 byte Bit = false; //used by "Update" function
 
-//                 H E L  L  O  [] W  O  R  L  D
-//int message[] = {8,5,12,12,10,30,53,45,48,42,34};
-
-String message = "hello world";
+String message = "";
 
 void setup() {
   pinMode(12, OUTPUT);
@@ -21,9 +18,13 @@ void loop() {
   Zero(0);
 
   //Serial.write(int(sizeof(message)/sizeof(message[0])));
+  while (Serial.available()) {
+    delay(20);
+    char c = Serial.read();
+    message += c;
+  }
 
   for (int i=0;i<message.length(); i++){
-    Serial.write(i);
     jumpTo(0,lookup(message[i],false));
     delay(500);
   }
