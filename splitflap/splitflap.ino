@@ -1,6 +1,6 @@
 #include <EEPROM.h>
 
-int updateDelay = 70; //delay between each flap
+int updateDelay = 64; //delay between each flap
 byte Bit = false; //used by "Update" function
 
 String message = "hello world";
@@ -10,14 +10,18 @@ void setup() {
   pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
-  pinMode(A0, INPUT);
+  
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(A1, INPUT_PULLUP);
+  
   Zero(0);
+  Zero(1);
   Serial.begin(115200);
   //Serial.write(int(sizeof(message[0])));
 }
 
 void loop() {
-  Zero(0);
+  /*Zero(0);
   //String temp = message;
   message.toLowerCase();
   //bool red[message.length()] = {};
@@ -30,11 +34,14 @@ void loop() {
     red[i] = state;
   }*/
   
-  for (int i=0;i<message.length(); i++){
-    jumpTo(0,lookup(message[i],false));
-    delay(500);
+  /*for (int i=0;i<message.length(); i++){
+    jumpTo(i%2,lookup(message[i]+i/2,false));
+    delay(1000);
   }
-  delay(1000);
+  delay(10000);*/
+  Update(0);
+  
+  Update(1);
 }
 
 int lookup(char input, boolean red){
@@ -76,6 +83,7 @@ int lookup(char input, boolean red){
     output += 30;
   }
   return output;
+  output = 0;
 }
 
 //jump to a character on the display
@@ -89,47 +97,57 @@ void jumpTo(byte Display, int num){
   
   else if (num > prev){
     for (int i=prev; i<num;i++){
-      Update(Display, updateDelay);
+      Update(Display);
     }
   }
   EEPROM.write(Display,num);
 }
 
 //flap once
-void Update(byte Display, int flapDelay){
+void Update(byte Display){
   switch(Display){
     case 0:
-      digitalWrite(12, Bit);
-      digitalWrite(13, !Bit);
+      digitalWrite(13, Bit);
+      digitalWrite(12, !Bit);
     break;
     case 1:
       digitalWrite(11, Bit);
       digitalWrite(10, !Bit);
     break;
   }
-  delay(flapDelay);
+  delay(updateDelay);
   Bit = !Bit;
 }
 
 //flaps until it reaches the first display-segment
 void Zero(byte Display){
-  while(digitalRead(A0)){
-    Update(Display, updateDelay);
+  switch(Display){
+    case 0:
+      while(digitalRead(A0)){
+        Update(Display);
+      }
+    break;
+    case 1:
+      while(digitalRead(A1)){
+        Update(Display);
+      }
+    break;
   }
-  EEPROM.write(0,0);
+  
+  EEPROM.write(Display,0);
 }
 
 //flaps a certain amount of times
 void increase(byte Display, int num){
-  int prev = EEPROM.read(Display);
-  if (num+prev < 60){
+  //int prev = EEPROM.read(Display);
+  //if (num+prev < 60){
     
     for (int i=0; i<num; i++){
-      Update(Display, updateDelay);
+      Update(Display);
     }
     
-    EEPROM.write(Display, (num+prev)%60);
-  }else{
+    //EEPROM.write(Display, (num+prev)%60);
+  //}else{
     //error code: reached segment limit
-  }
+  //}
 }
