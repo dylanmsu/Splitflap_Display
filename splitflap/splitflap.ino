@@ -1,23 +1,36 @@
 #include <EEPROM.h>
 
-int updateDelay = 64; //delay between each flap
-byte Bit = false; //used by "Update" function
+int updateDelay = 70; //delay between each flap
+bool Bit[4] = {false,false,false,true}; //used by "Update" function
 
-String message = "hello world";
+
+String message = "dag tijl";
 
 void setup() {
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
+
+  pinMode(5, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(2, OUTPUT);
   
   pinMode(A0, INPUT_PULLUP);
   pinMode(A1, INPUT_PULLUP);
+  pinMode(A2, INPUT_PULLUP);
+  pinMode(A3, INPUT_PULLUP);
   
+  Serial.begin(115200);
   Zero(0);
   Zero(1);
-  Serial.begin(115200);
-  //Serial.write(int(sizeof(message[0])));
+  Zero(2);
+  Zero(3);
 }
 
 void loop() {
@@ -39,9 +52,16 @@ void loop() {
     delay(1000);
   }
   delay(10000);*/
-  Update(0);
-  
-  Update(1);
+
+  for (int i=0;i<4; i++){
+    jumpTo(3-i,lookup(message[i],false));
+    delay(100);
+  }
+  delay(500);
+  for (int i=0;i<4; i++){
+    jumpTo(3-i,lookup(message[i+4],true));
+    delay(100);
+  }
 }
 
 int lookup(char input, boolean red){
@@ -87,7 +107,7 @@ int lookup(char input, boolean red){
 }
 
 //jump to a character on the display
-void jumpTo(byte Display, int num){
+void jumpTo(int Display, int num){
   int prev = EEPROM.read(Display);
   
   if (num < prev){
@@ -104,41 +124,73 @@ void jumpTo(byte Display, int num){
 }
 
 //flap once
-void Update(byte Display){
+void Update(int Display){
   switch(Display){
     case 0:
-      digitalWrite(13, Bit);
-      digitalWrite(12, !Bit);
+      digitalWrite(5, 1);
+      digitalWrite(13, Bit[0]);
+      digitalWrite(12, !Bit[0]);
+      delay(updateDelay);
+      digitalWrite(5, 0);
+      Bit[0] = !Bit[0];
     break;
     case 1:
-      digitalWrite(11, Bit);
-      digitalWrite(10, !Bit);
+      
+      digitalWrite(4, 1);
+      digitalWrite(11, Bit[1]);
+      digitalWrite(10, !Bit[1]);
+      delay(updateDelay);
+      digitalWrite(4, 0);
+      Bit[1] = !Bit[1];
+    break;
+    case 2:
+      digitalWrite(3, 1);
+      digitalWrite(9, Bit[2]);
+      digitalWrite(8, !Bit[2]);
+      delay(updateDelay);
+      digitalWrite(3, 0);
+      Bit[2] = !Bit[2];
+    break;
+    case 3:
+      digitalWrite(2, 1);
+      digitalWrite(7, Bit[3]);
+      digitalWrite(6, !Bit[3]);
+      delay(updateDelay);
+      digitalWrite(2, 0);
+      Bit[3] = !Bit[3];
     break;
   }
-  delay(updateDelay);
-  Bit = !Bit;
 }
 
 //flaps until it reaches the first display-segment
-void Zero(byte Display){
+void Zero(int Display){
+  EEPROM.write(Display,0);
   switch(Display){
     case 0:
       while(digitalRead(A0)){
-        Update(Display);
+        Update(0);
       }
     break;
     case 1:
       while(digitalRead(A1)){
-        Update(Display);
+        Update(1);
+      }
+    break;
+    case 2:
+      while(digitalRead(A2)){
+        Update(2);
+      }
+    break;
+    case 3:
+      while(digitalRead(A3)){
+        Update(3);
       }
     break;
   }
-  
-  EEPROM.write(Display,0);
 }
 
 //flaps a certain amount of times
-void increase(byte Display, int num){
+void increase(int Display, int num){
   //int prev = EEPROM.read(Display);
   //if (num+prev < 60){
     
