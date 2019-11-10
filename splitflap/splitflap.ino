@@ -27,9 +27,6 @@ void loop() {
 }
 
 void stringToIdexArray(String input, int *output, boolean red){
-
-  
-  
   for (int i=0;i<sizeof(input);i++){
     switch(input[i]){
       case 'A':   output[i] = 1;    break;
