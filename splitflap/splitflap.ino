@@ -38,7 +38,6 @@ void loop() {
 
 void Write(String text){
   Zero();
-<<<<<<< HEAD
   String temp = text;
   text.toLowerCase();
   for (int i=0; i<text.length(); i++){
@@ -69,13 +68,6 @@ void Write(String text){
 void Zero(){
   bool state[4] = {1,1,1,1};
   while ((state[0]||state[1]||state[2]||state[3])){
-=======
-  for (int i=0; i<4; i++){
-    indices[i] = lookup(text[i],false);
-  }
-
-  for (int i=0; i<text.length(); i++){
->>>>>>> e455e5e477accdd592027d17e7b78dd16abb9f50
     for (int i = 0; i<4; i++){
       delay(updateDelay/4);
       state[i] = digitalRead(APins[i]);
@@ -89,7 +81,6 @@ void Zero(){
         digitalWrite(5-i, 0);
       }
     }
-    
   }
 }
 
