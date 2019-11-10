@@ -36,11 +36,11 @@ void loop() {
   int indices[4] = {};
 
   Zero();
-  for (int i=0; i< i++){
+  for (int i=0; i<4; i++){
     indices[i] = lookup(text[i],false);
   }
 
-  for (int i=0; i<text.length() i++){
+  for (int i=0; i<text.length(); i++){
     for (int i = 0; i<4; i++){
       if (!indices[3-i]){
         digitalWrite(5-i, 1);

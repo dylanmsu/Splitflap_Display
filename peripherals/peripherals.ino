@@ -26,7 +26,6 @@ byte mac_addr[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 //Credentials MySQL server
 IPAddress server_addr(192,168,200,15);
-IPAddress ip(192,168,200,178);
 char user[] = "tijl";
 char password[] = "73647364";
 
@@ -41,15 +40,16 @@ EthernetClient client;
 MySQL_Connection conn((Client *)&client);
 
 void setup() {
-  Serial.begin(115200);
-  while (!Serial);
+  //Serial.begin(115200);
+  //while (!Serial);
   Ethernet.begin(mac_addr);
-  Serial.println("Verbinden...");
+  //Serial.println("Verbinden...");
   if (conn.connect(server_addr, 3306, user, password)) {
     delay(1000);
   }
-  else {
-    Serial.println("Verbinding mislukt."); }
+  /*
+   else {
+    Serial.println("Verbinding mislukt."); } */
 
 //Output Pins    
     pinMode(flaps, OUTPUT);
@@ -71,10 +71,11 @@ MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
 sprintf(query, UPDATE, temperature_sensor);
 cur_mem->execute(query);    
 
+/*
 //DISPLAY INPUT
     Serial.println("Data Opgeslaan:");
     Serial.print("Temperatuur: ");
-    Serial.println(temperature_sensor);
+    Serial.println(temperature_sensor); */
 
 //READ Query
   sprintf(query, READ);
