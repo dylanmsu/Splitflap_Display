@@ -1,11 +1,11 @@
 #include <EEPROM.h>
 
-int updateDelay = 60; //delay between each flap
-uint8_t APins[4] = {A0,A1,A2,A3};
-bool Bit[4] = {false,false,false,true}; //used by "Update" function
-bool state[4] = {1,1,1,1};
-
-//String message = "dag tijl";
+int updateDelay = 80; //delay between each flap
+uint8_t APins[4] = {A4,A1,A2,A3};
+bool Bit[4] = {};
+bool enable[4] = {};
+bool state[4] = {};
+int indices[4] = {};
 
 void setup() {
   pinMode(6, OUTPUT);
@@ -32,24 +32,56 @@ void setup() {
 }
 
 void loop() {
-  String text = "text";
-  int indices[4] = {};
+  Write("tEst");
+  delay(10000);
+}
 
+void Write(String text){
   Zero();
-  for (int i=0; i< i++){
-    indices[i] = lookup(text[i],false);
+  String temp = text;
+  text.toLowerCase();
+  for (int i=0; i<text.length(); i++){
+    if (temp[i] != text[i]){
+      indices[3-i] = lookup(text[i],true);
+    }else{
+      indices[3-i] = lookup(text[i],false);
+    }
   }
 
-  for (int i=0; i<text.length() i++){
+  while (indices[0]||indices[1]||indices[2]||indices[3]){
+    for (int i=0; i<4; i++){
+      if (indices[i]){
+        indices[i] -= 1;
+        digitalWrite(5-i, HIGH);
+        digitalWrite(13-i*2, Bit[i]);
+        digitalWrite(12-i*2, !Bit[i]);
+        Bit[i] = !Bit[i];
+      }else{
+        digitalWrite(5-i, LOW);
+      }
+      delay(updateDelay/4);
+    }
+  }
+}
+
+//flaps until it reaches the first display-segment
+void Zero(){
+  bool state[4] = {1,1,1,1};
+  while ((state[0]||state[1]||state[2]||state[3])){
     for (int i = 0; i<4; i++){
-      if (!indices[3-i]){
+      delay(updateDelay/4);
+      state[i] = digitalRead(APins[i]);
+      if (state[i]){
         digitalWrite(5-i, 1);
         digitalWrite(13-i*2, Bit[i]);
         digitalWrite(12-i*2, !Bit[i]);
         Bit[i] = !Bit[i];
+      }else{
+        
+        digitalWrite(5-i, 0);
       }
-      Serial.print(state[i]);
     }
+    
   }
 }
 
@@ -94,60 +126,3 @@ int lookup(char input, boolean red){
   return output;
   output = 0;
 }
-
-//jump to a character on the display
-/*void jumpTo(int Display, int num){
-  int prev = EEPROM.read(Display);
-  bool state[4] = {0,0,0,0};
-  
-  if (num < prev){
-    Zero(Display);
-    increase(Display,num);
-  }
-  
-  else if (num > prev){
-    for (int i=prev; i<num;i++){
-      Update(Display,state);
-    }
-  }
-  EEPROM.write(Display,num);
-}*/
-
-//flaps until it reaches the first display-segment
-void Zero(){
-  bool state[4] = {1,1,1,1};
-  while ((state[0]||state[1]||state[2]||state[3])){
-    for (int i = 0; i<4; i++){
-      state[i] = digitalRead(APins[3-i]);
-    }
-    for (int i = 0; i<4; i++){
-      
-      if (state[3-i]){
-        digitalWrite(5-i, 1);
-        digitalWrite(13-i*2, Bit[i]);
-        digitalWrite(12-i*2, !Bit[i]);
-        Bit[i] = !Bit[i];
-      }
-    }
-    delay(updateDelay);
-    for (int i = 0; i<4; i++){
-      digitalWrite(2+i, 0);
-    }
-  }
-}
-
-//flaps a certain amount of times
-/*void increase(int Display, int num){
-  //int prev = EEPROM.read(Display);
-  //if (num+prev < 60){
-    
-    for (int i=0; i<num; i++){
-      bool state[4] = {0,0,0,0};
-      Update(state);
-    }
-    
-    //EEPROM.write(Display, (num+prev)%60);
-  //}else{
-    //error code: reached segment limit
-  //}
-}*/
