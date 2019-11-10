@@ -1,7 +1,7 @@
 #include <Ethernet.h>
 #include <MySQL_Connection.h>
 #include <MySQL_Cursor.h>
-#include <SimpleDHT.h>
+#include <math.h>
 
 //Pins
 int flaps = 3;
@@ -9,25 +9,33 @@ int heating = 4;
 int vent = 5;
 int light = 6;
 int led = 7;
-int pinDHT11 = 2;
+int tempsens = A5;
 
-SimpleDHT11 dht11(pinDHT11);
+//Calculate Temperature
+double Thermistor(int RawADC) {
+  double Temp;
+  Temp = log(10000.0*((1024.0/RawADC-1))); 
+  Temp = 1 / (0.001129148 + (0.000234125 + (0.0000000876741 * Temp * Temp ))* Temp );
+  Temp = Temp - 273.15;
+   return Temp;
+}
+char temperature_sensor[10];
 
+//MAC adress
 byte mac_addr[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 //Credentials MySQL server
-IPAddress server_addr(37,59,55,185);
-char user[] = "qaHS6nqQwW";
-char password[] = "OLampD9032";
+IPAddress server_addr(192,168,200,15);
+IPAddress ip(192,168,200,178);
+char user[] = "tijl";
+char password[] = "73647364";
 
 //Query status
-char query_a[] = "SELECT * FROM qaHS6nqQwW.status_board WHERE track=2";
+char READ[] = "SELECT * FROM scmserver.status_board WHERE track=2";
 
 //Query sensor
-char UPDATE_DATA[] = "UPDATE qaHS6nqQwW.sensor_values SET temperature=%s,humidity=%s WHERE track='2'";
-char query_b[128];
-char temperature_sensor[10];
-char humidity_sensor[10];
+char UPDATE[] = "UPDATE scmserver.sensor_values SET temperature=%s WHERE track='2'";
+char query[128];
 
 EthernetClient client;
 MySQL_Connection conn((Client *)&client);
@@ -42,7 +50,7 @@ void setup() {
   }
   else {
     Serial.println("Verbinding mislukt."); }
-    
+
 //Output Pins    
     pinMode(flaps, OUTPUT);
     pinMode(heating, OUTPUT);
@@ -52,23 +60,40 @@ void setup() {
 }
 
 void loop() {
-//Read Status
-  
-  MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
-  cur_mem->execute(query_a);
+
+//Temperature Reading
+  int readVal=analogRead(tempsens);
+ double temp =  Thermistor(readVal);
+ dtostrf((float)temp, 3, 1, temperature_sensor);
+    
+//UPDATE Query     
+MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
+sprintf(query, UPDATE, temperature_sensor);
+cur_mem->execute(query);    
+
+//DISPLAY INPUT
+    Serial.println("Data Opgeslaan:");
+    Serial.print("Temperatuur: ");
+    Serial.println(temperature_sensor);
+
+//READ Query
+  sprintf(query, READ);
+  cur_mem->execute(query);
   column_names *cols = cur_mem->get_columns();
   row_values *row = NULL;
   do {
     row = cur_mem->get_next_row();
   
     if (row != NULL) {
+
+//OUTPUT RELAIS
  digitalWrite(flaps, atol(row->values[2]));
  digitalWrite(heating, atol(row->values[3]));
  digitalWrite(vent, atol(row->values[4]));
  digitalWrite(light, atol(row->values[5]));
  digitalWrite(led, atol(row->values[6])); }
+ 
   } while (row != NULL); {
   delete cur_mem; }
-
     delay(1000);
 }
