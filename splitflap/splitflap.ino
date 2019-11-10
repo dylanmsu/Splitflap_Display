@@ -1,8 +1,9 @@
 #include <EEPROM.h>
 
-int updateDelay = 70; //delay between each flap
+int updateDelay = 60; //delay between each flap
+uint8_t APins[4] = {A0,A1,A2,A3};
 bool Bit[4] = {false,false,false,true}; //used by "Update" function
-
+bool state[4] = {1,1,1,1};
 
 String message = "dag tijl";
 
@@ -27,33 +28,17 @@ void setup() {
   pinMode(A3, INPUT_PULLUP);
   
   Serial.begin(115200);
-  Zero(0);
-  Zero(1);
-  Zero(2);
-  Zero(3);
+  
 }
 
 void loop() {
-  /*Zero(0);
-  //String temp = message;
-  message.toLowerCase();
-  //bool red[message.length()] = {};
-
-  /*bool state = false;
-  for (int i=0;i<message.length();i++){
-    if (temp[i] != message[i]){
-      state = !state;
-    }
-    red[i] = state;
-  }*/
   
-  /*for (int i=0;i<message.length(); i++){
-    jumpTo(i%2,lookup(message[i]+i/2,false));
-    delay(1000);
-  }
-  delay(10000);*/
-
-  for (int i=0;i<4; i++){
+    //for (int i = 0; i<100; i++){
+      delay(10);
+      Update(state);
+    //}
+    //delay(1000);
+  /*for (int i=0;i<4; i++){
     jumpTo(3-i,lookup(message[i],false));
     delay(100);
   }
@@ -61,6 +46,28 @@ void loop() {
   for (int i=0;i<4; i++){
     jumpTo(3-i,lookup(message[i+4],true));
     delay(100);
+  }*/
+}
+
+//flap once
+void Update(bool *state){
+  for (int i = 0; i<4; i++){
+    state[i] = digitalRead(APins[3-i]);
+  }
+  for (int i = 0; i<4; i++){
+    
+    if (state[3-i]){
+      digitalWrite(5-i, 1);
+      digitalWrite(13-i*2, Bit[i]);
+      digitalWrite(12-i*2, !Bit[i]);
+      Bit[i] = !Bit[i];
+    }
+    Serial.print(state[i]);
+  }
+  Serial.println();
+  delay(updateDelay);
+  for (int i = 0; i<4; i++){
+    digitalWrite(2+i, 0);
   }
 }
 
@@ -93,7 +100,7 @@ int lookup(char input, boolean red){
     case 'x':   output = 24;    break;
     case 'y':   output = 25;    break;
     case 'z':   output = 26;    break;
-    case '—':   output = 27;    break;
+    case '%':   output = 27;    break;
     case '-':   output = 27;    break;
     case '/':   output = 29;    break;
     case ' ':   output = 30;    break;
@@ -107,8 +114,9 @@ int lookup(char input, boolean red){
 }
 
 //jump to a character on the display
-void jumpTo(int Display, int num){
+/*void jumpTo(int Display, int num){
   int prev = EEPROM.read(Display);
+  bool state[4] = {0,0,0,0};
   
   if (num < prev){
     Zero(Display);
@@ -117,77 +125,39 @@ void jumpTo(int Display, int num){
   
   else if (num > prev){
     for (int i=prev; i<num;i++){
-      Update(Display);
+      Update(Display,state);
     }
   }
   EEPROM.write(Display,num);
-}
-
-//flap once
-void Update(int Display){
-  switch(Display){
-    case 0:
-      digitalWrite(5, 1);
-      digitalWrite(13, Bit[0]);
-      digitalWrite(12, !Bit[0]);
-      delay(updateDelay);
-      digitalWrite(5, 0);
-      Bit[0] = !Bit[0];
-    break;
-    case 1:
-      
-      digitalWrite(4, 1);
-      digitalWrite(11, Bit[1]);
-      digitalWrite(10, !Bit[1]);
-      delay(updateDelay);
-      digitalWrite(4, 0);
-      Bit[1] = !Bit[1];
-    break;
-    case 2:
-      digitalWrite(3, 1);
-      digitalWrite(9, Bit[2]);
-      digitalWrite(8, !Bit[2]);
-      delay(updateDelay);
-      digitalWrite(3, 0);
-      Bit[2] = !Bit[2];
-    break;
-    case 3:
-      digitalWrite(2, 1);
-      digitalWrite(7, Bit[3]);
-      digitalWrite(6, !Bit[3]);
-      delay(updateDelay);
-      digitalWrite(2, 0);
-      Bit[3] = !Bit[3];
-    break;
-  }
-}
+}*/
 
 //flaps until it reaches the first display-segment
-void Zero(int Display){
+/*void Zero(int Display){
   EEPROM.write(Display,0);
+  bool state[4] = {0,0,0,0};
   switch(Display){
     case 0:
       while(digitalRead(A0)){
-        Update(0);
+        Update(0,state);
       }
     break;
     case 1:
       while(digitalRead(A1)){
-        Update(1);
+        Update(1,state);
       }
     break;
     case 2:
       while(digitalRead(A2)){
-        Update(2);
+        Update(2,state);
       }
     break;
     case 3:
       while(digitalRead(A3)){
-        Update(3);
+        Update(3,state);
       }
     break;
   }
-}
+}*/
 
 //flaps a certain amount of times
 void increase(int Display, int num){
@@ -195,7 +165,8 @@ void increase(int Display, int num){
   //if (num+prev < 60){
     
     for (int i=0; i<num; i++){
-      Update(Display);
+      bool state[4] = {0,0,0,0};
+      Update(state);
     }
     
     //EEPROM.write(Display, (num+prev)%60);
