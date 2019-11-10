@@ -1,7 +1,7 @@
 #include <EEPROM.h>
 
 int updateDelay = 80; //delay between each flap
-uint8_t APins[4] = {A4,A1,A2,A3};
+uint8_t APins[4] = {A0,A1,A2,A3};
 bool Bit[4] = {};
 bool enable[4] = {};
 bool state[4] = {};
@@ -26,14 +26,28 @@ void setup() {
   pinMode(A1, INPUT_PULLUP);
   pinMode(A2, INPUT_PULLUP);
   pinMode(A3, INPUT_PULLUP);
+  pinMode(A4, INPUT_PULLUP);
+
+  pinMode(A5, OUTPUT);
+  digitalWrite(A5, 1);
   
   Serial.begin(115200);
   
 }
 
 void loop() {
-  Write("tEst");
-  delay(10000);
+  Write("koek");
+  delay(5000);
+  Write("prei");
+  delay(5000);
+  Write("mier");
+  delay(5000);
+  Write("tram");
+  delay(5000);
+  Write("ello");
+  delay(5000);
+  
+  
 }
 
 void Write(String text){
