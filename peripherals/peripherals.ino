@@ -1,4 +1,5 @@
 #include <Ethernet.h>
+#include <Adafruit_NeoPixel.h>
 #include <MySQL_Connection.h>
 #include <MySQL_Cursor.h>
 #include <math.h>
@@ -10,6 +11,10 @@ int vent = 5;
 int light = 6;
 int led = 7;
 int tempsens = A5;
+int ledPin = 2;
+
+//Variables
+int aantal_pixels = 5;
 
 //Calculate Temperature
 double Thermistor(int RawADC) {
@@ -25,7 +30,7 @@ char temperature_sensor[10];
 byte mac_addr[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 //Credentials MySQL server
-IPAddress server_addr(192,168,200,15);
+IPAddress server_addr(192,168,100,111);
 char user[] = "tijl";
 char password[] = "73647364";
 
@@ -39,17 +44,19 @@ char query[128];
 EthernetClient client;
 MySQL_Connection conn((Client *)&client);
 
+//RGB strip
+Adafruit_NeoPixel pixels(aantal_pixels, ledPin, NEO_GRB + NEO_KHZ800);
+
 void setup() {
-  //Serial.begin(115200);
-  //while (!Serial);
+  Serial.begin(115200);
+  while (!Serial);
   Ethernet.begin(mac_addr);
   //Serial.println("Verbinden...");
   if (conn.connect(server_addr, 3306, user, password)) {
     delay(1000);
   }
-  /*
-   else {
-    Serial.println("Verbinding mislukt."); } */
+  else {
+    Serial.println("Verbinding mislukt."); } 
 
 //Output Pins    
     pinMode(flaps, OUTPUT);
@@ -57,6 +64,9 @@ void setup() {
     pinMode(vent, OUTPUT);
     pinMode(light, OUTPUT);
     pinMode(led, OUTPUT);
+
+//Start RGB strip
+  pixels.begin();
 }
 
 void loop() {
@@ -66,7 +76,7 @@ void loop() {
  double temp =  Thermistor(readVal);
  dtostrf((float)temp, 3, 1, temperature_sensor);
     
-//UPDATE Query     
+//UPDATE Query
 MySQL_Cursor *cur_mem = new MySQL_Cursor(&conn);
 sprintf(query, UPDATE, temperature_sensor);
 cur_mem->execute(query);    
@@ -92,7 +102,12 @@ cur_mem->execute(query);
  digitalWrite(heating, atol(row->values[3]));
  digitalWrite(vent, atol(row->values[4]));
  digitalWrite(light, atol(row->values[5]));
- digitalWrite(led, atol(row->values[6])); }
+ digitalWrite(led, atol(row->values[6]));
+ 
+ for(int i=0; i<aantal_pixels; i++) {
+    pixels.setPixelColor(i, pixels.Color(0, 0, 255));
+    pixels.show();  }
+ }
  
   } while (row != NULL); {
   delete cur_mem; }
