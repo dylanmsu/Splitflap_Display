@@ -1,13 +1,11 @@
 #include <EEPROM.h>
 
-int numDispl = 4;
-
-int updateDelay = 70; //delay between each flap
-bool Bit[4] = {false,false,false,true}; //used by "Update" function
-bool sens[4] = {false,false,false,false};
-
-
-String message = "dag tijl";
+int updateDelay = 80; //delay between each flap
+uint8_t APins[4] = {A0,A1,A2,A3};
+bool Bit[4] = {};
+bool enable[4] = {};
+bool state[4] = {};
+int indices[4] = {};
 
 void setup() {
   pinMode(6, OUTPUT);
@@ -28,51 +26,75 @@ void setup() {
   pinMode(A1, INPUT_PULLUP);
   pinMode(A2, INPUT_PULLUP);
   pinMode(A3, INPUT_PULLUP);
+  pinMode(A4, INPUT_PULLUP);
+
+  pinMode(A5, OUTPUT);
+  digitalWrite(A5, 1);
   
   Serial.begin(115200);
-  //Zero(0);
-  //Zero(1);
-  //Zero(2);
-  //Zero(3);
 }
 
 void loop() {
-  /*Zero(0);
-  //String temp = message;
-  message.toLowerCase();
-  //bool red[message.length()] = {};
-
-  /*bool state = false;
-  for (int i=0;i<message.length();i++){
-    if (temp[i] != message[i]){
-      state = !state;
-    }
-    red[i] = state;
-  }*/
+  Write("koek");
+  delay(5000);
+  Write("prei");
+  delay(5000);
+  Write("mier");
+  delay(5000);
+  Write("tram");
+  delay(5000);
+  Write("ello");
+  delay(5000);
   
-  /*for (int i=0;i<message.length(); i++){
-    jumpTo(i%2,lookup(message[i]+i/2,false));
-    delay(1000);
-  }
-  delay(10000);*/
+  
+}
 
-  delay(500);
-  //
-    while (!(sens[0]&&sens[1]&&sens[2]&&sens[3])){
-      for (int i=0;i<4; i++){
-        if (!sens[i]){
-          Update(i);
-          sens[0] = digitalRead(A0);
-          sens[1] = digitalRead(A1);
-          sens[2] = digitalRead(A2);
-          sens[2] = digitalRead(A3);
-        }
-      }
-      
+void Write(String text){
+  Zero();
+  String temp = text;
+  text.toLowerCase();
+  for (int i=0; i<text.length(); i++){
+    if (temp[i] != text[i]){
+      indices[3-i] = lookup(text[i],true);
+    }else{
+      indices[3-i] = lookup(text[i],false);
     }
-    //Update(i);
-    delay(100);
- // }
+  }
+  
+  while (indices[0]||indices[1]||indices[2]||indices[3]){
+    for (int i=0; i<4; i++){
+      if (indices[i]){
+        indices[i] -= 1;
+        digitalWrite(5-i, HIGH);
+        digitalWrite(13-i*2, Bit[i]);
+        digitalWrite(12-i*2, !Bit[i]);
+        Bit[i] = !Bit[i];
+      }else{
+        digitalWrite(5-i, LOW);
+      }
+      delay(updateDelay/4);
+    }
+  }
+}
+
+//flaps until it reaches the first display-segment
+void Zero(){
+  bool state[4] = {1,1,1,1};
+  while ((state[0]||state[1]||state[2]||state[3])){
+    for (int i = 0; i<4; i++){
+      delay(updateDelay/4);
+      state[i] = digitalRead(APins[i]);
+      if (state[i]){
+        digitalWrite(5-i, 1);
+        digitalWrite(13-i*2, Bit[i]);
+        digitalWrite(12-i*2, !Bit[i]);
+        Bit[i] = !Bit[i];
+      }else{
+        
+        digitalWrite(5-i, 0);
+      }
+    }
+  }
 }
 
 int lookup(char input, boolean red){
@@ -104,7 +126,7 @@ int lookup(char input, boolean red){
     case 'x':   output = 24;    break;
     case 'y':   output = 25;    break;
     case 'z':   output = 26;    break;
-    case '—':   output = 27;    break;
+    case '%':   output = 27;    break;
     case '-':   output = 27;    break;
     case '/':   output = 29;    break;
     case ' ':   output = 30;    break;
@@ -115,102 +137,4 @@ int lookup(char input, boolean red){
   }
   return output;
   output = 0;
-}
-
-//jump to a character on the display
-void jumpTo(int Display, int num){
-  int prev = EEPROM.read(Display);
-  
-  if (num < prev){
-    Zero(Display);
-    increase(Display,num);
-  }
-  
-  else if (num > prev){
-    for (int i=prev; i<num;i++){
-      Update(Display);
-    }
-  }
-  EEPROM.write(Display,num);
-}
-
-//flap once
-void Update(int Display){
-  switch(Display){
-    case 0:
-      digitalWrite(5, 1);
-      digitalWrite(13, Bit[0]);
-      digitalWrite(12, !Bit[0]);
-      delay(updateDelay);
-      digitalWrite(5, 0);
-      Bit[0] = !Bit[0];
-    break;
-    case 1:
-      
-      digitalWrite(4, 1);
-      digitalWrite(11, Bit[1]);
-      digitalWrite(10, !Bit[1]);
-      delay(updateDelay);
-      digitalWrite(4, 0);
-      Bit[1] = !Bit[1];
-    break;
-    case 2:
-      digitalWrite(3, 1);
-      digitalWrite(9, Bit[2]);
-      digitalWrite(8, !Bit[2]);
-      delay(updateDelay);
-      digitalWrite(3, 0);
-      Bit[2] = !Bit[2];
-    break;
-    case 3:
-      digitalWrite(2, 1);
-      digitalWrite(7, Bit[3]);
-      digitalWrite(6, !Bit[3]);
-      delay(updateDelay);
-      digitalWrite(2, 0);
-      Bit[3] = !Bit[3];
-    break;
-  }
-}
-
-//flaps until it reaches the first display-segment
-void Zero(int Display){
-  EEPROM.write(Display,0);
-  switch(Display){
-    case 0:
-      while(digitalRead(A0)){
-        Update(0);
-      }
-    break;
-    case 1:
-      while(digitalRead(A1)){
-        Update(1);
-      }
-    break;
-    case 2:
-      while(digitalRead(A2)){
-        Update(2);
-      }
-    break;
-    case 3:
-      while(digitalRead(A3)){
-        Update(3);
-      }
-    break;
-  }
-}
-
-//flaps a certain amount of times
-void increase(int Display, int num){
-  //int prev = EEPROM.read(Display);
-  //if (num+prev < 60){
-    
-    for (int i=0; i<num; i++){
-      Update(Display);
-    }
-    
-    //EEPROM.write(Display, (num+prev)%60);
-  //}else{
-    //error code: reached segment limit
-  //}
 }
