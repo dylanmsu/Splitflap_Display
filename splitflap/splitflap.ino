@@ -1,7 +1,10 @@
 #include <EEPROM.h>
 
+int numDispl = 4;
+
 int updateDelay = 70; //delay between each flap
 bool Bit[4] = {false,false,false,true}; //used by "Update" function
+bool sens[4] = {false,false,false,false};
 
 
 String message = "dag tijl";
@@ -27,10 +30,10 @@ void setup() {
   pinMode(A3, INPUT_PULLUP);
   
   Serial.begin(115200);
-  Zero(0);
-  Zero(1);
-  Zero(2);
-  Zero(3);
+  //Zero(0);
+  //Zero(1);
+  //Zero(2);
+  //Zero(3);
 }
 
 void loop() {
@@ -53,15 +56,23 @@ void loop() {
   }
   delay(10000);*/
 
-  for (int i=0;i<4; i++){
-    jumpTo(3-i,lookup(message[i],false));
-    delay(100);
-  }
   delay(500);
-  for (int i=0;i<4; i++){
-    jumpTo(3-i,lookup(message[i+4],true));
+  //
+    while (!(sens[0]&&sens[1]&&sens[2]&&sens[3])){
+      for (int i=0;i<4; i++){
+        if (!sens[i]){
+          Update(i);
+          sens[0] = digitalRead(A0);
+          sens[1] = digitalRead(A1);
+          sens[2] = digitalRead(A2);
+          sens[2] = digitalRead(A3);
+        }
+      }
+      
+    }
+    //Update(i);
     delay(100);
-  }
+ // }
 }
 
 int lookup(char input, boolean red){
