@@ -47,7 +47,7 @@ EthernetClient client;
 MySQL_Connection conn((Client *)&client);
 
 //RGB strip
-Adafruit_NeoPixel pixels(num_pixels, rgb_in, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels(num_pixels, rgb_pin, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   Serial.begin(115200);
