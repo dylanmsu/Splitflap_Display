@@ -27,7 +27,6 @@ void setup() {
 
   
   Serial.begin(115200);
-  
 }
 
 void loop() {
@@ -56,9 +55,15 @@ void Write(String text){
       indices[i] = lookup(text[i],false);
     }
   }
+<<<<<<< HEAD
 
   while (indices[0]||indices[1]||indices[2]||indices[3]||indices[4]||indices[5]||indices[6]||indices[7]){
     for (int i=0; i<num; i++){
+=======
+  
+  while (indices[0]||indices[1]||indices[2]||indices[3]){
+    for (int i=0; i<4; i++){
+>>>>>>> 60bf69825c6ccf469be435b1e517519a25aeaaff
       if (indices[i]){
         indices[i] -= 1;
         //digitalWrite(5-i, HIGH);
