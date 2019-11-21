@@ -32,15 +32,15 @@ char temperature_sensor[10];
 byte mac_addr[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 //Credentials MySQL server
-IPAddress server_addr(192,168,100,111);
-char user[] = "tijl";
-char password[] = "73647364";
+IPAddress server_addr(178,117,157,239);
+char user[] = "ris";
+char password[] = "RIS_2020_ris";
 
 //Query status
-char READ[] = "SELECT * FROM scmserver.status_board WHERE track=2";
+char READ[] = "SELECT * FROM ris.status_board WHERE track=2";
 
 //Query sensor
-char UPDATE[] = "UPDATE scmserver.sensor_values SET temperature=%s WHERE track='2'";
+char UPDATE[] = "UPDATE ris.sensor_values SET temperature=%s WHERE track='2'";
 char query[128];
 
 EthernetClient client;
