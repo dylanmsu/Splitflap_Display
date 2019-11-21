@@ -1,50 +1,45 @@
 #include <EEPROM.h>
 
-int updateDelay = 80; //delay between each flap
-uint8_t APins[4] = {A0,A1,A2,A3};
-bool Bit[4] = {};
-bool enable[4] = {};
-bool state[4] = {};
-int indices[4] = {};
+int num = 8;
+int updateDelay = 100; //delay between each flap
+uint8_t APins[8] = {A0,A1,A2,A3,A4,A5,2,3};
+bool Bit[8] = {};
+bool enable[8] = {};
+bool state[8] = {};
+int indices[8] = {};
+const int latchPin = 8;
+const int clockPin = 12;
+const int dataPin = 11;
+byte bitsToSendA = 0;
+byte bitsToSendB = 0;
 
 void setup() {
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(13, OUTPUT);
-
-  pinMode(5, OUTPUT);
-  pinMode(4, OUTPUT);
-  pinMode(3, OUTPUT);
-  pinMode(2, OUTPUT);
+  pinMode(latchPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);  
+  pinMode(clockPin, OUTPUT);
   
   pinMode(A0, INPUT_PULLUP);
   pinMode(A1, INPUT_PULLUP);
   pinMode(A2, INPUT_PULLUP);
   pinMode(A3, INPUT_PULLUP);
   pinMode(A4, INPUT_PULLUP);
+  pinMode(A5, INPUT_PULLUP);
 
-  pinMode(A5, OUTPUT);
-  digitalWrite(A5, 1);
   
   Serial.begin(115200);
   
 }
 
 void loop() {
-  Write("koek");
+  Write("halloooo");
   delay(5000);
-  Write("prei");
+  Write("dag TIJL");
   delay(5000);
-  Write("mier");
+  Write(" hello  ");
+  delay(1000);
+  Write(" world  ");
   delay(5000);
-  Write("tram");
-  delay(5000);
-  Write("ello");
+  Write("testTEST");
   delay(5000);
   
   
@@ -56,46 +51,57 @@ void Write(String text){
   text.toLowerCase();
   for (int i=0; i<text.length(); i++){
     if (temp[i] != text[i]){
-      indices[3-i] = lookup(text[i],true);
+      indices[i] = lookup(text[i],true);
     }else{
-      indices[3-i] = lookup(text[i],false);
+      indices[i] = lookup(text[i],false);
     }
   }
 
-  while (indices[0]||indices[1]||indices[2]||indices[3]){
-    for (int i=0; i<4; i++){
+  while (indices[0]||indices[1]||indices[2]||indices[3]||indices[4]||indices[5]||indices[6]||indices[7]){
+    for (int i=0; i<num; i++){
       if (indices[i]){
         indices[i] -= 1;
-        digitalWrite(5-i, HIGH);
-        digitalWrite(13-i*2, Bit[i]);
-        digitalWrite(12-i*2, !Bit[i]);
+        //digitalWrite(5-i, HIGH);
+        registerWrite(i, !Bit[i]);
         Bit[i] = !Bit[i];
       }else{
-        digitalWrite(5-i, LOW);
+        //digitalWrite(5-i, LOW);
       }
-      delay(updateDelay/4);
+      delay(updateDelay/num);
     }
   }
 }
 
 //flaps until it reaches the first display-segment
 void Zero(){
-  bool state[4] = {1,1,1,1};
-  while ((state[0]||state[1]||state[2]||state[3])){
-    for (int i = 0; i<4; i++){
-      delay(updateDelay/4);
+  bool state[8] = {1,1,1,1,1,1,1,1};
+  while ((state[0]||state[1]||state[2]||state[3]||state[4]||state[5]||state[6]||state[7])){
+    for (int i = 0; i<num; i++){
+      delay(updateDelay/num);
       state[i] = digitalRead(APins[i]);
       if (state[i]){
-        digitalWrite(5-i, 1);
-        digitalWrite(13-i*2, Bit[i]);
-        digitalWrite(12-i*2, !Bit[i]);
+        registerWrite(i, !Bit[i]);
         Bit[i] = !Bit[i];
       }else{
-        
-        digitalWrite(5-i, 0);
       }
     }
   }
+}
+
+void registerWrite(int whichPin, int whichState) {
+  digitalWrite(latchPin, LOW);
+
+  if (whichPin < 8){
+    bitWrite(bitsToSendA, whichPin, whichState);
+  }else{
+    bitWrite(bitsToSendB, whichPin-8, whichState);
+  }
+  
+  shiftOut(dataPin, clockPin, MSBFIRST, bitsToSendB);
+  shiftOut(dataPin, clockPin, MSBFIRST, bitsToSendA);
+
+  digitalWrite(latchPin, HIGH);
+
 }
 
 int lookup(char input, boolean red){
