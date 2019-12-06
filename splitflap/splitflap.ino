@@ -5,7 +5,7 @@ int updateDelay = 100; //delay between each flap
 uint8_t APins[8] = {A0,A1,A2,A3,A4,A5,2,3};
 bool Bit[8] = {};
 bool enable[8] = {};
-bool state[8] = {};
+int state[8] = {};
 int indices[8] = {};
 const int latchPin = 8;
 const int clockPin = 12;
@@ -44,6 +44,20 @@ void loop() {
   
 }
 
+bool isAllZero(int *arr){
+  bool zero = 0;
+  for (int i=0; i<num; i++){
+    zero += arr[i];
+  }
+  return zero;
+}
+
+void setAll(int *arr, int to){
+  for (int i=0; i<num; i++){
+    arr[i] = to;
+  }
+}
+
 void Write(String text){
   Zero();
   String temp = text;
@@ -56,7 +70,7 @@ void Write(String text){
     }
   }
 
-  while (indices[0]||indices[1]||indices[2]||indices[3]||indices[4]||indices[5]||indices[6]||indices[7]){
+  while (isAllZero(indices)){
     for (int i=0; i<num; i++){
       if (indices[i]){
         indices[i] -= 1;
@@ -73,8 +87,9 @@ void Write(String text){
 
 //flaps until it reaches the first display-segment
 void Zero(){
-  bool state[8] = {1,1,1,1,1,1,1,1};
-  while ((state[0]||state[1]||state[2]||state[3]||state[4]||state[5]||state[6]||state[7])){
+  //int state[num] = {1,1,1,1,1,1,1,1};
+  setAll(state, 1);
+  while (isAllZero(state)){
     for (int i = 0; i<num; i++){
       delay(updateDelay/num);
       state[i] = digitalRead(APins[i]);
