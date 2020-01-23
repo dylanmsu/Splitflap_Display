@@ -87,7 +87,6 @@ void Write(String text){
 
 //flaps until it reaches the first display-segment
 void Zero(){
-  //int state[num] = {1,1,1,1,1,1,1,1};
   setAll(state, 1);
   while (isAllZero(state)){
     for (int i = 0; i<num; i++){

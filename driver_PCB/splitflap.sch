@@ -519,7 +519,7 @@ F 1 "D_Bridge_+-AA" H 13094 2155 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 2200 50  0001 C CNN
 F 3 "~" H 12750 2200 50  0001 C CNN
 	1    12750 2200
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D2
@@ -530,7 +530,7 @@ F 1 "D_Bridge_+-AA" H 13094 2855 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 2900 50  0001 C CNN
 F 3 "~" H 12750 2900 50  0001 C CNN
 	1    12750 2900
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D3
@@ -541,7 +541,7 @@ F 1 "D_Bridge_+-AA" H 13094 3555 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 3600 50  0001 C CNN
 F 3 "~" H 12750 3600 50  0001 C CNN
 	1    12750 3600
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D6
@@ -552,7 +552,7 @@ F 1 "D_Bridge_+-AA" H 13094 5655 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 5700 50  0001 C CNN
 F 3 "~" H 12750 5700 50  0001 C CNN
 	1    12750 5700
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D7
@@ -563,7 +563,7 @@ F 1 "D_Bridge_+-AA" H 13094 6355 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 6400 50  0001 C CNN
 F 3 "~" H 12750 6400 50  0001 C CNN
 	1    12750 6400
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D8
@@ -574,7 +574,7 @@ F 1 "D_Bridge_+-AA" H 13094 7055 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 7100 50  0001 C CNN
 F 3 "~" H 12750 7100 50  0001 C CNN
 	1    12750 7100
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D5
@@ -585,7 +585,7 @@ F 1 "D_Bridge_+-AA" H 13094 4955 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 5000 50  0001 C CNN
 F 3 "~" H 12750 5000 50  0001 C CNN
 	1    12750 5000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L Device:D_Bridge_+-AA D4
@@ -596,7 +596,7 @@ F 1 "D_Bridge_+-AA" H 13094 4255 50  0000 L CNN
 F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 4300 50  0001 C CNN
 F 3 "~" H 12750 4300 50  0001 C CNN
 	1    12750 4300
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 Wire Wire Line
 	9550 2350 9550 1850

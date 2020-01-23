@@ -35,6 +35,7 @@
 
   (setup
     (last_trace_width 0.25)
+    (user_trace_width 2)
     (trace_clearance 0.2)
     (zone_clearance 0.508)
     (zone_45_only no)
@@ -696,7 +697,7 @@
   )
 
   (module Package_DIP:DIP-16_W7.62mm_LongPads (layer F.Cu) (tedit 5A02E8C5) (tstamp 5DEBF6C5)
-    (at 155.245001 70.604999 90)
+    (at 156.21 71.12 90)
     (descr "16-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils), LongPads")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil LongPads")
     (path /5DEAA446)
@@ -952,7 +953,7 @@
   )
 
   (module Connector_PinSocket_2.54mm:PinSocket_1x02_P2.54mm_Vertical (layer F.Cu) (tedit 5A19A420) (tstamp 5DEBF63D)
-    (at 128.27 31.75)
+    (at 128.27 30.48)
     (descr "Through hole straight socket strip, 1x02, 2.54mm pitch, single row (from Kicad 4.0.7), script generated")
     (tags "Through hole socket strip THT 1x02 2.54mm single row")
     (path /5DED560C)
@@ -992,7 +993,7 @@
   )
 
   (module Package_DIP:DIP-16_W7.62mm_LongPads (layer F.Cu) (tedit 5A02E8C5) (tstamp 5DEBF627)
-    (at 154.94 91.44 90)
+    (at 156.21 91.44 90)
     (descr "16-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils), LongPads")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil LongPads")
     (path /5E1254E2)
@@ -1060,7 +1061,7 @@
   )
 
   (module Package_DIP:DIP-16_W7.62mm_LongPads (layer F.Cu) (tedit 5A02E8C5) (tstamp 5DEBF603)
-    (at 154.94 30.48 90)
+    (at 156.21 30.48 90)
     (descr "16-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils), LongPads")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil LongPads")
     (path /5DED8412)
