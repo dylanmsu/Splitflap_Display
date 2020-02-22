@@ -2,21 +2,27 @@
 
 int num = 8;
 int updateDelay = 100; //delay between each flap
-uint8_t APins[8] = {A0,A1,A2,A3,A4,A5,2,3};
+uint8_t APins[8] = {A0,A1,A2,A3,A4,A5,A6,A7};
 bool Bit[8] = {};
 bool enable[8] = {};
 int state[8] = {};
 int indices[8] = {};
-const int latchPin = 8;
-const int clockPin = 12;
-const int dataPin = 11;
+const int latch1 = 8;
+const int clock1 = 13;
+const int data1 = 12;
+const int latch2 = 7;
+const int clock2 = 11;
+const int data2 = 10;
 byte bitsToSendA = 0;
 byte bitsToSendB = 0;
 
 void setup() {
-  pinMode(latchPin, OUTPUT);
-  pinMode(dataPin, OUTPUT);  
-  pinMode(clockPin, OUTPUT);
+  pinMode(latch1, OUTPUT);
+  pinMode(data1, OUTPUT);  
+  pinMode(clock1, OUTPUT);
+  pinMode(latch2, OUTPUT);
+  pinMode(data2, OUTPUT);  
+  pinMode(clock2, OUTPUT);
   
   pinMode(A0, INPUT_PULLUP);
   pinMode(A1, INPUT_PULLUP);
@@ -24,6 +30,8 @@ void setup() {
   pinMode(A3, INPUT_PULLUP);
   pinMode(A4, INPUT_PULLUP);
   pinMode(A5, INPUT_PULLUP);
+  pinMode(A6, INPUT_PULLUP);
+  pinMode(A7, INPUT_PULLUP);
 
   
   Serial.begin(115200);
@@ -40,8 +48,6 @@ void loop() {
   delay(5000);
   Write("testTEST");
   delay(5000);
-  
-  
 }
 
 bool isAllZero(int *arr){
@@ -59,7 +65,9 @@ void setAll(int *arr, int to){
 }
 
 void Write(String text){
-  Zero();
+  Zero(); // set all displays to zero
+
+  //check if letter is uppercase and change the color of all uppercase letters to red
   String temp = text;
   text.toLowerCase();
   for (int i=0; i<text.length(); i++){
@@ -85,7 +93,7 @@ void Write(String text){
   }
 }
 
-//flaps until it reaches the first display-segment
+//continues flapping until it reaches first segment
 void Zero(){
   setAll(state, 1);
   while (isAllZero(state)){
@@ -93,16 +101,20 @@ void Zero(){
       delay(updateDelay/num);
       state[i] = digitalRead(APins[i]);
       if (state[i]){
+        Serial.print(1);
         registerWrite(i, !Bit[i]);
         Bit[i] = !Bit[i];
       }else{
+        Serial.print(1);
       }
     }
+    Serial.print(" ");
   }
 }
 
+
 void registerWrite(int whichPin, int whichState) {
-  digitalWrite(latchPin, LOW);
+  digitalWrite(latch1, LOW);
 
   if (whichPin < 8){
     bitWrite(bitsToSendA, whichPin, whichState);
@@ -110,10 +122,10 @@ void registerWrite(int whichPin, int whichState) {
     bitWrite(bitsToSendB, whichPin-8, whichState);
   }
   
-  shiftOut(dataPin, clockPin, MSBFIRST, bitsToSendB);
-  shiftOut(dataPin, clockPin, MSBFIRST, bitsToSendA);
+  shiftOut(data1, clock1, MSBFIRST, bitsToSendB);
+  shiftOut(data1, clock1, MSBFIRST, bitsToSendA);
 
-  digitalWrite(latchPin, HIGH);
+  digitalWrite(latch1, HIGH);
 
 }
 
@@ -156,5 +168,4 @@ int lookup(char input, boolean red){
     output += 30;
   }
   return output;
-  output = 0;
 }
