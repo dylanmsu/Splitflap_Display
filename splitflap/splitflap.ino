@@ -1,20 +1,24 @@
-#include <EEPROM.h>
+const int num = 8; //number of display segments
+const int updateDelay = 75; //delay between each flap in milliseconds
+uint8_t APins[num] = {A0,A1,A2,A3,A4,A5,2,3}; //the inputpins for the positionsensors of the splitflaps
 
-int num = 8;
-int updateDelay = 100; //delay between each flap
-uint8_t APins[8] = {A0,A1,A2,A3,A4,A5,A6,A7};
-bool Bit[8] = {};
-bool enable[8] = {};
-int state[8] = {};
-int indices[8] = {};
+bool Bit[num] = {}; //keeps track of the current state of the toggelers
+bool enable[num] = {};
+int state[num] = {};
+int indices[num] = {};
+
 const int latch1 = 8;
 const int clock1 = 13;
 const int data1 = 12;
+
 const int latch2 = 7;
 const int clock2 = 11;
 const int data2 = 10;
-byte bitsToSendA = 0;
-byte bitsToSendB = 0;
+
+byte bitsToSendA = 0x00;
+byte bitsToSendB = 0xff;
+
+String incoming = "        ";
 
 void setup() {
   pinMode(latch1, OUTPUT);
@@ -30,24 +34,40 @@ void setup() {
   pinMode(A3, INPUT_PULLUP);
   pinMode(A4, INPUT_PULLUP);
   pinMode(A5, INPUT_PULLUP);
-  pinMode(A6, INPUT_PULLUP);
-  pinMode(A7, INPUT_PULLUP);
+  pinMode(2, INPUT_PULLUP);
+  pinMode(3, INPUT_PULLUP);
 
-  
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 
 void loop() {
-  Write("halloooo");
-  delay(5000);
-  Write("dag TIJL");
-  delay(5000);
-  Write(" hello  ");
-  delay(1000);
-  Write(" world  ");
-  delay(5000);
-  Write("testTEST");
-  delay(5000);
+  if (Serial.available() > 0) {
+    enableAll();
+    incoming = Serial.readString();
+    incoming.remove(incoming.length()-1);//remove enter
+    if (incoming.length() > num){
+      String a = "err: the string can't contain more than ";
+      String b = " charakters.";
+      Serial.println(a + num + b);
+    } else {
+      Serial.println(incoming);
+      Write(incoming);
+    }
+    delay(300);
+    disableAll();
+  } 
+}
+
+void enableAll(){
+  digitalWrite(latch1, LOW);
+  shiftOut(data1, clock1, MSBFIRST, 0xFF); //set all enable pins to high 
+  digitalWrite(latch1, HIGH);
+}
+
+void disableAll(){
+  digitalWrite(latch1, LOW);
+  shiftOut(data1, clock1, MSBFIRST, 0x00); //set all enable pins to low
+  digitalWrite(latch1, HIGH);
 }
 
 bool isAllZero(int *arr){
@@ -72,9 +92,9 @@ void Write(String text){
   text.toLowerCase();
   for (int i=0; i<text.length(); i++){
     if (temp[i] != text[i]){
-      indices[i] = lookup(text[i],true);
+      indices[(num-1)-i] = lookup(text[i],true);
     }else{
-      indices[i] = lookup(text[i],false);
+      indices[(num-1)-i] = lookup(text[i],false);
     }
   }
 
@@ -82,18 +102,18 @@ void Write(String text){
     for (int i=0; i<num; i++){
       if (indices[i]){
         indices[i] -= 1;
-        //digitalWrite(5-i, HIGH);
-        registerWrite(i, !Bit[i]);
+        //enableSegment(i, HIGH);
+        writeSegment(i, !Bit[i]);
         Bit[i] = !Bit[i];
       }else{
-        //digitalWrite(5-i, LOW);
+        //enableSegment(i, LOW);
       }
       delay(updateDelay/num);
     }
   }
 }
 
-//continues flapping until it reaches first segment
+//continues flapping until all segments are on the 0'th position
 void Zero(){
   setAll(state, 1);
   while (isAllZero(state)){
@@ -101,32 +121,31 @@ void Zero(){
       delay(updateDelay/num);
       state[i] = digitalRead(APins[i]);
       if (state[i]){
-        Serial.print(1);
-        registerWrite(i, !Bit[i]);
+        writeSegment(i, !Bit[i]);
         Bit[i] = !Bit[i];
       }else{
-        Serial.print(1);
       }
     }
-    Serial.print(" ");
   }
 }
 
 
-void registerWrite(int whichPin, int whichState) {
+void writeSegment(int whichPin, int whichState) {
+  digitalWrite(latch2, LOW);
+
+  bitWrite(bitsToSendA, whichPin, whichState);
+  shiftOut(data2, clock2, MSBFIRST, bitsToSendA);
+
+  digitalWrite(latch2, HIGH);
+}
+
+void enableSegment(int which, int whichState) {
   digitalWrite(latch1, LOW);
 
-  if (whichPin < 8){
-    bitWrite(bitsToSendA, whichPin, whichState);
-  }else{
-    bitWrite(bitsToSendB, whichPin-8, whichState);
-  }
-  
-  shiftOut(data1, clock1, MSBFIRST, bitsToSendB);
-  shiftOut(data1, clock1, MSBFIRST, bitsToSendA);
+  bitWrite(bitsToSendB, which, whichState);
+  shiftOut(data1, clock1, MSBFIRST, bitsToSendB);  
 
   digitalWrite(latch1, HIGH);
-
 }
 
 int lookup(char input, boolean red){
