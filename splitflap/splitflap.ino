@@ -45,13 +45,14 @@ void loop() {
     enableAll();
     incoming = Serial.readString();
     incoming.remove(incoming.length()-1);//remove enter
+    
     if (incoming.length() > num){
       String a = "err: the string can't contain more than ";
       String b = " charakters.";
       Serial.println(a + num + b);
     } else {
       Serial.println(incoming);
-      Write(incoming);
+      WriteText(incoming);
     }
     delay(300);
     disableAll();
@@ -84,7 +85,7 @@ void setAll(int *arr, int to){
   }
 }
 
-void Write(String text){
+void WriteText(String text){
   Zero(); // set all displays to zero
 
   //check if letter is uppercase and change the color of all uppercase letters to red
@@ -97,16 +98,15 @@ void Write(String text){
       indices[(num-1)-i] = lookup(text[i],false);
     }
   }
+  writeIndices(indices);
+}
 
+void writeIndices(int *indices){
   while (isAllZero(indices)){
     for (int i=0; i<num; i++){
       if (indices[i]){
         indices[i] -= 1;
-        //enableSegment(i, HIGH);
-        writeSegment(i, !Bit[i]);
-        Bit[i] = !Bit[i];
-      }else{
-        //enableSegment(i, LOW);
+        flipSegment(i);
       }
       delay(updateDelay/num);
     }
@@ -119,16 +119,19 @@ void Zero(){
   while (isAllZero(state)){
     for (int i = 0; i<num; i++){
       delay(updateDelay/num);
-      state[i] = digitalRead(APins[i]);
-      if (state[i]){
-        writeSegment(i, !Bit[i]);
-        Bit[i] = !Bit[i];
+      //state[i] ;
+      if (state[i] = digitalRead(APins[i])){
+        flipSegment(i);
       }else{
       }
     }
   }
 }
 
+void flipSegment(int segment){
+  writeSegment(segment, !Bit[segment]);
+  Bit[segment] = !Bit[segment];
+}
 
 void writeSegment(int whichPin, int whichState) {
   digitalWrite(latch2, LOW);
@@ -177,8 +180,7 @@ int lookup(char input, boolean red){
     case 'x':   output = 24;    break;
     case 'y':   output = 25;    break;
     case 'z':   output = 26;    break;
-    case '%':   output = 27;    break;
-    case '-':   output = 27;    break;
+    case '-':   output = 28;    break;
     case '/':   output = 29;    break;
     case ' ':   output = 30;    break;
     default:    output = 57;    break; //unknown character gets replaced with an "Ö"
