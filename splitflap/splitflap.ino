@@ -1,6 +1,6 @@
 const int num = 8; //number of display segments
 const int updateDelay = 75; //delay between each flap in milliseconds
-uint8_t APins[num] = {A0,A1,A2,A3,A4,A5,2,3}; //the inputpins for the positionsensors of the splitflaps
+uint8_t sensPins[num] = {A0,A1,A2,A3,A4,A5,2,3};
 
 bool Bit[num] = {}; //keeps track of the current state of the toggelers
 bool enable[num] = {};
@@ -57,18 +57,6 @@ void loop() {
     delay(300);
     disableAll();
   } 
-}
-
-void enableAll(){
-  digitalWrite(latch1, LOW);
-  shiftOut(data1, clock1, MSBFIRST, 0xFF); //set all enable pins to high 
-  digitalWrite(latch1, HIGH);
-}
-
-void disableAll(){
-  digitalWrite(latch1, LOW);
-  shiftOut(data1, clock1, MSBFIRST, 0x00); //set all enable pins to low
-  digitalWrite(latch1, HIGH);
 }
 
 bool isAllZero(int *arr){

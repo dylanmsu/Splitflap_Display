@@ -1297,7 +1297,7 @@ U 1 1 5E673ABB
 P 1850 2450
 F 0 "J1" H 1900 2867 50  0000 C CNN
 F 1 "Conn_02x06_Odd_Even" H 1900 2776 50  0000 C CNN
-F 2 "Connector_IDC:IDC-Header_2x06_P2.54mm_Vertical" H 1850 2450 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_2x06_P2.54mm_Vertical" H 1850 2450 50  0001 C CNN
 F 3 "~" H 1850 2450 50  0001 C CNN
 	1    1850 2450
 	1    0    0    -1  
@@ -1415,7 +1415,7 @@ U 1 1 5E927BDA
 P 1850 4150
 F 0 "J2" H 1900 4567 50  0000 C CNN
 F 1 "Conn_02x06_Odd_Even" H 1900 4476 50  0000 C CNN
-F 2 "Connector_IDC:IDC-Header_2x06_P2.54mm_Vertical" H 1850 4150 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_2x06_P2.54mm_Vertical" H 1850 4150 50  0001 C CNN
 F 3 "~" H 1850 4150 50  0001 C CNN
 	1    1850 4150
 	1    0    0    -1  
@@ -2066,10 +2066,10 @@ Wire Wire Line
 Wire Wire Line
 	14200 4250 14500 4250
 $Comp
-L Connector:Screw_Terminal_01x04 J3
+L Connector:Screw_Terminal_01x04 J?
 U 1 1 5F266857
 P 14700 4050
-F 0 "J3" H 14780 4042 50  0000 L CNN
+F 0 "J?" H 14780 4042 50  0000 L CNN
 F 1 "Screw_Terminal_01x04" H 14780 3951 50  0000 L CNN
 F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 4050 50  0001 C CNN
 F 3 "~" H 14700 4050 50  0001 C CNN
@@ -2077,10 +2077,10 @@ F 3 "~" H 14700 4050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Screw_Terminal_01x04 J4
+L Connector:Screw_Terminal_01x04 J?
 U 1 1 5F46FDCA
 P 14700 4450
-F 0 "J4" H 14780 4442 50  0000 L CNN
+F 0 "J?" H 14780 4442 50  0000 L CNN
 F 1 "Screw_Terminal_01x04" H 14780 4351 50  0000 L CNN
 F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 4450 50  0001 C CNN
 F 3 "~" H 14700 4450 50  0001 C CNN
@@ -2088,10 +2088,10 @@ F 3 "~" H 14700 4450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Screw_Terminal_01x04 J5
+L Connector:Screw_Terminal_01x04 J?
 U 1 1 5F4C5B33
 P 14700 4850
-F 0 "J5" H 14780 4842 50  0000 L CNN
+F 0 "J?" H 14780 4842 50  0000 L CNN
 F 1 "Screw_Terminal_01x04" H 14780 4751 50  0000 L CNN
 F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 4850 50  0001 C CNN
 F 3 "~" H 14700 4850 50  0001 C CNN
@@ -2099,10 +2099,10 @@ F 3 "~" H 14700 4850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Connector:Screw_Terminal_01x04 J6
+L Connector:Screw_Terminal_01x04 J?
 U 1 1 5F51B921
 P 14700 5250
-F 0 "J6" H 14780 5242 50  0000 L CNN
+F 0 "J?" H 14780 5242 50  0000 L CNN
 F 1 "Screw_Terminal_01x04" H 14780 5151 50  0000 L CNN
 F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 5250 50  0001 C CNN
 F 3 "~" H 14700 5250 50  0001 C CNN
