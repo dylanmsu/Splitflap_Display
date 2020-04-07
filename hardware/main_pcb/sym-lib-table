@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name splitflap-rescue)(type Legacy)(uri ${KIPRJMOD}/splitflap-rescue.lib)(options "")(descr ""))
+  (lib (name MEGA2560PRO-EMBED)(type Legacy)(uri C:/Users/dylan/Downloads/MEGA2560PRO-EMBED/MEGA2560PRO-EMBED.lib)(options "")(descr ""))
+)

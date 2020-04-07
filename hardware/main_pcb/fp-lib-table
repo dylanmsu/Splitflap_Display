@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name maldegem)(type KiCad)(uri C:/Users/dylan/Downloads/maldegem.pretty)(options "")(descr ""))
+  (lib (name Package_DIP)(type KiCad)(uri C:/Users/dylan/Downloads/kicad-footprints-master/kicad-footprints-master/Package_DIP.pretty)(options "")(descr ""))
+  (lib (name MEGA2560PRO-EMBED)(type Legacy)(uri C:/Users/dylan/Downloads/MEGA2560PRO-EMBED/MEGA2560PRO-EMBED.mod)(options "")(descr ""))
+)
