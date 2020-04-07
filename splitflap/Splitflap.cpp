@@ -1,51 +1,108 @@
 #include "Arduino.h"
 #include "Splitflap.h"
 
-Splitflap::Splitflap(int numSegments){
+
+Splitflap::Splitflap(int numSegments, int *serialPins){
+
+  //serialPins = {D,DE,La,LaE,Clk,ClkE};
+  
   updateDelay = 75; //delay between each flap in milliseconds
   num = numSegments;
 
-  APins[0] = A0;
-  APins[1] = A1;
-  APins[2] = A2;
-  APins[3] = A3;
-  APins[4] = A4;
-  APins[5] = A5;
-  APins[6] = 2;
-  APins[7] = 3;
+  int sensPins[] = {A0, A1, A2, A3, A4, A5, 2, 3};
+  for (int i=0; i<num; i++){
+    APins[i] = sensPins[i];
+    pinMode(APins[i], INPUT_PULLUP);
+  }
   
-  latch_enable = 7;
-  clock_enable = 11;
-  data_enable = 10;
+  latch_enable = serialPins[3];
+  clock_enable = serialPins[5];
+  data_enable = serialPins[1];
   
-  latchH = 8;
-  clockH = 13;
-  dataH = 12;
+  latchH = serialPins[2];
+  clockH = serialPins[4];
+  dataH = serialPins[0];
+
+  for (int i=0; i<6; i++){
+    pinMode(serialPins[i], OUTPUT);
+  }
   
   bitsToSendA = 0x00;
   bitsToSendB = 0xff;
 };
 
-Splitflap::Splitflap(int numSegments, int updateDelayMs){
+
+Splitflap::Splitflap(int numSegments, int *sensPins, int *serialPins){
+  updateDelay = 75; //delay between each flap in milliseconds
+  num = numSegments;
+
+  for (int i=0; i<num; i++){
+    APins[i] = sensPins[i];
+    pinMode(APins[i], INPUT_PULLUP);
+  }
+  
+  latch_enable = serialPins[3];
+  clock_enable = serialPins[5];
+  data_enable = serialPins[1];
+  
+  latchH = serialPins[2];
+  clockH = serialPins[4];
+  dataH = serialPins[0];
+
+  for (int i=0; i<6; i++){
+    pinMode(serialPins[i], OUTPUT);
+  }
+  
+  bitsToSendA = 0x00;
+  bitsToSendB = 0xff;
+};
+
+Splitflap::Splitflap(int numSegments, int updateDelayMs, int *serialPins){
   updateDelay = updateDelayMs; //delay between each flap in milliseconds
   num = numSegments;
 
-  APins[0] = A0;
-  APins[1] = A1;
-  APins[2] = A2;
-  APins[3] = A3;
-  APins[4] = A4;
-  APins[5] = A5;
-  APins[6] = 2;
-  APins[7] = 3;
+  int sensPins[] = {A0, A1, A2, A3, A4, A5, 2, 3};
+  for (int i=0; i<num; i++){
+    APins[i] = sensPins[i];
+    pinMode(APins[i], INPUT_PULLUP);
+  }
   
-  latch_enable = 7;
-  clock_enable = 11;
-  data_enable = 10;
+  latch_enable = serialPins[3];
+  clock_enable = serialPins[5];
+  data_enable = serialPins[1];
   
-  latchH = 8;
-  clockH = 13;
-  dataH = 12;
+  latchH = serialPins[2];
+  clockH = serialPins[4];
+  dataH = serialPins[0];
+
+  for (int i=0; i<6; i++){
+    pinMode(serialPins[i], OUTPUT);
+  }
+  
+  bitsToSendA = 0x00;
+  bitsToSendB = 0xff;
+};
+
+Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins){
+  updateDelay = updateDelayMs; //delay between each flap in milliseconds
+  num = numSegments;
+
+  for (int i=0; i<num; i++){
+    APins[i] = sensPins[i];
+    pinMode(APins[i], INPUT_PULLUP);
+  }
+  
+  latch_enable = serialPins[3];
+  clock_enable = serialPins[5];
+  data_enable = serialPins[1];
+  
+  latchH = serialPins[2];
+  clockH = serialPins[4];
+  dataH = serialPins[0];
+
+  for (int i=0; i<6; i++){
+    pinMode(serialPins[i], OUTPUT);
+  }
   
   bitsToSendA = 0x00;
   bitsToSendB = 0xff;

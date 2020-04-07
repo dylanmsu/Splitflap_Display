@@ -5,8 +5,10 @@
 
 class Splitflap {
   public:
-    Splitflap(int num);
-    Splitflap(int numSegments, int updateDelayMs);
+    Splitflap(int numSegments, int *serialPins);
+    Splitflap(int numSegments, int *sensPins, int *serialPins);
+    Splitflap(int numSegments, int updateDelayMs, int *serialPins);
+    Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins);
     void Zero();
     void WriteText(String text);
     void enableAll();
