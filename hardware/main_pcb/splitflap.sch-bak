@@ -448,4 +448,68 @@ Text GLabel 6800 10800 2    39   Input ~ 0
 Latch-EN
 Text GLabel 6800 10900 2    39   Input ~ 0
 Clock-EN
+Text GLabel 1400 1200 0    39   Input ~ 0
+S0
+Text GLabel 1900 1200 2    39   Input ~ 0
+S1
+Text GLabel 1900 1300 2    39   Input ~ 0
+S3
+Text GLabel 1900 1400 2    39   Input ~ 0
+S5
+Text GLabel 1900 1500 2    39   Input ~ 0
+S7
+Text GLabel 1900 1600 2    39   Input ~ 0
+S9
+Text GLabel 1900 1700 2    39   Input ~ 0
+S11
+Text GLabel 1400 1300 0    39   Input ~ 0
+S2
+Text GLabel 1400 1400 0    39   Input ~ 0
+S4
+Text GLabel 1400 1500 0    39   Input ~ 0
+S6
+Text GLabel 1400 1600 0    39   Input ~ 0
+S8
+Text GLabel 1400 1700 0    39   Input ~ 0
+S10
+Text GLabel 2700 1200 0    39   Input ~ 0
+S12
+Text GLabel 2700 1300 0    39   Input ~ 0
+S14
+Text GLabel 3200 1200 2    39   Input ~ 0
+S13
+Text GLabel 3200 1300 2    39   Input ~ 0
+S15
+Text GLabel 1450 2500 0    39   Input ~ 0
+S16
+Text GLabel 1950 2500 2    39   Input ~ 0
+S17
+Text GLabel 1450 2600 0    39   Input ~ 0
+S18
+Text GLabel 1450 2700 0    39   Input ~ 0
+S20
+Text GLabel 1450 2800 0    39   Input ~ 0
+S22
+Text GLabel 1450 2900 0    39   Input ~ 0
+S24
+Text GLabel 1450 3000 0    39   Input ~ 0
+S26
+Text GLabel 1950 2600 2    39   Input ~ 0
+S19
+Text GLabel 1950 2700 2    39   Input ~ 0
+S21
+Text GLabel 1950 2800 2    39   Input ~ 0
+S23
+Text GLabel 1950 2900 2    39   Input ~ 0
+S25
+Text GLabel 1950 3000 2    39   Input ~ 0
+S27
+Text GLabel 2750 2500 0    39   Input ~ 0
+S28
+Text GLabel 2750 2600 0    39   Input ~ 0
+S30
+Text GLabel 3250 2500 2    39   Input ~ 0
+S29
+Text GLabel 3250 2600 2    39   Input ~ 0
+S31
 $EndSCHEMATC

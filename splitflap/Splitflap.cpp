@@ -2,87 +2,6 @@
 #include "Splitflap.h"
 
 
-Splitflap::Splitflap(int numSegments, int *serialPins){
-
-  //serialPins = {D,DE,La,LaE,Clk,ClkE};
-  
-  updateDelay = 75; //delay between each flap in milliseconds
-  num = numSegments;
-
-  int sensPins[] = {A0, A1, A2, A3, A4, A5, 2, 3};
-  for (int i=0; i<num; i++){
-    APins[i] = sensPins[i];
-    pinMode(APins[i], INPUT_PULLUP);
-  }
-  
-  latch_enable = serialPins[3];
-  clock_enable = serialPins[5];
-  data_enable = serialPins[1];
-  
-  latchH = serialPins[2];
-  clockH = serialPins[4];
-  dataH = serialPins[0];
-
-  for (int i=0; i<6; i++){
-    pinMode(serialPins[i], OUTPUT);
-  }
-  
-  bitsToSendA = 0x00;
-  bitsToSendB = 0xff;
-};
-
-
-Splitflap::Splitflap(int numSegments, int *sensPins, int *serialPins){
-  updateDelay = 75; //delay between each flap in milliseconds
-  num = numSegments;
-
-  for (int i=0; i<num; i++){
-    APins[i] = sensPins[i];
-    pinMode(APins[i], INPUT_PULLUP);
-  }
-  
-  latch_enable = serialPins[3];
-  clock_enable = serialPins[5];
-  data_enable = serialPins[1];
-  
-  latchH = serialPins[2];
-  clockH = serialPins[4];
-  dataH = serialPins[0];
-
-  for (int i=0; i<6; i++){
-    pinMode(serialPins[i], OUTPUT);
-  }
-  
-  bitsToSendA = 0x00;
-  bitsToSendB = 0xff;
-};
-
-Splitflap::Splitflap(int numSegments, int updateDelayMs, int *serialPins){
-  updateDelay = updateDelayMs; //delay between each flap in milliseconds
-  num = numSegments;
-
-  int sensPins[] = {A0, A1, A2, A3, A4, A5, 2, 3};
-  for (int i=0; i<num; i++){
-    APins[i] = sensPins[i];
-    pinMode(APins[i], INPUT_PULLUP);
-  }
-  
-  latch_enable = serialPins[3];
-  clock_enable = serialPins[5];
-  data_enable = serialPins[1];
-  
-  latchH = serialPins[2];
-  clockH = serialPins[4];
-  dataH = serialPins[0];
-
-  for (int i=0; i<6; i++){
-    pinMode(serialPins[i], OUTPUT);
-  }
-  
-  bitsToSendA = 0x00;
-  bitsToSendB = 0xff;
-};
-
 Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins){
   updateDelay = updateDelayMs; //delay between each flap in milliseconds
   num = numSegments;
@@ -91,6 +10,8 @@ Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *se
     APins[i] = sensPins[i];
     pinMode(APins[i], INPUT_PULLUP);
   }
+
+  setAll(Bit, 0, 32);
   
   latch_enable = serialPins[3];
   clock_enable = serialPins[5];
@@ -104,8 +25,8 @@ Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *se
     pinMode(serialPins[i], OUTPUT);
   }
   
-  bitsToSendA = 0x00;
-  bitsToSendB = 0xff;
+  stateSegment = 0x0000;
+  stateEnable = 0x0000;
 };
 
 //continues flapping until all segments are on the 0'th position
@@ -118,15 +39,14 @@ void Splitflap::Zero(){
       state[i] = hall;
       if (state[i]){
         flipSegment(i);
-      }else{
       }
     }
   }
+  delay(updateDelay);
 };
     
 void Splitflap::WriteText(String text){
   Zero(); // set all displays to zero
-
   //check if letter is uppercase and change the color of all uppercase letters to red
   String temp = text;
   text.toLowerCase();
@@ -181,7 +101,7 @@ int Splitflap::lookup(char input, boolean red){
 };
 
 void Splitflap::setAll(int *arr, int to, int len){
-  for (int i=0; i<num; i++){
+  for (int i=0; i<len; i++){
     arr[i] = to;
   }
 };
@@ -204,6 +124,7 @@ void Splitflap::writeIndices(int *indices){
       delay(updateDelay/num);
     }
   }
+  delay(updateDelay);
 };
 
 void Splitflap::flipSegment(int segment){
@@ -214,17 +135,45 @@ void Splitflap::flipSegment(int segment){
 void Splitflap::writeSegment(int whichPin, int whichState) {
   digitalWrite(latchH, LOW);
 
-  bitWrite(bitsToSendA, whichPin, whichState);
-  shiftOut(dataH, clockH, MSBFIRST, bitsToSendA);
+  /*if (whichState){
+    stateSegment |= (1ULL << (whichPin));
+  }else{
+    stateSegment &= -(1ULL << (whichPin));
+  }*/
+
+  bitWrite(stateSegment,whichPin,whichState);
+
+  uint8_t first =  (stateSegment & 0xFF000000UL) >> 24;
+  uint8_t second = (stateSegment & 0x00FF0000UL) >> 16;
+  uint8_t third =  (stateSegment & 0x0000FF00UL) >> 8;
+  uint8_t forth  = (stateSegment & 0x000000FFUL);
+  
+  //shiftOut(dataH, clockH, MSBFIRST, first);
+  //shiftOut(dataH, clockH, MSBFIRST, second);
+  shiftOut(dataH, clockH, MSBFIRST, third);
+  shiftOut(dataH, clockH, MSBFIRST, forth);
 
   digitalWrite(latchH, HIGH);
 };
 
-void Splitflap::enableSegment(int which, int whichState) {
+void Splitflap::writeEnable(int whichPin, int whichState) {
   digitalWrite(latch_enable, LOW);
+  
+  if (whichState){
+    stateEnable |= (1ULL << (whichPin));
+  }else{
+    stateEnable &= !(1ULL << (whichPin));
+  }
 
-  bitWrite(bitsToSendB, which, whichState);
-  shiftOut(data_enable, clock_enable, MSBFIRST, bitsToSendB);  
+  uint8_t first =  (stateEnable & 0xFF000000UL) >> 24;
+  uint8_t second = (stateEnable & 0x00FF0000UL) >> 16;
+  uint8_t third =  (stateEnable & 0x0000FF00UL) >> 8;
+  uint8_t forth  = (stateEnable & 0x000000FFUL);
+  
+  shiftOut(data_enable, clock_enable, MSBFIRST, first);
+  shiftOut(data_enable, clock_enable, MSBFIRST, second);
+  shiftOut(data_enable, clock_enable, MSBFIRST, third);
+  shiftOut(data_enable, clock_enable, MSBFIRST, forth);
 
   digitalWrite(latch_enable, HIGH);
 };
@@ -233,14 +182,22 @@ void Splitflap::enableAll() {
   digitalWrite(latch_enable, LOW);
 
   shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
 
   digitalWrite(latch_enable, HIGH);
+  stateEnable = 0xFFFFFFFF;
 };
 
 void Splitflap::disableAll() {
   digitalWrite(latch_enable, LOW);
 
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00);  
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
 
   digitalWrite(latch_enable, HIGH);
+  stateEnable = 0x00000000;
 };
