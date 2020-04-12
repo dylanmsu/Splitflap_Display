@@ -1,7 +1,7 @@
 #ifndef Splitflap_h
 #define Splitflap_h
 
-#include "Arduino.h"
+#include "arduino.h"
 
 class Splitflap {
   public:

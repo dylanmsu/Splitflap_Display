@@ -1,4 +1,4 @@
-#include "Arduino.h"
+#include "arduino.h"
 #include "Splitflap.h"
 
 
@@ -46,6 +46,7 @@ void Splitflap::Zero(){
 };
     
 void Splitflap::WriteText(String text){
+  enableAll();
   Zero(); // set all displays to zero
   //check if letter is uppercase and change the color of all uppercase letters to red
   String temp = text;
@@ -58,6 +59,7 @@ void Splitflap::WriteText(String text){
     }
   }
   writeIndices(indices);
+  disableAll();
 };
     
 int Splitflap::lookup(char input, boolean red){
