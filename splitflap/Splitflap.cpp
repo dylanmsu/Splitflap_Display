@@ -30,7 +30,7 @@ Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *se
 };
 
 //continues flapping until all segments are on the 0'th position
-void Splitflap::Zero(){
+void Splitflap::ResetAll(){
   setAll(state, 1, num);
   while (!isAllZero(state)){
     for (int i = 0; i<num; i++){
@@ -47,7 +47,7 @@ void Splitflap::Zero(){
     
 void Splitflap::WriteText(String text){
   enableAll();
-  Zero(); // set all displays to zero
+  ResetAll(); // set all displays to zero
   //check if letter is uppercase and change the color of all uppercase letters to red
   String temp = text;
   text.toLowerCase();

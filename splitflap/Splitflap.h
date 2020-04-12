@@ -6,7 +6,7 @@
 class Splitflap {
   public:
     Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins);
-    void Zero();
+    void ResetAll();
     void WriteText(String text);
     void enableAll();
     void disableAll();
