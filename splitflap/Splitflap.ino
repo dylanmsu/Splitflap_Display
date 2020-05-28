@@ -12,40 +12,5 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    String temp = incoming;
-    incoming = Serial.readString();
-    incoming.remove(incoming.length()-1);//remove enter
-    
-    if (incoming.length() > 8){
-      Serial.println("err: The string can't contain more than 24 charakters.");
-<<<<<<< HEAD
-    } else if (incoming == temp && incoming != "") {
-=======
-    } else if (incoming == temp) {
->>>>>>> aaab055837e9c46714ea7bf18ea848ea73e6a9d4
-      Serial.println("err: That text is already displaying.");
-    } else {
-      Serial.println(incoming);
-      splitflaps.enableAll();
-      splitflaps.WriteText(incoming);
-      splitflaps.disableAll();
-    }
-  }
-<<<<<<< HEAD
-=======
-splitflaps.enableAll();
-
-for (int i=0; i<16; i++){
-  splitflaps.writeSegment(i,1);
-  delay(100);
-}
-
-
-for (int i=0; i<16; i++){
-  splitflaps.writeSegment(i,0);
-  delay(100);
-}
- 
->>>>>>> aaab055837e9c46714ea7bf18ea848ea73e6a9d4
+  
 }
