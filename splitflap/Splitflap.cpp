@@ -13,13 +13,14 @@ Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *se
 
   setAll(Bit, 0, 32);
   
-  latch_enable = serialPins[3];
-  clock_enable = serialPins[5];
-  data_enable = serialPins[1];
+  latch_enable = serialPins[4];
+  clock_enable = serialPins[2];
+  data_enable = serialPins[0];
   
-  latchH = serialPins[2];
-  clockH = serialPins[4];
-  dataH = serialPins[0];
+  latchH = serialPins[5];
+  clockH = serialPins[3];
+  dataH = serialPins[1];
+
 
   for (int i=0; i<6; i++){
     pinMode(serialPins[i], OUTPUT);
