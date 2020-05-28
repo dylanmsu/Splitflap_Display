@@ -139,7 +139,7 @@ void Splitflap::writeSegment(int whichPin, int whichState) {
     stateSegment |= (1ULL << (whichPin));
   }else{
     stateSegment &= -(1ULL << (whichPin));
-  }*/
+  }*/ 
 
   bitWrite(stateSegment,whichPin,whichState);
 
