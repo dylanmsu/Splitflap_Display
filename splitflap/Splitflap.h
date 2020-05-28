@@ -1,12 +1,12 @@
 #ifndef Splitflap_h
 #define Splitflap_h
 
-#include "Arduino.h"
+#include "arduino.h"
 
 class Splitflap {
   public:
     Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins);
-    void Zero();
+    void ResetAll();
     void WriteText(String text);
     void enableAll();
     void disableAll();

@@ -1,4 +1,4 @@
-#include "Arduino.h"
+#include "arduino.h"
 #include "Splitflap.h"
 
 
@@ -30,7 +30,7 @@ Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *se
 };
 
 //continues flapping until all segments are on the 0'th position
-void Splitflap::Zero(){
+void Splitflap::ResetAll(){
   setAll(state, 1, num);
   while (!isAllZero(state)){
     for (int i = 0; i<num; i++){
@@ -46,7 +46,8 @@ void Splitflap::Zero(){
 };
     
 void Splitflap::WriteText(String text){
-  Zero(); // set all displays to zero
+  enableAll();
+  ResetAll(); // set all displays to zero
   //check if letter is uppercase and change the color of all uppercase letters to red
   String temp = text;
   text.toLowerCase();
@@ -58,6 +59,7 @@ void Splitflap::WriteText(String text){
     }
   }
   writeIndices(indices);
+  disableAll();
 };
     
 int Splitflap::lookup(char input, boolean red){
