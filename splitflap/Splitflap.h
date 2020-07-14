@@ -27,8 +27,8 @@ class Splitflap {
     int latchH;
     int clockH;
     int dataH;
-    uint16_t stateSegment;
-    uint16_t stateEnable;
+    uint32_t stateSegment;
+    uint32_t stateEnable;
     int lookup(char input, boolean red);
     void setAll(int *arr, int to, int len);
     bool isAllZero(int *arr);

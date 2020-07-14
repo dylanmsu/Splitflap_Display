@@ -11,7 +11,7 @@ Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *se
     pinMode(APins[i], INPUT_PULLUP);
   }
 
-  setAll(Bit, 0, 32);
+  setAll(Bit, 0, num);
   
   latch_enable = serialPins[4];
   clock_enable = serialPins[2];
@@ -36,8 +36,7 @@ void Splitflap::ResetAll(){
   while (!isAllZero(state)){
     for (int i = 0; i<num; i++){
       delay(updateDelay/num);
-      int hall = digitalRead(APins[i]);
-      state[i] = hall;
+      state[i] = digitalRead(APins[i]);
       if (state[i]){
         flipSegment(i);
       }
@@ -47,20 +46,25 @@ void Splitflap::ResetAll(){
 };
     
 void Splitflap::WriteText(String text){
-  enableAll();
-  ResetAll(); // set all displays to zero
-  //check if letter is uppercase and change the color of all uppercase letters to red
-  String temp = text;
-  text.toLowerCase();
-  for (int i=0; i<text.length(); i++){
-    if (temp[i] != text[i]){
-      indices[i] = lookup(text[i],true);
-    }else{
-      indices[i] = lookup(text[i],false);
+  if (text.length() <= 28){
+    enableAll();
+    ResetAll(); // set all displays to zero
+    //check if letter is uppercase and change the color of all uppercase letters to red
+    String temp = text;
+    text.toLowerCase();
+    for (int i=0; i<text.length(); i++){
+      if (temp[i] != text[i]){
+        indices[i] = lookup(text[i],true);
+      }else{
+        indices[i] = lookup(text[i],false);
+      }
     }
+    writeIndices(indices);
+    disableAll();
+  } else {
+    // error: 
   }
-  writeIndices(indices);
-  disableAll();
+  
 };
     
 int Splitflap::lookup(char input, boolean red){
@@ -142,7 +146,7 @@ void Splitflap::writeSegment(int whichPin, int whichState) {
     stateSegment |= (1ULL << (whichPin));
   }else{
     stateSegment &= -(1ULL << (whichPin));
-  }*/ 
+  } */
 
   bitWrite(stateSegment,whichPin,whichState);
 
@@ -151,8 +155,8 @@ void Splitflap::writeSegment(int whichPin, int whichState) {
   uint8_t third =  (stateSegment & 0x0000FF00UL) >> 8;
   uint8_t forth  = (stateSegment & 0x000000FFUL);
   
-  //shiftOut(dataH, clockH, MSBFIRST, first);
-  //shiftOut(dataH, clockH, MSBFIRST, second);
+  shiftOut(dataH, clockH, MSBFIRST, first);
+  shiftOut(dataH, clockH, MSBFIRST, second);
   shiftOut(dataH, clockH, MSBFIRST, third);
   shiftOut(dataH, clockH, MSBFIRST, forth);
 
@@ -167,7 +171,7 @@ void Splitflap::writeEnable(int whichPin, int whichState) {
   }else{
     stateEnable &= !(1ULL << (whichPin));
   }
-
+  
   uint8_t first =  (stateEnable & 0xFF000000UL) >> 24;
   uint8_t second = (stateEnable & 0x00FF0000UL) >> 16;
   uint8_t third =  (stateEnable & 0x0000FF00UL) >> 8;
