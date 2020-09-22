@@ -13,6 +13,7 @@ class Splitflap {
     void flipSegment(int segment);
     void writeEnable(int which, int whichState);
     void writeSegment(int whichPin, int whichState);
+    void writeIndices(int *indices);
     
   private:
     int num;
@@ -32,7 +33,6 @@ class Splitflap {
     int lookup(char input, boolean red);
     void setAll(int *arr, int to, int len);
     bool isAllZero(int *arr);
-    void writeIndices(int *indices);
 };
 
 #endif

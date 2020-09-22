@@ -96,7 +96,8 @@ int Splitflap::lookup(char input, boolean red){
     case 'x':   output = 24;    break;
     case 'y':   output = 25;    break;
     case 'z':   output = 26;    break;
-    case '-':   output = 28;    break;
+    case '-':   output = 27;    break;
+    case '_':   output = 58;    break;
     case '/':   output = 29;    break;
     case ' ':   output = 30;    break;
     default:    output = 57;    break; //unknown character gets replaced with an "Ö"
