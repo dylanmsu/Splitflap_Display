@@ -1,9 +1,10 @@
 # Splitflap_Display
-software to digtally drive a public split flap display using arduino
+software to digtally drive a public splitflap display using arduino. The display is meant do be deployed in a steamtrain station where it reads the data from their server.
 
 ## this repository contains:
 * arduino software
 * kicad schematic and pcb desgin
+* basic documentation about the splitflap display modules
 
 ## authors
 * Dylan Missuwe
