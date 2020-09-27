@@ -2,70 +2,198 @@
 #include "Splitflap.h"
 
 
-Splitflap::Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins){
-  updateDelay = updateDelayMs; //delay between each flap in milliseconds
-  num = numSegments;
+Splitflap::Splitflap(int *sensPins,  int updateDelayMs, int *serialPins){
+    updateDelay = updateDelayMs; //delay between each flap in milliseconds
 
-  for (int i=0; i<num; i++){
-    APins[i] = sensPins[i];
-    pinMode(APins[i], INPUT_PULLUP);
-  }
+    for (int i=0; i<32; i++){
+        APins[i] = sensPins[i];
+        pinMode(APins[i], INPUT_PULLUP);
+    }
 
-  setAll(Bit, 0, num);
-  
-  latch_enable = serialPins[4];
-  clock_enable = serialPins[2];
-  data_enable = serialPins[0];
-  
-  latchH = serialPins[5];
-  clockH = serialPins[3];
-  dataH = serialPins[1];
+    setAll(Bit, 0, 32);
+    
+    latch_enable = serialPins[4];
+    clock_enable = serialPins[2];
+    data_enable = serialPins[0];
+    
+    latchH = serialPins[5];
+    clockH = serialPins[3];
+    dataH = serialPins[1];
 
 
-  for (int i=0; i<6; i++){
-    pinMode(serialPins[i], OUTPUT);
-  }
-  
-  stateSegment = 0x0000;
-  stateEnable = 0x0000;
+    for (int i=0; i<6; i++){
+        pinMode(serialPins[i], OUTPUT);
+    }
+    
+    stateSegment = 0x00000000;
+    stateEnable = 0x00000000;
 };
+
+bool Splitflap::Send(String text, int hours, int minutes)
+{
+    if (text.length() <= 28 && hours <= 23 && hours >= 0 && minutes <= 59 && minutes >= 0){
+        enableAll();
+
+        int indices[32] = {};
+        String temp = text;
+        text.toLowerCase();
+        for (int i=0; i<text.length(); i++){
+            if (temp[i] != text[i]){
+                indices[i] = lookup(text[i],true);
+            }else{
+                indices[i] = lookup(text[i],false);
+            }
+            //Serial.print(String(indices[i]) + " ");
+        }
+
+        indices[28] = 0;
+
+        if (hours == 0){
+            indices[29] = 30;
+        } else {
+            indices[29] = hours;
+        }
+
+        int minutesA = minutes%10;
+        int minutesB = (minutes/10)%10;
+
+        if (minutesB == 0){
+            indices[30] = 10;
+        } else {
+            indices[30] = minutesB;
+        }
+
+        if (minutesA == 0){
+            indices[31] = 10;
+        } else {
+            indices[31] = minutesA;
+        }
+        
+
+        delay(updateDelay);
+
+        int hasBeenZerod[32] = {};
+        int flapProgress[32] = {};
+
+        for (int i=0; i<32; i++) {
+            hasBeenZerod[i] = !digitalRead(APins[i]);
+            flapProgress[i] = 0;
+        }
+
+        while (stopflapping(indices, flapProgress)) {
+            for (int i=0; i<32; i++)  {
+                /*if (currentIndices[i] == indices[i] - flapProgress[i]) {
+                    // dont flap if the new index is equal to the current position
+                } 
+                else if (currentIndices[i] <= indices[i] - flapProgress[i]) {*/
+                    // flap to zero and then flap until it reaches the desired position if the new position is smaller than the current position
+
+                    // flap to the desired position if its been zeord
+                    if (hasBeenZerod[i] && (indices[i] - (flapProgress[i])) > 0) {
+                        flapProgress[i] += 1;
+                        flipSegment(i);
+                    }
+
+                    // flap to zero
+                    if (digitalRead(APins[i]) && !hasBeenZerod[i]){
+                        flipSegment(i);
+                        hasBeenZerod[i] = 0;
+                    } else {
+                        hasBeenZerod[i] = 1;
+                    }/*
+                } 
+                else if (currentIndices[i] >= indices[i] - flapProgress[i]) {
+                    // flap to the desired position if the new position is beyond the current position 
+                    if (indices[i] - flapProgress[i] - currentIndices[i] > 0) {
+                        flapProgress[i] += 1;
+                        flipSegment(i);
+                    }
+                }*/
+                delay(updateDelay/32);
+            }
+        }
+
+        for (int i=0; i<32; i++) {
+            currentIndices[i] = indices[i];
+            Serial.print(String(indices[i]) + "-");
+            Serial.print(String(flapProgress[i]) + " ");
+        }
+
+        disableAll();
+        return true;
+    } else {
+        Serial.println("ERR: trying to display "+String(text.length())+" charakters, but you can only display 28");
+        return false;
+    }
+};
+
+bool Splitflap::stopflapping(int *a, int *b) {
+     bool zero = 0;
+    for (int i=0; i<32; i++){
+        zero += a[i] - b[i];
+    }
+    return zero;
+}
 
 //continues flapping until all segments are on the 0'th position
 void Splitflap::ResetAll(){
-  setAll(state, 1, num);
-  while (!isAllZero(state)){
-    for (int i = 0; i<num; i++){
-      delay(updateDelay/num);
-      state[i] = digitalRead(APins[i]);
-      if (state[i]){
+    setAll(state, 1, 32);
+    setAll(currentIndices, 0, 32);
+    while (!isAllZero(state)){
+        for (int i = 0; i<32; i++){
+            delay(updateDelay/32);
+            state[i] = digitalRead(APins[i]);
+            if (state[i]){
+                flipSegment(i);
+            }
+        }
+    }
+    delay(updateDelay);
+};
+    
+bool Splitflap::WriteText(String text){
+    if (text.length() <= 28){
+        enableAll();
+        ResetAll(); // set all displays to zero
+
+        int indices[32] = {};
+        String temp = text;
+        text.toLowerCase();
+        for (int i=0; i<text.length(); i++){
+            if (temp[i] != text[i]){
+                indices[i] = lookup(text[i],true);
+            }else{
+                indices[i] = lookup(text[i],false);
+            }
+        }
+        writeIndices(indices);
+        disableAll();
+        return true;
+    } else {
+        Serial.println("ERR: trying to display "+String(text.length())+" charakters, but you can only display 28");
+        return false;
+    }
+};
+
+void Splitflap::writeIndices(int *indices){
+  while (!isAllZero(indices)){
+    for (int i=0; i<32; i++){
+      if (indices[i]){
+        indices[i] -= 1;
         flipSegment(i);
       }
+      delay(updateDelay/32);
     }
   }
   delay(updateDelay);
 };
-    
-void Splitflap::WriteText(String text){
-  if (text.length() <= 28){
-    enableAll();
-    ResetAll(); // set all displays to zero
-    //check if letter is uppercase and change the color of all uppercase letters to red
-    String temp = text;
-    text.toLowerCase();
-    for (int i=0; i<text.length(); i++){
-      if (temp[i] != text[i]){
-        indices[i] = lookup(text[i],true);
-      }else{
-        indices[i] = lookup(text[i],false);
-      }
-    }
-    writeIndices(indices);
-    disableAll();
-  } else {
-    // error: 
-  }
-  
+
+void Splitflap::flipSegment(int segment){
+    writeSegment(segment, !Bit[segment]);
+    Bit[segment] = !Bit[segment];
+    currentIndices[segment] += 1;
 };
+
     
 int Splitflap::lookup(char input, boolean red){
   int output = 0;
@@ -109,103 +237,75 @@ int Splitflap::lookup(char input, boolean red){
 };
 
 void Splitflap::setAll(int *arr, int to, int len){
-  for (int i=0; i<len; i++){
-    arr[i] = to;
-  }
+    for (int i=0; i<len; i++){
+        arr[i] = to;
+    }
 };
 
 bool Splitflap::isAllZero(int *arr){
-  bool zero = 0;
-  for (int i=0; i<num; i++){
-    zero += arr[i];
-  }
-  return !zero;
-};
-
-void Splitflap::writeIndices(int *indices){
-  while (!isAllZero(indices)){
-    for (int i=0; i<num; i++){
-      if (indices[i]){
-        indices[i] -= 1;
-        flipSegment(i);
-      }
-      delay(updateDelay/num);
+    bool zero = 0;
+    for (int i=0; i<32; i++){
+        zero += arr[i];
     }
-  }
-  delay(updateDelay);
-};
-
-void Splitflap::flipSegment(int segment){
-  writeSegment(segment, !Bit[segment]);
-  Bit[segment] = !Bit[segment];
+    return !zero;
 };
 
 void Splitflap::writeSegment(int whichPin, int whichState) {
-  digitalWrite(latchH, LOW);
+    digitalWrite(latchH, LOW);
 
-  /*if (whichState){
-    stateSegment |= (1ULL << (whichPin));
-  }else{
-    stateSegment &= -(1ULL << (whichPin));
-  } */
+    bitWrite(stateSegment,whichPin,whichState);
 
-  bitWrite(stateSegment,whichPin,whichState);
+    uint8_t first =  (stateSegment & 0xFF000000UL) >> 24;
+    uint8_t second = (stateSegment & 0x00FF0000UL) >> 16;
+    uint8_t third =  (stateSegment & 0x0000FF00UL) >> 8;
+    uint8_t forth  = (stateSegment & 0x000000FFUL);
+    
+    shiftOut(dataH, clockH, MSBFIRST, first);
+    shiftOut(dataH, clockH, MSBFIRST, second);
+    shiftOut(dataH, clockH, MSBFIRST, third);
+    shiftOut(dataH, clockH, MSBFIRST, forth);
 
-  uint8_t first =  (stateSegment & 0xFF000000UL) >> 24;
-  uint8_t second = (stateSegment & 0x00FF0000UL) >> 16;
-  uint8_t third =  (stateSegment & 0x0000FF00UL) >> 8;
-  uint8_t forth  = (stateSegment & 0x000000FFUL);
-  
-  shiftOut(dataH, clockH, MSBFIRST, first);
-  shiftOut(dataH, clockH, MSBFIRST, second);
-  shiftOut(dataH, clockH, MSBFIRST, third);
-  shiftOut(dataH, clockH, MSBFIRST, forth);
-
-  digitalWrite(latchH, HIGH);
+    digitalWrite(latchH, HIGH);
 };
 
 void Splitflap::writeEnable(int whichPin, int whichState) {
-  digitalWrite(latch_enable, LOW);
-  
-  if (whichState){
-    stateEnable |= (1ULL << (whichPin));
-  }else{
-    stateEnable &= !(1ULL << (whichPin));
-  }
-  
-  uint8_t first =  (stateEnable & 0xFF000000UL) >> 24;
-  uint8_t second = (stateEnable & 0x00FF0000UL) >> 16;
-  uint8_t third =  (stateEnable & 0x0000FF00UL) >> 8;
-  uint8_t forth  = (stateEnable & 0x000000FFUL);
-  
-  shiftOut(data_enable, clock_enable, MSBFIRST, first);
-  shiftOut(data_enable, clock_enable, MSBFIRST, second);
-  shiftOut(data_enable, clock_enable, MSBFIRST, third);
-  shiftOut(data_enable, clock_enable, MSBFIRST, forth);
+    digitalWrite(latch_enable, LOW);
+    
+    bitWrite(stateEnable,whichPin,whichState);
+    
+    uint8_t first =  (stateEnable & 0xFF000000UL) >> 24;
+    uint8_t second = (stateEnable & 0x00FF0000UL) >> 16;
+    uint8_t third =  (stateEnable & 0x0000FF00UL) >> 8;
+    uint8_t forth  = (stateEnable & 0x000000FFUL);
+    
+    shiftOut(data_enable, clock_enable, MSBFIRST, first);
+    shiftOut(data_enable, clock_enable, MSBFIRST, second);
+    shiftOut(data_enable, clock_enable, MSBFIRST, third);
+    shiftOut(data_enable, clock_enable, MSBFIRST, forth);
 
-  digitalWrite(latch_enable, HIGH);
+    digitalWrite(latch_enable, HIGH);
 };
 
 void Splitflap::enableAll() {
-  digitalWrite(latch_enable, LOW);
+    digitalWrite(latch_enable, LOW);
 
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0xFF);  
 
-  digitalWrite(latch_enable, HIGH);
-  stateEnable = 0xFFFFFFFF;
+    digitalWrite(latch_enable, HIGH);
+    stateEnable = 0xFFFFFFFF;
 };
 
 void Splitflap::disableAll() {
-  digitalWrite(latch_enable, LOW);
+    digitalWrite(latch_enable, LOW);
 
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
-  shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
+    shiftOut(data_enable, clock_enable, MSBFIRST, 0x00); 
 
-  digitalWrite(latch_enable, HIGH);
-  stateEnable = 0x00000000;
+    digitalWrite(latch_enable, HIGH);
+    stateEnable = 0x00000000;
 };

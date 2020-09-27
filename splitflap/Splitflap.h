@@ -1,38 +1,40 @@
 #ifndef Splitflap_h
 #define Splitflap_h
 
-#include "arduino.h"
+#include "Arduino.h"
 
 class Splitflap {
-  public:
-    Splitflap(int numSegments, int *sensPins,  int updateDelayMs, int *serialPins);
-    void ResetAll();
-    void WriteText(String text);
-    void enableAll();
-    void disableAll();
-    void flipSegment(int segment);
-    void writeEnable(int which, int whichState);
-    void writeSegment(int whichPin, int whichState);
-    void writeIndices(int *indices);
-    
-  private:
-    int num;
-    int updateDelay;
-    int state[32];
-    int APins[32];
-    int Bit[32];
-    int indices[32];
-    int latch_enable;
-    int clock_enable;
-    int data_enable;
-    int latchH;
-    int clockH;
-    int dataH;
-    uint32_t stateSegment;
-    uint32_t stateEnable;
-    int lookup(char input, boolean red);
-    void setAll(int *arr, int to, int len);
-    bool isAllZero(int *arr);
+    public:
+        Splitflap(int *sensPins,  int updateDelayMs, int *serialPins);
+        void writeSegment(int whichPin, int whichState);
+        bool Send(String text, int hours, int minutes);
+        void writeEnable(int which, int whichState);
+        void writeIndices(int *indices);
+        void flipSegment(int segment);
+        bool WriteText(String text);
+        void disableAll();
+        void enableAll();
+        void ResetAll();
+        
+    private:
+        void setAll(int *arr, int to, int len);
+        int lookup(char input, boolean red);
+        bool stopflapping(int *a, int *b);
+        bool isAllZero(int *arr);
+        int currentIndices[32];
+        uint32_t stateSegment;
+        uint32_t stateEnable;
+        int latch_enable;
+        int clock_enable;
+        int data_enable;
+        int updateDelay;
+        int state[32];
+        int APins[32];
+        int Bit[32];
+        int latchH;
+        int clockH;
+        int dataH;
+        int num;
 };
 
 #endif

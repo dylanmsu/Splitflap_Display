@@ -21,7 +21,7 @@ void loop() {
     } else {
       Serial.println(incoming);
       splitflaps.enableAll();
-      splitflaps.WriteText(incoming);
+      splitflaps.Send(incoming, 0, 0);
       splitflaps.disableAll();
     }
   }
