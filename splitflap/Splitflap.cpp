@@ -29,7 +29,7 @@ Splitflap::Splitflap(int *sensPins,  int updateDelayMs, int *serialPins){
     stateEnable = 0x00000000;
 };
 
-bool Splitflap::Send(String text, int hours, int minutes)
+bool Splitflap::Send(String text, int icon_index, int hours, int minutes)
 {
     if (text.length() <= 28 && hours <= 23 && hours >= 0 && minutes <= 59 && minutes >= 0){
         enableAll();
@@ -46,7 +46,7 @@ bool Splitflap::Send(String text, int hours, int minutes)
             //Serial.print(String(indices[i]) + " ");
         }
 
-        indices[28] = 0;
+        indices[28] = icon_index;
 
         if (hours == 0){
             indices[29] = 30;
@@ -82,13 +82,10 @@ bool Splitflap::Send(String text, int hours, int minutes)
 
         while (stopflapping(indices, flapProgress)) {
             for (int i=0; i<32; i++)  {
-                /*if (currentIndices[i] == indices[i] - flapProgress[i]) {
-                    // dont flap if the new index is equal to the current position
-                } 
-                else if (currentIndices[i] <= indices[i] - flapProgress[i]) {*/
+                if (currentIndices[i] == NULL || currentIndices[i] != indices[i]) {
                     // flap to zero and then flap until it reaches the desired position if the new position is smaller than the current position
 
-                    // flap to the desired position if its been zeord
+                    // flap to the desired position if it has been zeord
                     if (hasBeenZerod[i] && (indices[i] - (flapProgress[i])) > 0) {
                         flapProgress[i] += 1;
                         flipSegment(i);
@@ -100,23 +97,17 @@ bool Splitflap::Send(String text, int hours, int minutes)
                         hasBeenZerod[i] = 0;
                     } else {
                         hasBeenZerod[i] = 1;
-                    }/*
-                } 
-                else if (currentIndices[i] >= indices[i] - flapProgress[i]) {
-                    // flap to the desired position if the new position is beyond the current position 
-                    if (indices[i] - flapProgress[i] - currentIndices[i] > 0) {
-                        flapProgress[i] += 1;
-                        flipSegment(i);
                     }
-                }*/
+                } else {
+                    flapProgress[i] = indices[i];
+                }
+
                 delay(updateDelay/32);
             }
         }
 
         for (int i=0; i<32; i++) {
             currentIndices[i] = indices[i];
-            Serial.print(String(indices[i]) + "-");
-            Serial.print(String(flapProgress[i]) + " ");
         }
 
         disableAll();
@@ -147,6 +138,9 @@ void Splitflap::ResetAll(){
                 flipSegment(i);
             }
         }
+    }
+    for (int i=0; i<32; i++) {
+        currentIndices[i] = 0;
     }
     delay(updateDelay);
 };
@@ -191,7 +185,6 @@ void Splitflap::writeIndices(int *indices){
 void Splitflap::flipSegment(int segment){
     writeSegment(segment, !Bit[segment]);
     Bit[segment] = !Bit[segment];
-    currentIndices[segment] += 1;
 };
 
     

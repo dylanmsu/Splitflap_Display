@@ -7,7 +7,7 @@ class Splitflap {
     public:
         Splitflap(int *sensPins,  int updateDelayMs, int *serialPins);
         void writeSegment(int whichPin, int whichState);
-        bool Send(String text, int hours, int minutes);
+        bool Send(String text, int icon_index, int hours, int minutes);
         void writeEnable(int which, int whichState);
         void writeIndices(int *indices);
         void flipSegment(int segment);

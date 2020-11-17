@@ -1,10 +1,18 @@
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
 #include <ArduinoJson.h>
 #include "Splitflap.h"
 #include <Ethernet.h>
 #include <SPI.h>
 
+#define RGB_LED_PIN 46
+
 #define board "A"
 #define polDelay 10000 //ms
+
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(144, RGB_LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // hall-sensor pins from the splitflaps
 int sensPins[32] = {
@@ -14,7 +22,10 @@ int sensPins[32] = {
     26, 27, 28, 29, 30, 31, 32, 33
 };
 
-int serialPins[6] = {44,38,42,36,40,34};                // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
+unsigned long lastMillis;
+
+//int serialPins[6] = {44,38,42,36,40,34};                // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
+int serialPins[6] = {2,3,4,5,6,7};                // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
 Splitflap splitflaps(sensPins, 200, serialPins);        // make an object from the class
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};      // mac-address of the ethernet module (must be unique)
@@ -27,49 +38,88 @@ String prevtext = "";
 void setup() {
     Serial.begin(9600);
     initEthernet();
+
+    pinMode(48, OUTPUT);
+    digitalWrite(48, 1);
+
+    strip.begin();
+    strip.show(); // Initialize all pixels to 'off'
+    strip.setBrightness(32); // max: 255
 }
 
 void loop() {
+    /*if (millis() - lastMillis >= 2*60*1000UL)
+    {
+       lastMillis = millis();  //get ready for the next iteration
+    }*/
     updateDisplay();
+    rainbowCycle(20);
     delay(10000);
 }
 
 void updateDisplay(){
     DynamicJsonDocument doc = fetchFromApi();
 
-    String textA = doc[board][0]["first_text"].as<String>();
-    String textB = doc[board][0]["second_text"].as<String>();
-    String align = doc[board][0]["align"].as<String>();
-
-    String text = "";
+    Serial.println(doc[board].as<String>());
+    if (doc[board].as<String>() != "null") {
+        String textA = doc[board]["first_text"].as<String>();
+        String textB = doc[board]["second_text"].as<String>();
+        String align = doc[board]["align"].as<String>();
+        int minutes = doc[board]["minutes"].as<int>();
+        int hours = doc[board]["hours"].as<int>();
+        int icon = doc[board]["icon_index"].as<int>();
+        
+        String text = "";
     
-    if (align == "left"){
-        String a = textA + fill(14-textA.length());
-        String b = textB + fill(14-textB.length());
-        text = a + b;
-    } else if (align == "center"){
-        String spaceA = fill((14 - textA.length())/2);
-        String spaceB = fill((14 - textB.length())/2);
-        String a = spaceA + textA + fill(14-(spaceA.length()+textA.length()));
-        String b = spaceB + textB + fill(14-(spaceB.length()+textB.length()));
-        text = a + b;
-    } else if (align == "right"){
-        String a = fill(14-textA.length()) + textA;
-        String b = fill(14-textB.length()) + textB;
-        text = a + b;
+        if (textA == "null") {
+            textA = "";
+        }
+    
+        if (textB == "null") {
+            textB = "";
+        }
+        
+        if (align == "left"){
+            String a = textA + fill(14-textA.length());
+            String b = textB + fill(14-textB.length());
+            text = a + b;
+        } else if (align == "center"){
+            String spaceA = fill((14 - textA.length())/2);
+            String spaceB = fill((14 - textB.length())/2);
+            String a = spaceA + textA + fill(14-(spaceA.length()+textA.length()));
+            String b = spaceB + textB + fill(14-(spaceB.length()+textB.length()));
+            text = a + b;
+        } else if (align == "right"){
+            String a = fill(14-textA.length()) + textA;
+            String b = fill(14-textB.length()) + textB;
+            text = a + b;
+        } else {
+            Serial.println("unrecognized alignment");
+        }
+    
+        if (prevtext != text){
+            prevtext = text;
+            splitflaps.enableAll();
+            Serial.println("sending " + text + " to the display... ");
+            splitflaps.Send(text, icon, hours, minutes);
+            splitflaps.disableAll();
+            Serial.println("done.");
+        } else {
+            Serial.println("nothing new to display");
+        }
     } else {
-        Serial.println("unrecognized alignment");
-    }
-
-    if (prevtext != text){
-        prevtext = text;
-        splitflaps.enableAll();
-        Serial.println("sending " + text + " to the display... ");
-        splitflaps.Send(text, 12, 30);
-        splitflaps.disableAll();
-        Serial.println("done.");
-    } else {
-        Serial.println("nothing new to display");
+        if (prevtext != "no trains"){ 
+            prevtext = "no trains";
+            String textA = "geen treinen";
+            String textB = "vandaag";
+            String spaceA = fill((14 - textA.length())/2);
+            String spaceB = fill((14 - textB.length())/2);
+            String a = spaceA + textA + fill(14-(spaceA.length()+textA.length()));
+            String b = spaceB + textB + fill(14-(spaceB.length()+textB.length()));
+            splitflaps.Send(a + b, 0, 0, 0);
+            splitflaps.disableAll();
+        }
+        
     }
 }
 
@@ -90,7 +140,7 @@ void showAllCharakters(){
         }
         Serial.print("showing: ");
         Serial.println(text);
-        splitflaps.Send(text, 0, 0);
+        splitflaps.Send(text, 0, 0, 0);
         delay(10000);
     }
 }
@@ -133,7 +183,7 @@ DynamicJsonDocument fetchFromApi(){
 
     // Send HTTP request
     Serial.print("\tsending request and awaiting... ");
-    client.println("GET /index.txt HTTP/1.1");
+    client.println("GET /index.php HTTP/1.1");
     client.println("Host: api.scm-team.be");
     client.println("User-Agent: arduino-ethernet");
     client.println("Connection: close");
@@ -177,4 +227,29 @@ DynamicJsonDocument fetchFromApi(){
     }
     Serial.println("done.");
     return doc;
+}
+
+void rainbowCycle(uint8_t wait) {
+    uint16_t i, j;
+    
+    for(j=0; j<256*5; j++) { // 5 cycles of all colors on wheel
+        for(i=0; i< strip.numPixels(); i++) {
+          strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + j) & 255));
+        }
+        strip.show();
+        delay(wait);
+    }
+}
+
+uint32_t Wheel(byte WheelPos) {
+    WheelPos = 255 - WheelPos;
+    if(WheelPos < 85) {
+        return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+    }
+    if(WheelPos < 170) {
+        WheelPos -= 85;
+        return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+    }
+    WheelPos -= 170;
+    return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
 }
