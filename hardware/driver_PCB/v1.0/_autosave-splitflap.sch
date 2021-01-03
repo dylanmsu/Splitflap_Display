@@ -1,0 +1,2145 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title "Driver board"
+Date "09/05/2020"
+Rev "3"
+Comp "Stoomcentrum Maldegem"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L splitflap-rescue:SN754410NE-SN754410NE-splitflap-rescue U3
+U 1 1 5DEAD288
+P 8850 3700
+F 0 "U3" H 8850 4670 50  0000 C CNN
+F 1 "SN754410NE" H 8850 4579 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 8850 3700 50  0001 L BNN
+F 3 "" H 8850 3700 50  0001 L BNN
+F 4 "Texas Instruments" H 8850 3700 50  0001 L BNN "Field4"
+F 5 "PDIP-16 Texas Instruments" H 8850 3700 50  0001 L BNN "Field5"
+F 6 "None" H 8850 3700 50  0001 L BNN "Field6"
+F 7 "Unavailable" H 8850 3700 50  0001 L BNN "Field7"
+F 8 "Peripheral Drivers and Actuators Quad Half-Hs" H 8850 3700 50  0001 L BNN "Field8"
+	1    8850 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:SN754410NE-SN754410NE-splitflap-rescue U4
+U 1 1 5DEAFE59
+P 8850 6700
+F 0 "U4" H 8850 7670 50  0000 C CNN
+F 1 "SN754410NE" H 8850 7579 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 8850 6700 50  0001 L BNN
+F 3 "" H 8850 6700 50  0001 L BNN
+F 4 "Texas Instruments" H 8850 6700 50  0001 L BNN "Field4"
+F 5 "PDIP-16 Texas Instruments" H 8850 6700 50  0001 L BNN "Field5"
+F 6 "None" H 8850 6700 50  0001 L BNN "Field6"
+F 7 "Unavailable" H 8850 6700 50  0001 L BNN "Field7"
+F 8 "Peripheral Drivers and Actuators Quad Half-Hs" H 8850 6700 50  0001 L BNN "Field8"
+	1    8850 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:SN754410NE-SN754410NE-splitflap-rescue U5
+U 1 1 5DEB6E0E
+P 10950 4300
+F 0 "U5" H 10950 5270 50  0000 C CNN
+F 1 "SN754410NE" H 10950 5179 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 10950 4300 50  0001 L BNN
+F 3 "" H 10950 4300 50  0001 L BNN
+F 4 "Texas Instruments" H 10950 4300 50  0001 L BNN "Field4"
+F 5 "PDIP-16 Texas Instruments" H 10950 4300 50  0001 L BNN "Field5"
+F 6 "None" H 10950 4300 50  0001 L BNN "Field6"
+F 7 "Unavailable" H 10950 4300 50  0001 L BNN "Field7"
+F 8 "Peripheral Drivers and Actuators Quad Half-Hs" H 10950 4300 50  0001 L BNN "Field8"
+	1    10950 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:SN754410NE-SN754410NE-splitflap-rescue U6
+U 1 1 5DEB6E1D
+P 11100 7400
+F 0 "U6" H 11100 8370 50  0000 C CNN
+F 1 "SN754410NE" H 11100 8279 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 11100 7400 50  0001 L BNN
+F 3 "" H 11100 7400 50  0001 L BNN
+F 4 "Texas Instruments" H 11100 7400 50  0001 L BNN "Field4"
+F 5 "PDIP-16 Texas Instruments" H 11100 7400 50  0001 L BNN "Field5"
+F 6 "None" H 11100 7400 50  0001 L BNN "Field6"
+F 7 "Unavailable" H 11100 7400 50  0001 L BNN "Field7"
+F 8 "Peripheral Drivers and Actuators Quad Half-Hs" H 11100 7400 50  0001 L BNN "Field8"
+	1    11100 7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0101
+U 1 1 5DEC2EE9
+P 4200 2750
+F 0 "#PWR0101" H 4200 2600 50  0001 C CNN
+F 1 "VCC" H 4217 2923 50  0000 C CNN
+F 2 "" H 4200 2750 50  0001 C CNN
+F 3 "" H 4200 2750 50  0001 C CNN
+	1    4200 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0103
+U 1 1 5DEC412A
+P 8150 5800
+F 0 "#PWR0103" H 8150 5650 50  0001 C CNN
+F 1 "VCC" H 8167 5973 50  0000 C CNN
+F 2 "" H 8150 5800 50  0001 C CNN
+F 3 "" H 8150 5800 50  0001 C CNN
+	1    8150 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0104
+U 1 1 5DEC4AC7
+P 10250 6300
+F 0 "#PWR0104" H 10250 6150 50  0001 C CNN
+F 1 "VCC" H 10267 6473 50  0000 C CNN
+F 2 "" H 10250 6300 50  0001 C CNN
+F 3 "" H 10250 6300 50  0001 C CNN
+	1    10250 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0105
+U 1 1 5DEC569D
+P 10200 3350
+F 0 "#PWR0105" H 10200 3200 50  0001 C CNN
+F 1 "VCC" H 10217 3523 50  0000 C CNN
+F 2 "" H 10200 3350 50  0001 C CNN
+F 3 "" H 10200 3350 50  0001 C CNN
+	1    10200 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0106
+U 1 1 5DEC5FEF
+P 8100 2650
+F 0 "#PWR0106" H 8100 2500 50  0001 C CNN
+F 1 "VCC" H 8117 2823 50  0000 C CNN
+F 2 "" H 8100 2650 50  0001 C CNN
+F 3 "" H 8100 2650 50  0001 C CNN
+	1    8100 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 2650 8100 3100
+Wire Wire Line
+	8100 3100 8150 3100
+Wire Wire Line
+	10200 3350 10200 3700
+Wire Wire Line
+	10200 3700 10250 3700
+Wire Wire Line
+	8150 5800 8150 6100
+Wire Wire Line
+	10250 6300 10250 6800
+Wire Wire Line
+	10250 6800 10400 6800
+$Comp
+L splitflap-rescue:GND-power #PWR0107
+U 1 1 5DEC7F29
+P 7900 7850
+F 0 "#PWR0107" H 7900 7600 50  0001 C CNN
+F 1 "GND" H 7905 7677 50  0000 C CNN
+F 2 "" H 7900 7850 50  0001 C CNN
+F 3 "" H 7900 7850 50  0001 C CNN
+	1    7900 7850
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0108
+U 1 1 5DEC8BD1
+P 10300 8350
+F 0 "#PWR0108" H 10300 8100 50  0001 C CNN
+F 1 "GND" H 10305 8177 50  0000 C CNN
+F 2 "" H 10300 8350 50  0001 C CNN
+F 3 "" H 10300 8350 50  0001 C CNN
+	1    10300 8350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0109
+U 1 1 5DEC9401
+P 10150 5350
+F 0 "#PWR0109" H 10150 5100 50  0001 C CNN
+F 1 "GND" H 10155 5177 50  0000 C CNN
+F 2 "" H 10150 5350 50  0001 C CNN
+F 3 "" H 10150 5350 50  0001 C CNN
+	1    10150 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0110
+U 1 1 5DEC9B60
+P 7950 4700
+F 0 "#PWR0110" H 7950 4450 50  0001 C CNN
+F 1 "GND" H 7955 4527 50  0000 C CNN
+F 2 "" H 7950 4700 50  0001 C CNN
+F 3 "" H 7950 4700 50  0001 C CNN
+	1    7950 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8150 4200 8050 4200
+Wire Wire Line
+	7950 4200 7950 4700
+Wire Wire Line
+	8150 4300 8050 4300
+Connection ~ 8050 4200
+Wire Wire Line
+	8050 4200 7950 4200
+Wire Wire Line
+	8150 4400 8050 4400
+Wire Wire Line
+	8050 4200 8050 4300
+Connection ~ 8050 4300
+Wire Wire Line
+	8050 4300 8050 4400
+Wire Wire Line
+	8150 4500 8050 4500
+Wire Wire Line
+	8050 4500 8050 4400
+Connection ~ 8050 4400
+Wire Wire Line
+	10250 5100 10150 5100
+Wire Wire Line
+	10150 5100 10150 5350
+Wire Wire Line
+	10250 5000 10150 5000
+Wire Wire Line
+	10150 5000 10150 5100
+Connection ~ 10150 5100
+Wire Wire Line
+	10250 4900 10150 4900
+Wire Wire Line
+	10150 4900 10150 5000
+Connection ~ 10150 5000
+Wire Wire Line
+	10250 4800 10150 4800
+Wire Wire Line
+	10150 4800 10150 4900
+Connection ~ 10150 4900
+Wire Wire Line
+	8150 7500 8050 7500
+Wire Wire Line
+	7900 7500 7900 7850
+Wire Wire Line
+	8150 7400 8050 7400
+Wire Wire Line
+	8050 7400 8050 7500
+Connection ~ 8050 7500
+Wire Wire Line
+	8050 7500 7900 7500
+Wire Wire Line
+	8150 7300 8050 7300
+Wire Wire Line
+	8050 7300 8050 7400
+Connection ~ 8050 7400
+Wire Wire Line
+	8150 7200 8050 7200
+Wire Wire Line
+	8050 7200 8050 7300
+Connection ~ 8050 7300
+Wire Wire Line
+	10400 8200 10300 8200
+Wire Wire Line
+	10300 8200 10300 8350
+Wire Wire Line
+	10400 8100 10300 8100
+Wire Wire Line
+	10300 8100 10300 8200
+Connection ~ 10300 8200
+Wire Wire Line
+	10400 8000 10300 8000
+Wire Wire Line
+	10300 8000 10300 8100
+Connection ~ 10300 8100
+Wire Wire Line
+	10400 7900 10300 7900
+Wire Wire Line
+	10300 7900 10300 8000
+Connection ~ 10300 8000
+$Comp
+L splitflap-rescue:GND-power #PWR0113
+U 1 1 5DEF4769
+P 4200 4700
+F 0 "#PWR0113" H 4200 4450 50  0001 C CNN
+F 1 "GND" H 4205 4527 50  0000 C CNN
+F 2 "" H 4200 4700 50  0001 C CNN
+F 3 "" H 4200 4700 50  0001 C CNN
+	1    4200 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 4350 4200 4500
+Wire Wire Line
+	9500 5000 9500 4300
+Wire Wire Line
+	9500 4300 10250 4300
+Wire Wire Line
+	9600 5100 9600 4400
+Wire Wire Line
+	9600 4400 10250 4400
+Wire Wire Line
+	9700 5200 9700 4500
+Wire Wire Line
+	9700 4500 10250 4500
+Wire Wire Line
+	9800 5300 9800 4600
+Wire Wire Line
+	9800 4600 10250 4600
+Wire Wire Line
+	9650 8000 9650 7400
+Wire Wire Line
+	9650 7400 10400 7400
+Wire Wire Line
+	9750 8100 9750 7500
+Wire Wire Line
+	9750 7500 10400 7500
+Wire Wire Line
+	9850 8200 9850 7600
+Wire Wire Line
+	9850 7600 10400 7600
+Wire Wire Line
+	9950 8300 9950 7700
+Wire Wire Line
+	9950 7700 10400 7700
+Wire Wire Line
+	4550 6950 4550 6000
+Wire Wire Line
+	4550 6000 7450 6000
+Wire Wire Line
+	7450 6000 7450 3400
+Wire Wire Line
+	7450 3400 8150 3400
+Wire Wire Line
+	4550 7050 4650 7050
+Wire Wire Line
+	4650 7050 4650 6100
+Wire Wire Line
+	4650 6100 7550 6100
+Wire Wire Line
+	7550 6100 7550 3500
+Wire Wire Line
+	7550 3500 8150 3500
+Wire Wire Line
+	4550 7150 4750 7150
+Wire Wire Line
+	4750 7150 4750 6200
+Wire Wire Line
+	4750 6200 7650 6200
+Wire Wire Line
+	7650 6200 7650 5400
+Wire Wire Line
+	7650 5400 9900 5400
+Wire Wire Line
+	9900 5400 9900 4000
+Wire Wire Line
+	9900 4000 10250 4000
+Wire Wire Line
+	4550 7250 4850 7250
+Wire Wire Line
+	4850 7250 4850 6300
+Wire Wire Line
+	4850 6300 7750 6300
+Wire Wire Line
+	7750 6300 7750 5500
+Wire Wire Line
+	7750 5500 10000 5500
+Wire Wire Line
+	10000 5500 10000 4100
+Wire Wire Line
+	10000 4100 10250 4100
+Wire Wire Line
+	4550 7350 4950 7350
+Wire Wire Line
+	4950 7350 4950 6400
+Wire Wire Line
+	4950 6400 8150 6400
+Wire Wire Line
+	4550 7450 5050 7450
+Wire Wire Line
+	5050 7450 5050 6500
+Wire Wire Line
+	5050 6500 8150 6500
+Wire Wire Line
+	10400 7200 9550 7200
+Wire Wire Line
+	9550 7200 9550 7900
+Wire Wire Line
+	9550 7900 6250 7900
+Wire Wire Line
+	6250 7900 6250 7650
+Wire Wire Line
+	6250 7650 4550 7650
+Wire Wire Line
+	4550 7550 6350 7550
+Wire Wire Line
+	6350 7550 6350 7800
+Wire Wire Line
+	6350 7800 9450 7800
+Wire Wire Line
+	9450 7800 9450 7100
+Wire Wire Line
+	9450 7100 10400 7100
+$Comp
+L splitflap-rescue:VDD-power #PWR0114
+U 1 1 5DFF86C8
+P 7800 2650
+F 0 "#PWR0114" H 7800 2500 50  0001 C CNN
+F 1 "VDD" H 7817 2823 50  0000 C CNN
+F 2 "" H 7800 2650 50  0001 C CNN
+F 3 "" H 7800 2650 50  0001 C CNN
+	1    7800 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VDD-power #PWR0115
+U 1 1 5DFF8BEA
+P 10050 3350
+F 0 "#PWR0115" H 10050 3200 50  0001 C CNN
+F 1 "VDD" H 10067 3523 50  0000 C CNN
+F 2 "" H 10050 3350 50  0001 C CNN
+F 3 "" H 10050 3350 50  0001 C CNN
+	1    10050 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VDD-power #PWR0116
+U 1 1 5DFF9132
+P 10050 6300
+F 0 "#PWR0116" H 10050 6150 50  0001 C CNN
+F 1 "VDD" H 10067 6473 50  0000 C CNN
+F 2 "" H 10050 6300 50  0001 C CNN
+F 3 "" H 10050 6300 50  0001 C CNN
+	1    10050 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VDD-power #PWR0117
+U 1 1 5E00EA7C
+P 7950 5800
+F 0 "#PWR0117" H 7950 5650 50  0001 C CNN
+F 1 "VDD" H 7967 5973 50  0000 C CNN
+F 2 "" H 7950 5800 50  0001 C CNN
+F 3 "" H 7950 5800 50  0001 C CNN
+	1    7950 5800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 5800 7950 6200
+Wire Wire Line
+	7950 6200 8150 6200
+Wire Wire Line
+	10050 3350 10050 3800
+Wire Wire Line
+	10400 6900 10050 6900
+Wire Wire Line
+	10050 6900 10050 6300
+Wire Wire Line
+	7800 2650 7800 3200
+Wire Wire Line
+	7800 3200 8150 3200
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D1
+U 1 1 5E03B961
+P 12750 2950
+F 0 "D1" H 13094 2996 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 2905 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 2950 50  0001 C CNN
+F 3 "~" H 12750 2950 50  0001 C CNN
+	1    12750 2950
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D2
+U 1 1 5E03EC56
+P 12750 3650
+F 0 "D2" H 13094 3696 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 3605 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 3650 50  0001 C CNN
+F 3 "~" H 12750 3650 50  0001 C CNN
+	1    12750 3650
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D3
+U 1 1 5E03F426
+P 12750 4350
+F 0 "D3" H 13094 4396 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 4305 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 4350 50  0001 C CNN
+F 3 "~" H 12750 4350 50  0001 C CNN
+	1    12750 4350
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D6
+U 1 1 5E04244C
+P 12750 6450
+F 0 "D6" H 13094 6496 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 6405 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 6450 50  0001 C CNN
+F 3 "~" H 12750 6450 50  0001 C CNN
+	1    12750 6450
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D7
+U 1 1 5E042456
+P 12750 7150
+F 0 "D7" H 13094 7196 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 7105 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 7150 50  0001 C CNN
+F 3 "~" H 12750 7150 50  0001 C CNN
+	1    12750 7150
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D8
+U 1 1 5E042460
+P 12750 7850
+F 0 "D8" H 13094 7896 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 7805 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 7850 50  0001 C CNN
+F 3 "~" H 12750 7850 50  0001 C CNN
+	1    12750 7850
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D5
+U 1 1 5E042442
+P 12750 5750
+F 0 "D5" H 13094 5796 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 5705 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 5750 50  0001 C CNN
+F 3 "~" H 12750 5750 50  0001 C CNN
+	1    12750 5750
+	1    0    0    1   
+$EndComp
+$Comp
+L splitflap-rescue:D_Bridge_+-AA-Device D4
+U 1 1 5E040148
+P 12750 5050
+F 0 "D4" H 13094 5096 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 13094 5005 50  0000 L CNN
+F 2 "Diode_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H 12750 5050 50  0001 C CNN
+F 3 "~" H 12750 5050 50  0001 C CNN
+	1    12750 5050
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	9550 3100 9550 2600
+Wire Wire Line
+	12750 2600 12750 2650
+Wire Wire Line
+	9550 3200 9650 3200
+Wire Wire Line
+	9650 3200 9650 2700
+Wire Wire Line
+	9650 2700 12150 2700
+Wire Wire Line
+	12150 2700 12150 3250
+Wire Wire Line
+	12050 3350 12050 2800
+Wire Wire Line
+	12050 2800 9750 2800
+Wire Wire Line
+	9750 2800 9750 3300
+Wire Wire Line
+	9750 3300 9550 3300
+Wire Wire Line
+	10050 3800 10250 3800
+Wire Wire Line
+	11950 2900 9850 2900
+Wire Wire Line
+	9850 2900 9850 3400
+Wire Wire Line
+	9850 3400 9550 3400
+Wire Wire Line
+	11650 4000 11650 5350
+Wire Wire Line
+	11650 3900 11750 3900
+Wire Wire Line
+	11750 3900 11750 4750
+Wire Wire Line
+	11650 3800 11850 3800
+Wire Wire Line
+	11850 3800 11850 4650
+Wire Wire Line
+	11650 3700 11950 3700
+Wire Wire Line
+	11950 3700 11950 4050
+Wire Wire Line
+	12050 3950 12050 3600
+Wire Wire Line
+	12050 3600 11950 3600
+Wire Wire Line
+	11950 2900 11950 3600
+Wire Wire Line
+	9550 6100 9550 5700
+Wire Wire Line
+	11800 5700 11800 5450
+Wire Wire Line
+	9550 5700 11800 5700
+Wire Wire Line
+	9550 6200 9650 6200
+Wire Wire Line
+	9650 6200 9650 5800
+Wire Wire Line
+	9650 5800 11800 5800
+Wire Wire Line
+	11800 5800 11800 6050
+Wire Wire Line
+	9550 6300 9750 6300
+Wire Wire Line
+	9750 6300 9750 5900
+Wire Wire Line
+	9750 5900 11700 5900
+Wire Wire Line
+	11700 5900 11700 6150
+Wire Wire Line
+	9550 6400 9850 6400
+Wire Wire Line
+	9850 6400 9850 6000
+Wire Wire Line
+	9850 6000 11600 6000
+Wire Wire Line
+	11600 6000 11600 6250
+Wire Wire Line
+	11600 6250 12100 6250
+Wire Wire Line
+	12100 6250 12100 6750
+Wire Wire Line
+	12750 6800 12750 6850
+Wire Wire Line
+	11800 6900 12100 6900
+Wire Wire Line
+	12100 6900 12100 7450
+Wire Wire Line
+	11800 7000 12000 7000
+Wire Wire Line
+	12000 7000 12000 7550
+Wire Wire Line
+	11800 7100 11900 7100
+Wire Wire Line
+	11900 7100 11900 8150
+Wire Wire Line
+	14500 2600 14500 4700
+Connection ~ 12750 2600
+Wire Wire Line
+	14400 3250 14400 4800
+Connection ~ 12750 3250
+Wire Wire Line
+	14300 3350 14300 4900
+Connection ~ 12750 3350
+Wire Wire Line
+	14200 3950 14200 5000
+Connection ~ 12750 3950
+Wire Wire Line
+	14100 4050 14100 5100
+Wire Wire Line
+	14100 5100 14500 5100
+Connection ~ 12750 4050
+Wire Wire Line
+	14000 4650 14000 5200
+Wire Wire Line
+	14000 5200 14500 5200
+Connection ~ 12750 4650
+Wire Wire Line
+	14500 8150 14500 6200
+Connection ~ 12750 8150
+Wire Wire Line
+	14400 7550 14400 6100
+Wire Wire Line
+	14400 6100 14500 6100
+Connection ~ 12750 7550
+Wire Wire Line
+	14300 7450 14300 6000
+Wire Wire Line
+	14300 6000 14500 6000
+Connection ~ 12750 7450
+Wire Wire Line
+	14200 6800 14200 5900
+Wire Wire Line
+	14200 5900 14500 5900
+Connection ~ 12750 6800
+Wire Wire Line
+	14100 6750 14100 5800
+Wire Wire Line
+	14100 5800 14500 5800
+Connection ~ 12750 6750
+Wire Wire Line
+	14000 6150 14000 5700
+Wire Wire Line
+	14000 5700 14500 5700
+Connection ~ 12750 6150
+Wire Wire Line
+	13900 6050 13900 5600
+Wire Wire Line
+	13900 5600 14500 5600
+Connection ~ 12750 6050
+Wire Wire Line
+	13900 4750 13900 5300
+Wire Wire Line
+	13900 5300 14500 5300
+Connection ~ 12750 4750
+Wire Wire Line
+	13800 5350 13800 5400
+Wire Wire Line
+	13800 5400 14500 5400
+Connection ~ 12750 5350
+Wire Wire Line
+	13700 5450 13700 5500
+Wire Wire Line
+	13700 5500 14500 5500
+Connection ~ 12750 5450
+Wire Wire Line
+	12750 2600 14500 2600
+Wire Wire Line
+	12750 3250 14400 3250
+Wire Wire Line
+	12750 3350 14300 3350
+Wire Wire Line
+	12750 3950 14200 3950
+Wire Wire Line
+	12750 4050 14100 4050
+Wire Wire Line
+	12750 4650 14000 4650
+Wire Wire Line
+	12750 8150 14500 8150
+Wire Wire Line
+	12750 7550 14400 7550
+Wire Wire Line
+	12750 7450 14300 7450
+Wire Wire Line
+	12750 6800 14200 6800
+Wire Wire Line
+	12750 6750 14100 6750
+Wire Wire Line
+	12750 6150 14000 6150
+Wire Wire Line
+	12750 6050 13900 6050
+Wire Wire Line
+	12750 4750 13900 4750
+Wire Wire Line
+	12750 5350 13800 5350
+Wire Wire Line
+	12750 5450 13700 5450
+$Comp
+L splitflap-rescue:VDD-power #PWR0118
+U 1 1 5E43A961
+P 13400 2150
+F 0 "#PWR0118" H 13400 2000 50  0001 C CNN
+F 1 "VDD" H 13417 2323 50  0000 C CNN
+F 2 "" H 13400 2150 50  0001 C CNN
+F 3 "" H 13400 2150 50  0001 C CNN
+	1    13400 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0119
+U 1 1 5E43B131
+P 12250 8600
+F 0 "#PWR0119" H 12250 8350 50  0001 C CNN
+F 1 "GND" H 12255 8427 50  0000 C CNN
+F 2 "" H 12250 8600 50  0001 C CNN
+F 3 "" H 12250 8600 50  0001 C CNN
+	1    12250 8600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	13050 7850 13400 7850
+Wire Wire Line
+	13400 7850 13400 7150
+Wire Wire Line
+	12050 3350 12750 3350
+Wire Wire Line
+	9550 2600 12750 2600
+Wire Wire Line
+	12150 3250 12750 3250
+Wire Wire Line
+	12050 3950 12750 3950
+Wire Wire Line
+	11950 4050 12750 4050
+Wire Wire Line
+	11850 4650 12750 4650
+Wire Wire Line
+	11900 8150 12750 8150
+Wire Wire Line
+	12000 7550 12750 7550
+Wire Wire Line
+	12100 7450 12750 7450
+Wire Wire Line
+	11800 6800 12750 6800
+Wire Wire Line
+	12100 6750 12750 6750
+Wire Wire Line
+	11700 6150 12750 6150
+Wire Wire Line
+	11800 6050 12750 6050
+Wire Wire Line
+	11750 4750 12750 4750
+Wire Wire Line
+	11650 5350 12750 5350
+Wire Wire Line
+	11800 5450 12750 5450
+Wire Wire Line
+	13050 7150 13400 7150
+Connection ~ 13400 7150
+Wire Wire Line
+	13400 7150 13400 6450
+Wire Wire Line
+	13050 6450 13400 6450
+Connection ~ 13400 6450
+Wire Wire Line
+	13400 6450 13400 5750
+Wire Wire Line
+	13050 5750 13400 5750
+Connection ~ 13400 5750
+Wire Wire Line
+	13400 5750 13400 5050
+Wire Wire Line
+	13050 5050 13400 5050
+Connection ~ 13400 5050
+Wire Wire Line
+	13400 5050 13400 4350
+Wire Wire Line
+	13050 4350 13400 4350
+Connection ~ 13400 4350
+Wire Wire Line
+	13400 4350 13400 3650
+Wire Wire Line
+	13050 3650 13400 3650
+Connection ~ 13400 3650
+Wire Wire Line
+	13400 3650 13400 2950
+Wire Wire Line
+	13050 2950 13400 2950
+Connection ~ 13400 2950
+Wire Wire Line
+	13400 2950 13400 2150
+Wire Wire Line
+	12250 8600 12250 7850
+Wire Wire Line
+	12250 2950 12450 2950
+Wire Wire Line
+	12450 3650 12250 3650
+Connection ~ 12250 3650
+Wire Wire Line
+	12250 3650 12250 2950
+Wire Wire Line
+	12450 4350 12250 4350
+Connection ~ 12250 4350
+Wire Wire Line
+	12250 4350 12250 3650
+Wire Wire Line
+	12450 5050 12250 5050
+Connection ~ 12250 5050
+Wire Wire Line
+	12250 5050 12250 4350
+Wire Wire Line
+	12450 5750 12250 5750
+Connection ~ 12250 5750
+Wire Wire Line
+	12250 5750 12250 5050
+Wire Wire Line
+	12450 6450 12250 6450
+Connection ~ 12250 6450
+Wire Wire Line
+	12250 6450 12250 5750
+Wire Wire Line
+	12450 7150 12250 7150
+Connection ~ 12250 7150
+Wire Wire Line
+	12250 7150 12250 6450
+Wire Wire Line
+	12450 7850 12250 7850
+Connection ~ 12250 7850
+Wire Wire Line
+	12250 7850 12250 7150
+Wire Wire Line
+	4200 2750 4200 2900
+$Comp
+L splitflap-rescue:VDD-power #PWR0120
+U 1 1 5DED682E
+P 3800 4350
+F 0 "#PWR0120" H 3800 4200 50  0001 C CNN
+F 1 "VDD" H 3817 4523 50  0000 C CNN
+F 2 "" H 3800 4350 50  0001 C CNN
+F 3 "" H 3800 4350 50  0001 C CNN
+	1    3800 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:74HC595-74xx U2
+U 1 1 5DEAA446
+P 4200 3650
+F 0 "U2" H 4200 4431 50  0000 C CNN
+F 1 "74HC595" H 4200 4340 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 4200 3650 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74hc595.pdf" H 4200 3650 50  0001 C CNN
+	1    4200 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0122
+U 1 1 5E756800
+P 4150 6450
+F 0 "#PWR0122" H 4150 6300 50  0001 C CNN
+F 1 "VCC" H 4167 6623 50  0000 C CNN
+F 2 "" H 4150 6450 50  0001 C CNN
+F 3 "" H 4150 6450 50  0001 C CNN
+	1    4150 6450
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0123
+U 1 1 5E75680A
+P 4150 8400
+F 0 "#PWR0123" H 4150 8150 50  0001 C CNN
+F 1 "GND" H 4155 8227 50  0000 C CNN
+F 2 "" H 4150 8400 50  0001 C CNN
+F 3 "" H 4150 8400 50  0001 C CNN
+	1    4150 8400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4150 8050 4150 8200
+Wire Wire Line
+	4150 6450 4150 6600
+$Comp
+L splitflap-rescue:VDD-power #PWR0124
+U 1 1 5E756816
+P 3750 8050
+F 0 "#PWR0124" H 3750 7900 50  0001 C CNN
+F 1 "VDD" H 3767 8223 50  0000 C CNN
+F 2 "" H 3750 8050 50  0001 C CNN
+F 3 "" H 3750 8050 50  0001 C CNN
+	1    3750 8050
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:74HC595-74xx U1
+U 1 1 5E756820
+P 4150 7350
+F 0 "U1" H 4150 8131 50  0000 C CNN
+F 1 "74HC595" H 4150 8040 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 4150 7350 50  0001 C CNN
+F 3 "http://www.ti.com/lit/ds/symlink/sn74hc595.pdf" H 4150 7350 50  0001 C CNN
+	1    4150 7350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 3850 3700 3850
+Wire Wire Line
+	3700 3850 3700 4500
+Wire Wire Line
+	3700 4500 4200 4500
+Connection ~ 4200 4500
+Wire Wire Line
+	4200 4500 4200 4700
+Wire Wire Line
+	3750 7550 3550 7550
+Wire Wire Line
+	3550 7550 3550 8200
+Wire Wire Line
+	3550 8200 4150 8200
+Connection ~ 4150 8200
+Wire Wire Line
+	4150 8200 4150 8400
+Wire Wire Line
+	3750 7250 3550 7250
+Wire Wire Line
+	3550 7250 3550 6600
+Wire Wire Line
+	3550 6600 4150 6600
+Connection ~ 4150 6600
+Wire Wire Line
+	4150 6600 4150 6750
+Wire Wire Line
+	3800 3550 3600 3550
+Wire Wire Line
+	3600 3550 3600 2900
+Wire Wire Line
+	3600 2900 4200 2900
+Connection ~ 4200 2900
+Wire Wire Line
+	4200 2900 4200 3050
+$Comp
+L splitflap-rescue:CD4049UBE-CD4049UBE-splitflap-rescue IC2
+U 1 1 5E1254E2
+P 5350 4150
+F 0 "IC2" H 5900 4415 50  0000 C CNN
+F 1 "CD4049UBE" H 5900 4324 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 6300 4250 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/cd4049ub.pdf" H 6300 4150 50  0001 L CNN
+F 4 "CD4049UBE, Hex Inverter Buffer, Converter, 26mA -0.5  20 V 16-Pin PDIP" H 6300 4050 50  0001 L CNN "Description"
+F 5 "5.08" H 6300 3950 50  0001 L CNN "Height"
+F 6 "Texas Instruments" H 6300 3850 50  0001 L CNN "Manufacturer_Name"
+F 7 "CD4049UBE" H 6300 3750 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "595-CD4049UBE" H 6300 3650 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.com/Search/Refine.aspx?Keyword=595-CD4049UBE" H 6300 3550 50  0001 L CNN "Mouser Price/Stock"
+F 10 "0527899" H 6300 3450 50  0001 L CNN "RS Part Number"
+F 11 "http://uk.rs-online.com/web/p/products/0527899" H 6300 3350 50  0001 L CNN "RS Price/Stock"
+	1    5350 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 3350 4600 3350
+Wire Wire Line
+	4800 3450 4600 3450
+Wire Wire Line
+	8150 3700 7650 3700
+Wire Wire Line
+	7650 3700 7650 1850
+Wire Wire Line
+	7650 1850 4600 1850
+Wire Wire Line
+	8150 3800 7350 3800
+Wire Wire Line
+	7350 3800 7350 1950
+Wire Wire Line
+	7350 1950 4700 1950
+Wire Wire Line
+	8150 3900 7250 3900
+Wire Wire Line
+	7250 3900 7250 2050
+Wire Wire Line
+	7250 2050 4800 2050
+Wire Wire Line
+	8150 4000 7150 4000
+Wire Wire Line
+	7150 4000 7150 2150
+Wire Wire Line
+	7150 2150 4900 2150
+Wire Wire Line
+	4700 3100 4700 3350
+Wire Wire Line
+	4800 3300 4800 3450
+Wire Wire Line
+	4700 3100 4800 3100
+Wire Wire Line
+	4700 1950 4700 2800
+Wire Wire Line
+	4800 2050 4800 3100
+Wire Wire Line
+	4900 2150 4900 3000
+Wire Wire Line
+	9500 5000 7050 5000
+Wire Wire Line
+	7050 5000 7050 2250
+Wire Wire Line
+	7050 2250 5000 2250
+Wire Wire Line
+	5000 2250 5000 3300
+Wire Wire Line
+	5000 3300 4800 3300
+Wire Wire Line
+	9600 5100 6950 5100
+Wire Wire Line
+	6950 5100 6950 2350
+Wire Wire Line
+	6950 2350 5100 2350
+Wire Wire Line
+	5100 2350 5100 3200
+$Comp
+L splitflap-rescue:CD4049UBE-CD4049UBE-splitflap-rescue IC1
+U 1 1 5DED8412
+P 5200 2700
+F 0 "IC1" H 5750 2965 50  0000 C CNN
+F 1 "CD4049UBE" H 5750 2874 50  0000 C CNN
+F 2 "Package_DIP:DIP-16_W7.62mm_LongPads" H 6150 2800 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/cd4049ub.pdf" H 6150 2700 50  0001 L CNN
+F 4 "CD4049UBE, Hex Inverter Buffer, Converter, 26mA -0.5  20 V 16-Pin PDIP" H 6150 2600 50  0001 L CNN "Description"
+F 5 "5.08" H 6150 2500 50  0001 L CNN "Height"
+F 6 "Texas Instruments" H 6150 2400 50  0001 L CNN "Manufacturer_Name"
+F 7 "CD4049UBE" H 6150 2300 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "595-CD4049UBE" H 6150 2200 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.com/Search/Refine.aspx?Keyword=595-CD4049UBE" H 6150 2100 50  0001 L CNN "Mouser Price/Stock"
+F 10 "0527899" H 6150 2000 50  0001 L CNN "RS Part Number"
+F 11 "http://uk.rs-online.com/web/p/products/0527899" H 6150 1900 50  0001 L CNN "RS Price/Stock"
+	1    5200 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4600 1850 4600 2900
+Wire Wire Line
+	5200 2900 4600 2900
+Connection ~ 4600 2900
+Wire Wire Line
+	4600 2900 4600 3250
+Wire Wire Line
+	5200 3100 4800 3100
+Connection ~ 4800 3100
+Wire Wire Line
+	5200 3300 5000 3300
+Connection ~ 5000 3300
+Wire Wire Line
+	5200 2800 4700 2800
+Wire Wire Line
+	5200 3000 4900 3000
+Wire Wire Line
+	5200 3200 5100 3200
+Wire Wire Line
+	4600 3550 4950 3550
+Wire Wire Line
+	6300 3550 6300 3400
+Wire Wire Line
+	6400 3650 6400 3200
+Wire Wire Line
+	6400 3200 6300 3200
+Wire Wire Line
+	4600 3650 5150 3650
+Wire Wire Line
+	6300 2900 6500 2900
+Wire Wire Line
+	6500 2900 6500 3750
+Wire Wire Line
+	6500 3750 5250 3750
+Wire Wire Line
+	9700 5200 4950 5200
+Wire Wire Line
+	4950 5200 4950 3550
+Connection ~ 4950 3550
+Wire Wire Line
+	4950 3550 6300 3550
+Wire Wire Line
+	9800 5300 6600 5300
+Wire Wire Line
+	6600 5300 6600 3300
+Wire Wire Line
+	6600 3300 6300 3300
+Wire Wire Line
+	8150 6700 5150 6700
+Wire Wire Line
+	5150 6700 5150 3650
+Connection ~ 5150 3650
+Wire Wire Line
+	5150 3650 6400 3650
+Wire Wire Line
+	8150 6800 6700 6800
+Wire Wire Line
+	6700 6800 6700 3100
+Wire Wire Line
+	6700 3100 6300 3100
+Wire Wire Line
+	8150 6900 5250 6900
+Wire Wire Line
+	5250 6900 5250 3750
+Connection ~ 5250 3750
+Wire Wire Line
+	5250 3750 4600 3750
+Wire Wire Line
+	8150 7000 6800 7000
+Wire Wire Line
+	6800 7000 6800 2800
+Wire Wire Line
+	6800 2800 6300 2800
+Wire Wire Line
+	5350 4350 4850 4350
+Wire Wire Line
+	4850 4350 4850 3850
+Wire Wire Line
+	4850 3850 4600 3850
+Wire Wire Line
+	5350 4550 4750 4550
+Wire Wire Line
+	4750 4550 4750 3950
+Wire Wire Line
+	4750 3950 4600 3950
+Wire Wire Line
+	6450 4350 6550 4350
+Wire Wire Line
+	6550 4350 6550 3900
+Wire Wire Line
+	6550 3900 6200 3900
+Wire Wire Line
+	5350 3900 5350 4150
+Wire Wire Line
+	6550 4350 6550 4650
+Wire Wire Line
+	6550 4650 6450 4650
+Connection ~ 6550 4350
+Wire Wire Line
+	6550 4650 6550 4850
+Wire Wire Line
+	6550 4850 6450 4850
+Connection ~ 6550 4650
+Wire Wire Line
+	6550 4850 6550 5000
+Wire Wire Line
+	6550 5000 4850 5000
+Wire Wire Line
+	4850 5000 4850 4750
+Wire Wire Line
+	4850 4750 5350 4750
+Connection ~ 6550 4850
+Wire Wire Line
+	9650 8000 5350 8000
+Wire Wire Line
+	5350 8000 5350 5900
+Wire Wire Line
+	5350 5900 4650 5900
+Wire Wire Line
+	4650 5900 4650 4350
+Wire Wire Line
+	4650 4350 4850 4350
+Connection ~ 4850 4350
+Wire Wire Line
+	9750 8100 5450 8100
+Wire Wire Line
+	5450 8100 5450 5800
+Wire Wire Line
+	5450 5800 4550 5800
+Wire Wire Line
+	4550 5800 4550 4250
+Wire Wire Line
+	4550 4250 5350 4250
+Wire Wire Line
+	9850 8200 5550 8200
+Wire Wire Line
+	5550 8200 5550 5700
+Wire Wire Line
+	5550 5700 4450 5700
+Wire Wire Line
+	4450 5700 4450 4550
+Wire Wire Line
+	4450 4550 4750 4550
+Connection ~ 4750 4550
+Wire Wire Line
+	9950 8300 5650 8300
+Wire Wire Line
+	5650 8300 5650 5600
+Wire Wire Line
+	5650 5600 4750 5600
+Wire Wire Line
+	4750 5600 4750 4650
+Wire Wire Line
+	4750 4650 5050 4650
+Wire Wire Line
+	5050 4650 5050 4450
+Wire Wire Line
+	5050 4450 5350 4450
+$Comp
+L splitflap-rescue:VCC-power #PWR0125
+U 1 1 5ED0F5FC
+P 5200 2550
+F 0 "#PWR0125" H 5200 2400 50  0001 C CNN
+F 1 "VCC" H 5217 2723 50  0000 C CNN
+F 2 "" H 5200 2550 50  0001 C CNN
+F 3 "" H 5200 2550 50  0001 C CNN
+	1    5200 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 2550 5200 2700
+$Comp
+L splitflap-rescue:VCC-power #PWR0126
+U 1 1 5ED3E654
+P 6400 3950
+F 0 "#PWR0126" H 6400 3800 50  0001 C CNN
+F 1 "VCC" H 6417 4123 50  0000 C CNN
+F 2 "" H 6400 3950 50  0001 C CNN
+F 3 "" H 6400 3950 50  0001 C CNN
+	1    6400 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0127
+U 1 1 5ED3EC53
+P 5350 5100
+F 0 "#PWR0127" H 5350 4850 50  0001 C CNN
+F 1 "GND" H 5355 4927 50  0000 C CNN
+F 2 "" H 5350 5100 50  0001 C CNN
+F 3 "" H 5350 5100 50  0001 C CNN
+	1    5350 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0128
+U 1 1 5ED3F22C
+P 5050 3450
+F 0 "#PWR0128" H 5050 3200 50  0001 C CNN
+F 1 "GND" H 5055 3277 50  0000 C CNN
+F 2 "" H 5050 3450 50  0001 C CNN
+F 3 "" H 5050 3450 50  0001 C CNN
+	1    5050 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 3450 5200 3450
+Wire Wire Line
+	5200 3450 5200 3400
+Wire Wire Line
+	6400 3950 6200 3950
+Wire Wire Line
+	6200 3950 6200 3900
+Connection ~ 6200 3900
+Wire Wire Line
+	6200 3900 5350 3900
+Wire Wire Line
+	5350 4850 5350 5100
+$Comp
+L splitflap-rescue:Conn_02x06_Odd_Even-Connector_Generic J1
+U 1 1 5E673ABB
+P 1850 3200
+F 0 "J1" H 1900 3617 50  0000 C CNN
+F 1 "Conn_02x06_Odd_Even" H 1900 3526 50  0000 C CNN
+F 2 "Connector_IDC:IDC-Header_2x06_P2.54mm_Vertical" H 1850 3200 50  0001 C CNN
+F 3 "~" H 1850 3200 50  0001 C CNN
+	1    1850 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1650 3000 1650 2700
+Wire Wire Line
+	1650 2700 2150 2700
+Wire Wire Line
+	2150 2700 2150 3000
+Wire Wire Line
+	1650 3100 1600 3100
+Wire Wire Line
+	1600 3100 1600 2650
+Wire Wire Line
+	1600 2650 2150 2650
+Wire Wire Line
+	2200 2650 2200 3100
+Wire Wire Line
+	2200 3100 2150 3100
+Wire Wire Line
+	2150 3500 2150 3600
+Wire Wire Line
+	1650 3600 1650 3500
+Wire Wire Line
+	3800 3250 2600 3250
+Wire Wire Line
+	2600 3250 2600 3200
+Wire Wire Line
+	2600 3200 2150 3200
+Wire Wire Line
+	3800 3450 2500 3450
+Wire Wire Line
+	2450 3450 2450 3300
+Wire Wire Line
+	2450 3300 2150 3300
+Wire Wire Line
+	3800 3750 2600 3750
+Wire Wire Line
+	2350 3750 2350 3400
+Wire Wire Line
+	2350 3400 2150 3400
+Wire Wire Line
+	3750 6950 3400 6950
+Wire Wire Line
+	3400 6950 3400 3900
+Wire Wire Line
+	1450 3900 1450 3200
+Wire Wire Line
+	1450 3200 1650 3200
+Wire Wire Line
+	3750 7150 3300 7150
+Wire Wire Line
+	3300 7150 3300 4000
+Wire Wire Line
+	3300 4000 1350 4000
+Wire Wire Line
+	1350 4000 1350 3300
+Wire Wire Line
+	1350 3300 1650 3300
+Wire Wire Line
+	3750 7450 3200 7450
+Wire Wire Line
+	3200 7450 3200 4100
+Wire Wire Line
+	3200 4100 1250 4100
+Wire Wire Line
+	1250 4100 1250 3400
+Wire Wire Line
+	1250 3400 1650 3400
+$Comp
+L splitflap-rescue:GND-power #PWR0102
+U 1 1 5E8522B5
+P 1900 3650
+F 0 "#PWR0102" H 1900 3400 50  0001 C CNN
+F 1 "GND" H 1905 3477 50  0000 C CNN
+F 2 "" H 1900 3650 50  0001 C CNN
+F 3 "" H 1900 3650 50  0001 C CNN
+	1    1900 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0111
+U 1 1 5E8528FB
+P 2150 2550
+F 0 "#PWR0111" H 2150 2400 50  0001 C CNN
+F 1 "VCC" H 2167 2723 50  0000 C CNN
+F 2 "" H 2150 2550 50  0001 C CNN
+F 3 "" H 2150 2550 50  0001 C CNN
+	1    2150 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VDD-power #PWR0112
+U 1 1 5E854DC3
+P 1650 2550
+F 0 "#PWR0112" H 1650 2400 50  0001 C CNN
+F 1 "VDD" H 1667 2723 50  0000 C CNN
+F 2 "" H 1650 2550 50  0001 C CNN
+F 3 "" H 1650 2550 50  0001 C CNN
+	1    1650 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2150 2550 2150 2650
+Connection ~ 2150 2650
+Wire Wire Line
+	2150 2650 2200 2650
+Wire Wire Line
+	1650 2550 1650 2700
+Connection ~ 1650 2700
+$Comp
+L splitflap-rescue:Conn_02x06_Odd_Even-Connector_Generic J2
+U 1 1 5E927BDA
+P 1850 4900
+F 0 "J2" H 1900 5317 50  0000 C CNN
+F 1 "Conn_02x06_Odd_Even" H 1900 5226 50  0000 C CNN
+F 2 "Connector_IDC:IDC-Header_2x06_P2.54mm_Vertical" H 1850 4900 50  0001 C CNN
+F 3 "~" H 1850 4900 50  0001 C CNN
+	1    1850 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1650 3000 1150 3000
+Wire Wire Line
+	1150 3000 1150 4700
+Wire Wire Line
+	1150 4700 1550 4700
+Connection ~ 1650 3000
+Wire Wire Line
+	1550 4700 1550 4450
+Wire Wire Line
+	1550 4450 2150 4450
+Wire Wire Line
+	2150 4450 2150 4700
+Connection ~ 1550 4700
+Wire Wire Line
+	1550 4700 1650 4700
+Wire Wire Line
+	1600 3100 1050 3100
+Wire Wire Line
+	1050 3100 1050 4800
+Wire Wire Line
+	1050 4800 1450 4800
+Connection ~ 1600 3100
+Wire Wire Line
+	1450 4800 1450 4350
+Wire Wire Line
+	1450 4350 2250 4350
+Wire Wire Line
+	2250 4350 2250 4800
+Wire Wire Line
+	2250 4800 2150 4800
+Connection ~ 1450 4800
+Wire Wire Line
+	1450 4800 1650 4800
+Wire Wire Line
+	1650 5200 1650 5300
+Wire Wire Line
+	1650 5300 2150 5300
+Wire Wire Line
+	2150 5300 2150 5200
+Wire Wire Line
+	950  5200 950  3500
+Wire Wire Line
+	950  3500 1650 3500
+Wire Wire Line
+	950  5200 1650 5200
+Connection ~ 1650 5200
+Connection ~ 1650 3500
+Wire Wire Line
+	2400 4900 2400 4300
+Wire Wire Line
+	2400 4300 4600 4300
+Wire Wire Line
+	4600 4300 4600 4150
+Wire Wire Line
+	2150 4900 2400 4900
+Wire Wire Line
+	4550 7850 5150 7850
+Wire Wire Line
+	5150 7850 5150 6800
+Wire Wire Line
+	5150 6800 4350 6800
+Wire Wire Line
+	4350 6800 4350 5400
+Wire Wire Line
+	4350 5400 1550 5400
+Wire Wire Line
+	1550 5400 1550 4900
+Wire Wire Line
+	1550 4900 1650 4900
+Wire Wire Line
+	2150 5000 2500 5000
+Wire Wire Line
+	2500 5000 2500 3450
+Connection ~ 2500 3450
+Wire Wire Line
+	2500 3450 2450 3450
+Wire Wire Line
+	2150 5100 2600 5100
+Wire Wire Line
+	2600 5100 2600 3750
+Connection ~ 2600 3750
+Wire Wire Line
+	2600 3750 2350 3750
+Wire Wire Line
+	3400 3900 1450 3900
+Wire Wire Line
+	1650 5000 1350 5000
+Wire Wire Line
+	1350 5000 1350 4000
+Connection ~ 1350 4000
+Wire Wire Line
+	1650 5100 1250 5100
+Wire Wire Line
+	1250 5100 1250 4100
+Connection ~ 1250 4100
+Wire Wire Line
+	1900 3650 1900 3600
+Wire Wire Line
+	2150 3600 1900 3600
+Wire Wire Line
+	1900 3600 1650 3600
+Connection ~ 1900 3600
+$Comp
+L splitflap-rescue:CP-Device C1
+U 1 1 5E74F33F
+P 3150 8150
+F 0 "C1" H 3268 8196 50  0000 L CNN
+F 1 "CP" H 3268 8105 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 3188 8000 50  0001 C CNN
+F 3 "~" H 3150 8150 50  0001 C CNN
+	1    3150 8150
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:CP-Device C4
+U 1 1 5E794808
+P 6450 2600
+F 0 "C4" H 6568 2646 50  0000 L CNN
+F 1 "CP" H 6568 2555 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 6488 2450 50  0001 C CNN
+F 3 "~" H 6450 2600 50  0001 C CNN
+	1    6450 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:CP-Device C3
+U 1 1 5E7D90C7
+P 5850 5550
+F 0 "C3" H 5968 5596 50  0000 L CNN
+F 1 "CP" H 5968 5505 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 5888 5400 50  0001 C CNN
+F 3 "~" H 5850 5550 50  0001 C CNN
+	1    5850 5550
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0121
+U 1 1 5E81C64E
+P 6750 2500
+F 0 "#PWR0121" H 6750 2350 50  0001 C CNN
+F 1 "VCC" H 6767 2673 50  0000 C CNN
+F 2 "" H 6750 2500 50  0001 C CNN
+F 3 "" H 6750 2500 50  0001 C CNN
+	1    6750 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0129
+U 1 1 5E85FC19
+P 6750 2650
+F 0 "#PWR0129" H 6750 2400 50  0001 C CNN
+F 1 "GND" H 6755 2477 50  0000 C CNN
+F 2 "" H 6750 2650 50  0001 C CNN
+F 3 "" H 6750 2650 50  0001 C CNN
+	1    6750 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6750 2500 6650 2500
+Wire Wire Line
+	6650 2500 6650 2450
+Wire Wire Line
+	6650 2450 6450 2450
+Wire Wire Line
+	6750 2650 6650 2650
+Wire Wire Line
+	6650 2650 6650 2750
+Wire Wire Line
+	6650 2750 6450 2750
+$Comp
+L splitflap-rescue:VCC-power #PWR0130
+U 1 1 5E9F38CF
+P 3900 2200
+F 0 "#PWR0130" H 3900 2050 50  0001 C CNN
+F 1 "VCC" H 3917 2373 50  0000 C CNN
+F 2 "" H 3900 2200 50  0001 C CNN
+F 3 "" H 3900 2200 50  0001 C CNN
+	1    3900 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0131
+U 1 1 5E9F38D9
+P 3900 2350
+F 0 "#PWR0131" H 3900 2100 50  0001 C CNN
+F 1 "GND" H 3905 2177 50  0000 C CNN
+F 2 "" H 3900 2350 50  0001 C CNN
+F 3 "" H 3900 2350 50  0001 C CNN
+	1    3900 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0132
+U 1 1 5EA3ACA8
+P 6200 5450
+F 0 "#PWR0132" H 6200 5300 50  0001 C CNN
+F 1 "VCC" H 6217 5623 50  0000 C CNN
+F 2 "" H 6200 5450 50  0001 C CNN
+F 3 "" H 6200 5450 50  0001 C CNN
+	1    6200 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0133
+U 1 1 5EA3ACB2
+P 6200 5600
+F 0 "#PWR0133" H 6200 5350 50  0001 C CNN
+F 1 "GND" H 6205 5427 50  0000 C CNN
+F 2 "" H 6200 5600 50  0001 C CNN
+F 3 "" H 6200 5600 50  0001 C CNN
+	1    6200 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0134
+U 1 1 5EA811B3
+P 2800 8150
+F 0 "#PWR0134" H 2800 8000 50  0001 C CNN
+F 1 "VCC" H 2817 8323 50  0000 C CNN
+F 2 "" H 2800 8150 50  0001 C CNN
+F 3 "" H 2800 8150 50  0001 C CNN
+	1    2800 8150
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0135
+U 1 1 5EA811BD
+P 2800 8300
+F 0 "#PWR0135" H 2800 8050 50  0001 C CNN
+F 1 "GND" H 2805 8127 50  0000 C CNN
+F 2 "" H 2800 8300 50  0001 C CNN
+F 3 "" H 2800 8300 50  0001 C CNN
+	1    2800 8300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 2100 3750 2200
+Wire Wire Line
+	3750 2200 3900 2200
+Wire Wire Line
+	3600 2400 3750 2400
+Wire Wire Line
+	3750 2400 3750 2350
+Wire Wire Line
+	3750 2350 3900 2350
+Wire Wire Line
+	5850 5700 6050 5700
+Wire Wire Line
+	6050 5700 6050 5600
+Wire Wire Line
+	6050 5600 6200 5600
+Wire Wire Line
+	5850 5400 6050 5400
+Wire Wire Line
+	6050 5400 6050 5450
+Wire Wire Line
+	6050 5450 6200 5450
+Wire Wire Line
+	2800 8300 3150 8300
+Wire Wire Line
+	3150 8000 3000 8000
+Wire Wire Line
+	3000 8000 3000 8150
+Wire Wire Line
+	3000 8150 2800 8150
+$Comp
+L splitflap-rescue:CP-Device C7
+U 1 1 5EC75D4E
+P 8350 2400
+F 0 "C7" H 8468 2446 50  0000 L CNN
+F 1 "CP" H 8468 2355 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 8388 2250 50  0001 C CNN
+F 3 "~" H 8350 2400 50  0001 C CNN
+	1    8350 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0136
+U 1 1 5EC75D58
+P 8650 2350
+F 0 "#PWR0136" H 8650 2200 50  0001 C CNN
+F 1 "VCC" H 8667 2523 50  0000 C CNN
+F 2 "" H 8650 2350 50  0001 C CNN
+F 3 "" H 8650 2350 50  0001 C CNN
+	1    8650 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0137
+U 1 1 5EC75D62
+P 8650 2500
+F 0 "#PWR0137" H 8650 2250 50  0001 C CNN
+F 1 "GND" H 8655 2327 50  0000 C CNN
+F 2 "" H 8650 2500 50  0001 C CNN
+F 3 "" H 8650 2500 50  0001 C CNN
+	1    8650 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8350 2250 8500 2250
+Wire Wire Line
+	8500 2250 8500 2350
+Wire Wire Line
+	8500 2350 8650 2350
+Wire Wire Line
+	8350 2550 8500 2550
+Wire Wire Line
+	8500 2550 8500 2500
+Wire Wire Line
+	8500 2500 8650 2500
+$Comp
+L splitflap-rescue:CP-Device C10
+U 1 1 5ECC4B98
+P 9600 3800
+F 0 "C10" H 9718 3846 50  0000 L CNN
+F 1 "CP" H 9718 3755 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 9638 3650 50  0001 C CNN
+F 3 "~" H 9600 3800 50  0001 C CNN
+	1    9600 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0138
+U 1 1 5ECC4B9E
+P 9900 3750
+F 0 "#PWR0138" H 9900 3600 50  0001 C CNN
+F 1 "VCC" H 9917 3923 50  0000 C CNN
+F 2 "" H 9900 3750 50  0001 C CNN
+F 3 "" H 9900 3750 50  0001 C CNN
+	1    9900 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0139
+U 1 1 5ECC4BA4
+P 9900 3900
+F 0 "#PWR0139" H 9900 3650 50  0001 C CNN
+F 1 "GND" H 9905 3727 50  0000 C CNN
+F 2 "" H 9900 3900 50  0001 C CNN
+F 3 "" H 9900 3900 50  0001 C CNN
+	1    9900 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9600 3650 9750 3650
+Wire Wire Line
+	9750 3650 9750 3750
+Wire Wire Line
+	9750 3750 9900 3750
+Wire Wire Line
+	9600 3950 9750 3950
+Wire Wire Line
+	9750 3950 9750 3900
+Wire Wire Line
+	9750 3900 9900 3900
+$Comp
+L splitflap-rescue:CP-Device C9
+U 1 1 5ED11C42
+P 9550 6700
+F 0 "C9" H 9668 6746 50  0000 L CNN
+F 1 "CP" H 9668 6655 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 9588 6550 50  0001 C CNN
+F 3 "~" H 9550 6700 50  0001 C CNN
+	1    9550 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0140
+U 1 1 5ED11C48
+P 9850 6650
+F 0 "#PWR0140" H 9850 6500 50  0001 C CNN
+F 1 "VCC" H 9867 6823 50  0000 C CNN
+F 2 "" H 9850 6650 50  0001 C CNN
+F 3 "" H 9850 6650 50  0001 C CNN
+	1    9850 6650
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0141
+U 1 1 5ED11C4E
+P 9850 6800
+F 0 "#PWR0141" H 9850 6550 50  0001 C CNN
+F 1 "GND" H 9855 6627 50  0000 C CNN
+F 2 "" H 9850 6800 50  0001 C CNN
+F 3 "" H 9850 6800 50  0001 C CNN
+	1    9850 6800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9550 6550 9700 6550
+Wire Wire Line
+	9700 6550 9700 6650
+Wire Wire Line
+	9700 6650 9850 6650
+Wire Wire Line
+	9550 6850 9700 6850
+Wire Wire Line
+	9700 6850 9700 6800
+Wire Wire Line
+	9700 6800 9850 6800
+$Comp
+L splitflap-rescue:CP-Device C6
+U 1 1 5ED600F2
+P 7450 7400
+F 0 "C6" H 7568 7446 50  0000 L CNN
+F 1 "CP" H 7568 7355 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 7488 7250 50  0001 C CNN
+F 3 "~" H 7450 7400 50  0001 C CNN
+	1    7450 7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:VCC-power #PWR0142
+U 1 1 5ED600F8
+P 7750 7350
+F 0 "#PWR0142" H 7750 7200 50  0001 C CNN
+F 1 "VCC" H 7767 7523 50  0000 C CNN
+F 2 "" H 7750 7350 50  0001 C CNN
+F 3 "" H 7750 7350 50  0001 C CNN
+	1    7750 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0143
+U 1 1 5ED600FE
+P 7750 7500
+F 0 "#PWR0143" H 7750 7250 50  0001 C CNN
+F 1 "GND" H 7755 7327 50  0000 C CNN
+F 2 "" H 7750 7500 50  0001 C CNN
+F 3 "" H 7750 7500 50  0001 C CNN
+	1    7750 7500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7450 7250 7600 7250
+Wire Wire Line
+	7600 7250 7600 7350
+Wire Wire Line
+	7600 7350 7750 7350
+Wire Wire Line
+	7450 7550 7600 7550
+Wire Wire Line
+	7600 7550 7600 7500
+Wire Wire Line
+	7600 7500 7750 7500
+$Comp
+L splitflap-rescue:CP-Device C5
+U 1 1 5EE01DC3
+P 6750 7400
+F 0 "C5" H 6868 7446 50  0000 L CNN
+F 1 "CP" H 6868 7355 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 6788 7250 50  0001 C CNN
+F 3 "~" H 6750 7400 50  0001 C CNN
+	1    6750 7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0144
+U 1 1 5EE01DCF
+P 7050 7500
+F 0 "#PWR0144" H 7050 7250 50  0001 C CNN
+F 1 "GND" H 7055 7327 50  0000 C CNN
+F 2 "" H 7050 7500 50  0001 C CNN
+F 3 "" H 7050 7500 50  0001 C CNN
+	1    7050 7500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6750 7250 6900 7250
+Wire Wire Line
+	6900 7250 6900 7350
+Wire Wire Line
+	6750 7550 6900 7550
+Wire Wire Line
+	6900 7550 6900 7500
+Wire Wire Line
+	6900 7500 7050 7500
+$Comp
+L splitflap-rescue:VDD-power #PWR0145
+U 1 1 5EEF58E1
+P 7050 7350
+F 0 "#PWR0145" H 7050 7200 50  0001 C CNN
+F 1 "VDD" H 7065 7523 50  0000 C CNN
+F 2 "" H 7050 7350 50  0001 C CNN
+F 3 "" H 7050 7350 50  0001 C CNN
+	1    7050 7350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 7350 6900 7350
+$Comp
+L splitflap-rescue:CP-Device C8
+U 1 1 5EF49576
+P 8900 2400
+F 0 "C8" H 9018 2446 50  0000 L CNN
+F 1 "CP" H 9018 2355 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 8938 2250 50  0001 C CNN
+F 3 "~" H 8900 2400 50  0001 C CNN
+	1    8900 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0146
+U 1 1 5EF4957C
+P 9200 2500
+F 0 "#PWR0146" H 9200 2250 50  0001 C CNN
+F 1 "GND" H 9205 2327 50  0000 C CNN
+F 2 "" H 9200 2500 50  0001 C CNN
+F 3 "" H 9200 2500 50  0001 C CNN
+	1    9200 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8900 2250 9050 2250
+Wire Wire Line
+	9050 2250 9050 2350
+Wire Wire Line
+	8900 2550 9050 2550
+Wire Wire Line
+	9050 2550 9050 2500
+Wire Wire Line
+	9050 2500 9200 2500
+$Comp
+L splitflap-rescue:VDD-power #PWR0147
+U 1 1 5EF49587
+P 9200 2350
+F 0 "#PWR0147" H 9200 2200 50  0001 C CNN
+F 1 "VDD" H 9215 2523 50  0000 C CNN
+F 2 "" H 9200 2350 50  0001 C CNN
+F 3 "" H 9200 2350 50  0001 C CNN
+	1    9200 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9200 2350 9050 2350
+$Comp
+L splitflap-rescue:CP-Device C12
+U 1 1 5EF9EE80
+P 11300 3150
+F 0 "C12" H 11418 3196 50  0000 L CNN
+F 1 "CP" H 11418 3105 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 11338 3000 50  0001 C CNN
+F 3 "~" H 11300 3150 50  0001 C CNN
+	1    11300 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0148
+U 1 1 5EF9EE86
+P 11600 3250
+F 0 "#PWR0148" H 11600 3000 50  0001 C CNN
+F 1 "GND" H 11605 3077 50  0000 C CNN
+F 2 "" H 11600 3250 50  0001 C CNN
+F 3 "" H 11600 3250 50  0001 C CNN
+	1    11600 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	11300 3000 11450 3000
+Wire Wire Line
+	11450 3000 11450 3100
+Wire Wire Line
+	11300 3300 11450 3300
+Wire Wire Line
+	11450 3300 11450 3250
+Wire Wire Line
+	11450 3250 11600 3250
+$Comp
+L splitflap-rescue:VDD-power #PWR0149
+U 1 1 5EF9EE91
+P 11600 3100
+F 0 "#PWR0149" H 11600 2950 50  0001 C CNN
+F 1 "VDD" H 11615 3273 50  0000 C CNN
+F 2 "" H 11600 3100 50  0001 C CNN
+F 3 "" H 11600 3100 50  0001 C CNN
+	1    11600 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	11600 3100 11450 3100
+$Comp
+L splitflap-rescue:CP-Device C11
+U 1 1 5EFF4433
+P 10450 6300
+F 0 "C11" H 10568 6346 50  0000 L CNN
+F 1 "CP" H 10568 6255 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 10488 6150 50  0001 C CNN
+F 3 "~" H 10450 6300 50  0001 C CNN
+	1    10450 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:GND-power #PWR0150
+U 1 1 5EFF4439
+P 10750 6400
+F 0 "#PWR0150" H 10750 6150 50  0001 C CNN
+F 1 "GND" H 10755 6227 50  0000 C CNN
+F 2 "" H 10750 6400 50  0001 C CNN
+F 3 "" H 10750 6400 50  0001 C CNN
+	1    10750 6400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10450 6150 10600 6150
+Wire Wire Line
+	10600 6150 10600 6250
+Wire Wire Line
+	10450 6450 10600 6450
+Wire Wire Line
+	10600 6450 10600 6400
+Wire Wire Line
+	10600 6400 10750 6400
+$Comp
+L splitflap-rescue:VDD-power #PWR0151
+U 1 1 5EFF4444
+P 10750 6250
+F 0 "#PWR0151" H 10750 6100 50  0001 C CNN
+F 1 "VDD" H 10765 6423 50  0000 C CNN
+F 2 "" H 10750 6250 50  0001 C CNN
+F 3 "" H 10750 6250 50  0001 C CNN
+	1    10750 6250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10750 6250 10600 6250
+Wire Wire Line
+	3600 2100 3750 2100
+$Comp
+L splitflap-rescue:CP-Device C2
+U 1 1 5E7506B0
+P 3600 2250
+F 0 "C2" H 3718 2296 50  0000 L CNN
+F 1 "CP" H 3718 2205 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D4.0mm_P2.00mm" H 3638 2100 50  0001 C CNN
+F 3 "~" H 3600 2250 50  0001 C CNN
+	1    3600 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14400 4800 14500 4800
+Wire Wire Line
+	14300 4900 14500 4900
+Wire Wire Line
+	14200 5000 14500 5000
+$Comp
+L splitflap-rescue:Screw_Terminal_01x04-Connector J3
+U 1 1 5F266857
+P 14700 4800
+F 0 "J3" H 14780 4792 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 14780 4701 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 4800 50  0001 C CNN
+F 3 "~" H 14700 4800 50  0001 C CNN
+	1    14700 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:Screw_Terminal_01x04-Connector J4
+U 1 1 5F46FDCA
+P 14700 5200
+F 0 "J4" H 14780 5192 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 14780 5101 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 5200 50  0001 C CNN
+F 3 "~" H 14700 5200 50  0001 C CNN
+	1    14700 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:Screw_Terminal_01x04-Connector J5
+U 1 1 5F4C5B33
+P 14700 5600
+F 0 "J5" H 14780 5592 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 14780 5501 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 5600 50  0001 C CNN
+F 3 "~" H 14700 5600 50  0001 C CNN
+	1    14700 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L splitflap-rescue:Screw_Terminal_01x04-Connector J6
+U 1 1 5F51B921
+P 14700 6000
+F 0 "J6" H 14780 5992 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 14780 5901 50  0000 L CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-4_P5.08mm" H 14700 6000 50  0001 C CNN
+F 3 "~" H 14700 6000 50  0001 C CNN
+	1    14700 6000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 5550 1150 5550
+Wire Wire Line
+	1150 5550 1150 4700
+Connection ~ 1150 4700
+$Comp
+L splitflap-rescue:GND-power #PWR0152
+U 1 1 5ECCFB67
+P 1650 6950
+F 0 "#PWR0152" H 1650 6700 50  0001 C CNN
+F 1 "GND-power" H 1655 6777 50  0000 C CNN
+F 2 "" H 1650 6950 50  0001 C CNN
+F 3 "" H 1650 6950 50  0001 C CNN
+	1    1650 6950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1650 6950 1600 6950
+Wire Wire Line
+	1600 6750 1600 6950
+Wire Wire Line
+	1600 5550 1600 6650
+$Comp
+L Connector:Screw_Terminal_01x02 J7
+U 1 1 5ED99041
+P 1400 6750
+F 0 "J7" H 1318 6425 50  0000 C CNN
+F 1 "Screw_Terminal_01x02" H 1318 6516 50  0000 C CNN
+F 2 "TerminalBlock:TerminalBlock_bornier-2_P5.08mm" H 1400 6750 50  0001 C CNN
+F 3 "~" H 1400 6750 50  0001 C CNN
+	1    1400 6750
+	-1   0    0    1   
+$EndComp
+$EndSCHEMATC

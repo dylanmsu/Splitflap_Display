@@ -7,7 +7,9 @@ Splitflap::Splitflap(int *sensPins,  int updateDelayMs, int *serialPins){
 
     for (int i=0; i<32; i++){
         APins[i] = sensPins[i];
-        pinMode(APins[i], INPUT_PULLUP);
+        if (sensPins[i] != 0){
+            pinMode(APins[i], INPUT_PULLUP);
+        }
     }
 
     setAll(Bit, 0, 32);
@@ -76,8 +78,10 @@ bool Splitflap::Send(String text, int icon_index, int hours, int minutes)
         int flapProgress[32] = {};
 
         for (int i=0; i<32; i++) {
-            hasBeenZerod[i] = !digitalRead(APins[i]);
-            flapProgress[i] = 0;
+            if (APins[i] != 0){
+                hasBeenZerod[i] = !digitalRead(APins[i]);
+                flapProgress[i] = 0;
+            }
         }
 
         while (stopflapping(indices, flapProgress)) {
