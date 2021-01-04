@@ -12,10 +12,10 @@ The included Arduino library is designed to drive a complete split flap display 
 ```c++
 splitflaps.flipSegment(int segment);
 ```
-That segment will then flap once. Or if you want more control, there is the method:
-´´´c++
+That segment will then flap once. Or if you want more control, there is the method: 
+```c++
 splitflaps.writeSegment(int segment, int state);
-´´´
+```
 It sets the state of the selected h-Bridge. There are (in the future) a bunch of example sketches with different use cases for the library. However, they all require at least one driver PCB to actually drive the split flap modules.
 
 ## The driver PCB
