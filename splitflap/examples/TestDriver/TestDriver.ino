@@ -1,13 +1,13 @@
 #include <Splitflap.h>
 
-int sensPins[8] = {                               // set all zero because we dont use the sensors
+int sensPins[32] = {                               // set all zero because we dont use the sensors
   0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0,
   0,0,0,0,0,0,0,0
 };              
 
-int serialPins[6] = {2,3,4,5,6,7};                // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
+int serialPins[6] = {44,38,42,36,40,34};                // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
 Splitflap splitflaps(sensPins, 200, serialPins);  // make an object of the class (sensor pins, flapdelay, serial pins)
 
 void setup() {
@@ -16,10 +16,9 @@ void setup() {
 
 void loop() 
 {
-  for (int i=0; i<8; i++)
+  for (int i=0; i<32; i++)
   {
     splitflaps.flipSegment(i);
-    delay(500);
+    delay(200);
   }
-  delay(1000);
 }

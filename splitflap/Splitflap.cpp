@@ -8,7 +8,7 @@ Splitflap::Splitflap(int *sensPins,  int updateDelayMs, int *serialPins){
     for (int i=0; i<32; i++){
         APins[i] = sensPins[i];
         if (sensPins[i] != 0){
-            pinMode(APins[i], INPUT_PULLUP);
+            pinMode(APins[i], INPUT);
         }
     }
 
@@ -79,7 +79,7 @@ bool Splitflap::Send(String text, int icon_index, int hours, int minutes)
 
         for (int i=0; i<32; i++) {
             if (APins[i] != 0){
-                hasBeenZerod[i] = !digitalRead(APins[i]);
+                hasBeenZerod[i] = digitalRead(APins[i]);
                 flapProgress[i] = 0;
             }
         }
@@ -96,7 +96,7 @@ bool Splitflap::Send(String text, int icon_index, int hours, int minutes)
                     }
 
                     // flap to zero
-                    if (digitalRead(APins[i]) && !hasBeenZerod[i]){
+                    if (!digitalRead(APins[i]) && !hasBeenZerod[i]){
                         flipSegment(i);
                         hasBeenZerod[i] = 0;
                     } else {
@@ -132,13 +132,12 @@ bool Splitflap::stopflapping(int *a, int *b) {
 
 //continues flapping until all segments are on the 0'th position
 void Splitflap::ResetAll(){
-    setAll(state, 1, 32);
-    setAll(currentIndices, 0, 32);
-    while (!isAllZero(state)){
+    setAll(State, 0, 32);
+    while (!isAllOne(State)){
         for (int i = 0; i<32; i++){
             delay(updateDelay/32);
-            state[i] = digitalRead(APins[i]);
-            if (state[i]){
+            State[i] = digitalRead(APins[i]);
+            if (!State[i]){
                 flipSegment(i);
             }
         }
@@ -147,43 +146,6 @@ void Splitflap::ResetAll(){
         currentIndices[i] = 0;
     }
     delay(updateDelay);
-};
-    
-bool Splitflap::WriteText(String text){
-    if (text.length() <= 28){
-        enableAll();
-        ResetAll(); // set all displays to zero
-
-        int indices[32] = {};
-        String temp = text;
-        text.toLowerCase();
-        for (int i=0; i<text.length(); i++){
-            if (temp[i] != text[i]){
-                indices[i] = lookup(text[i],true);
-            }else{
-                indices[i] = lookup(text[i],false);
-            }
-        }
-        writeIndices(indices);
-        disableAll();
-        return true;
-    } else {
-        Serial.println("ERR: trying to display "+String(text.length())+" charakters, but you can only display 28");
-        return false;
-    }
-};
-
-void Splitflap::writeIndices(int *indices){
-  while (!isAllZero(indices)){
-    for (int i=0; i<32; i++){
-      if (indices[i]){
-        indices[i] -= 1;
-        flipSegment(i);
-      }
-      delay(updateDelay/32);
-    }
-  }
-  delay(updateDelay);
 };
 
 void Splitflap::flipSegment(int segment){
@@ -239,12 +201,12 @@ void Splitflap::setAll(int *arr, int to, int len){
     }
 };
 
-bool Splitflap::isAllZero(int *arr){
+bool Splitflap::isAllOne(int *arr){
     bool zero = 0;
     for (int i=0; i<32; i++){
-        zero += arr[i];
+        zero += !arr[i];
     }
-    return !zero;
+    return zero == 0;
 };
 
 void Splitflap::writeSegment(int whichPin, int whichState) {

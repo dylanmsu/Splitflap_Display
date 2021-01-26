@@ -20,7 +20,7 @@ class Splitflap {
         void setAll(int *arr, int to, int len);
         int lookup(char input, boolean red);
         bool stopflapping(int *a, int *b);
-        bool isAllZero(int *arr);
+        bool isAllOne(int *arr);
         int currentIndices[32];
         uint32_t stateSegment;
         uint32_t stateEnable;
@@ -28,7 +28,7 @@ class Splitflap {
         int clock_enable;
         int data_enable;
         int updateDelay;
-        int state[32];
+        int State[32];
         int APins[32];
         int Bit[32];
         int latchH;
