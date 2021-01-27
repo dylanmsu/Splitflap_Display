@@ -1,3 +1,4 @@
+#include <Ticker.h>
 #include <DHT.h>
 #include <DHT_U.h>
 #include <Adafruit_NeoPixel.h>
@@ -9,44 +10,12 @@
 #include <Ethernet.h>
 #include <SPI.h>
 
-// parameters
-#define BOARD           "A"
-#define DEBUG           true
-#define FLAP_DELAY      200 //ms
-#define POLL_DELAY      10000 //ms
-#define NUM_RGB_PIXELS  144
-#define RGB_BRIGHTNESS  128
-
-// pins
-#define RGB_LED_PIN     46
-#define ENABLE_PS_PIN   35
-#define DHT_PIN         49
-#define WHITE_LED_EN    45
-#define RGB_STRIP_en    46
-#define FAN             2
-#define LIGHT_SENS      A0
-
-#define LED_R           3
-#define LED_G           4
-#define LED_B           5
-
-#define STAT_A          6
-#define STAT_B          7
-#define STAT_C          8
-
-#define DATA_ENABLE     44
-#define DATA            38
-#define CLOCK_ENABLE    42
-#define CLOCK           36
-#define LATCH_ENABLE    40
-#define LATCH           34
-
 // hall-sensor pins from the splitflaps
 int sensPins[32] = {
-    15, 16, 17, 18, 19, 22, 23, 24,
-    25, 26, 27, 28, 29, 30, 31, A1,
-    A2, A3, A4, A5, A6, A7, A8, A9,
-    A10,A11,A12,A13,A14,A15,32, 33
+    S0,  S1,  S2,  S3,  S4,  S5,  S6,  S7,
+    S8,  S9,  S10, S11, S12, S13, S14, S15,
+    S16, S17, S18, S19, S20, S21, S22, S23,
+    S24, S25, S26, S27, S28, S29, S30, S31
 };
 
 // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch
@@ -70,14 +39,16 @@ uint16_t RGBStripMode = 0;
 uint16_t RGBStripColor = 0;
 String error = "No Error";
 String prevtext = "";
- 
+
+void updateDisplay();
+
 Splitflap splitflaps(sensPins, FLAP_DELAY, serialPins);        // make an object from the class
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};      // mac-address of the ethernet module (must be unique)
 IPAddress myDns(192, 168, 0, 1);                        // dns server. This is likely your home router
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_RGB_PIXELS, RGB_LED_PIN, NEO_GRB + NEO_KHZ800);
 DHT dht(DHT_PIN, DHT22);
 EthernetClient client;
-
+Ticker pollTimer(updateDisplay, POLL_DELAY); 
 
 void setup() {
     Serial.begin(9600);
@@ -88,7 +59,7 @@ void setup() {
     pinMode(WHITE_LED_EN, OUTPUT);
     pinMode(ENABLE_PS_PIN, OUTPUT);
     
-    digitalWrite(ENABLE_PS_PIN, HIGH);
+    enablePSU();
 
     strip.begin();
     strip.show(); // Initialize all pixels to 'off'
@@ -96,12 +67,11 @@ void setup() {
     
     initEthernet();
     dht.begin();
+    pollTimer.start();
 }
 
 void loop() {
-    updateDisplay();
-    
-    delay(POLL_DELAY);
+    pollTimer.update();
 }
 
 String CombineText(String textA, String textB, String align){
@@ -137,6 +107,8 @@ void updateDisplay(){
         int minutes = doc[BOARD]["minutes"].as<int>();
         int hours = doc[BOARD]["hours"].as<int>();
         int icon = doc[BOARD]["icon_index"].as<int>();
+
+        updatePeripherals();
         
         String text = "";
     
@@ -152,30 +124,22 @@ void updateDisplay(){
     
         if (prevtext != text){
             prevtext = text;
-            digitalWrite(ENABLE_PS_PIN, LOW);
+            
             delay(1000);
             splitflaps.enableAll();
             Serial.println("sending " + text + " to the display... ");
             splitflaps.Send(text, icon, hours, minutes);
             splitflaps.disableAll();
             Serial.println("done.");
-            digitalWrite(ENABLE_PS_PIN, HIGH);
         } else {
             Serial.println("nothing new to display");
         }
     } else {
         if (prevtext != "no trains"){ 
             prevtext = "no trains";
-            digitalWrite(ENABLE_PS_PIN, LOW);
-            String textA = "geen treinen";
-            String textB = "vandaag";
-            String spaceA = fill((14 - textA.length())/2);
-            String spaceB = fill((14 - textB.length())/2);
-            String a = spaceA + textA + fill(14-(spaceA.length()+textA.length()));
-            String b = spaceB + textB + fill(14-(spaceB.length()+textB.length()));
-            splitflaps.Send(a + b, 0, 0, 0);
+            splitflaps.enableAll();
+            splitflaps.Send(fill(28), 0, 0, 0);
             splitflaps.disableAll();
-            digitalWrite(ENABLE_PS_PIN, HIGH);
         }
     }
 }
@@ -232,6 +196,14 @@ int getLightLevel(){
     return analogRead(LIGHT_SENS);
 }
 
+void enablePSU() {
+    digitalWrite(ENABLE_PS_PIN, LOW);
+}
+
+void disablePSU() {
+    digitalWrite(ENABLE_PS_PIN, HIGH);
+}
+
 void RGBLed(int r, int g, int b){
     RGBLedColor = (r << 16) || (g << 8) || (b);
 }
@@ -271,11 +243,16 @@ DynamicJsonDocument fetchFromApi(){
     Serial.println("fetching data from api...");
     Serial.print("\tconnecting... ");
     client.setTimeout(1000);
+    int numReconnect = 0;
     while (!client.connect("api.scm-team.be", 80)){
+        numReconnect += 1;
         Serial.println(F("\tConnection failed"));
         delay(500);
         Serial.println(F("\tTrying again..."));
         delay(1000);
+        if (numReconnect >= 10){
+            return;
+        }
     }
 
     Serial.println("\tconnected!");
