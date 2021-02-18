@@ -1,17 +1,22 @@
 // parameters
 #define BOARD           "A"
 #define DEBUG           true
-#define FLAP_DELAY      200 //ms
+#define FLAP_DELAY      150 //ms
 #define POLL_DELAY      10000 //ms
 #define NUM_RGB_PIXELS  144
 #define RGB_BRIGHTNESS  128
 
+// network
+#define HOSTNAME        "api.scm-team.be"
+#define ROUTE           "/index.php"
+#define PORT            80
+
 // pins
-#define RGB_LED_PIN     46
+#define RGB_LED_PIN     47
+#define RGB_STRIP_EN    46
 #define ENABLE_PS_PIN   35
 #define DHT_PIN         49
 #define WHITE_LED_EN    45
-#define RGB_STRIP_en    46
 #define FAN             2
 #define LIGHT_SENS      A0
 

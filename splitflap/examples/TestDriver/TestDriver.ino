@@ -7,7 +7,7 @@ int sensPins[32] = {                               // set all zero because we do
   0,0,0,0,0,0,0,0
 };              
 
-int serialPins[6] = {44,38,42,36,40,34};                // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
+int serialPins[6] = {44,38,42,36,40,34};          // DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch 
 Splitflap splitflaps(sensPins, 200, serialPins);  // make an object of the class (sensor pins, flapdelay, serial pins)
 
 void setup() {

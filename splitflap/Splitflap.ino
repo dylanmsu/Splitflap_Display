@@ -6,9 +6,11 @@
   #include <avr/power.h>
 #endif
 #include <ArduinoJson.h>
-#include "Splitflap.h"
 #include <Ethernet.h>
 #include <SPI.h>
+
+#include "Splitflap.h"
+#include "config.h"
 
 // hall-sensor pins from the splitflaps
 int sensPins[32] = {
@@ -18,7 +20,7 @@ int sensPins[32] = {
     S24, S25, S26, S27, S28, S29, S30, S31
 };
 
-// DataEnable, Data, ClockEnable, Clock, LatchEnable, Latch
+// serial pins of the splitflap driver boards
 int serialPins[6] = {
     DATA_ENABLE,
     DATA,
@@ -51,27 +53,34 @@ EthernetClient client;
 Ticker pollTimer(updateDisplay, POLL_DELAY); 
 
 void setup() {
-    Serial.begin(9600);
+    if (DEBUG) Serial.begin(9600);
     pinMode(LED_R, OUTPUT);
     pinMode(LED_G, OUTPUT);
     pinMode(LED_B, OUTPUT);
     pinMode(LIGHT_SENS, INPUT);
     pinMode(WHITE_LED_EN, OUTPUT);
     pinMode(ENABLE_PS_PIN, OUTPUT);
+
+    pinMode(RGB_STRIP_EN, OUTPUT);
+    digitalWrite(RGB_STRIP_EN, 1);
     
     enablePSU();
 
     strip.begin();
-    strip.show(); // Initialize all pixels to 'off'
+    strip.show();
     strip.setBrightness(RGB_BRIGHTNESS);
     
     initEthernet();
     dht.begin();
     pollTimer.start();
+
+    strip.setPixelColor(10, 255);
 }
 
 void loop() {
     pollTimer.update();
+    //showAllCharakters();
+    //§printSensorStatus();
 }
 
 String CombineText(String textA, String textB, String align){
@@ -91,15 +100,15 @@ String CombineText(String textA, String textB, String align){
         String b = fill(14-textB.length()) + textB;
         text = a + b;
     } else {
-        Serial.println("unrecognized alignment");
+        if (DEBUG) Serial.println("unrecognized alignment");
     }
     return text;
 }
 
 void updateDisplay(){
+    
     DynamicJsonDocument doc = fetchFromApi();
-
-    Serial.println(doc[BOARD].as<String>());
+    if (DEBUG) Serial.println(doc[BOARD].as<String>());
     if (doc[BOARD].as<String>() != "null") {
         String textA = doc[BOARD]["first_text"].as<String>();
         String textB = doc[BOARD]["second_text"].as<String>();
@@ -107,10 +116,15 @@ void updateDisplay(){
         int minutes = doc[BOARD]["minutes"].as<int>();
         int hours = doc[BOARD]["hours"].as<int>();
         int icon = doc[BOARD]["icon_index"].as<int>();
+        whiteLED = doc[BOARD]["white_led"].as<int>();
+        String stripColor = doc[BOARD]["rgb_strip"]["color"].as<String>();
+        RGBStripMode = doc[BOARD]["rgb_strip"]["mode"].as<int>();
+
+        Serial.println(doc[BOARD]["rgb_strip"]["color"].as<String>());
+        RGBStripColor = (int) strtol( &stripColor[1], NULL, 16);
+        Serial.println(int( strtol( &stripColor[1], NULL, 16)));
 
         updatePeripherals();
-        
-        String text = "";
     
         if (textA == "null") {
             textA = "";
@@ -120,28 +134,25 @@ void updateDisplay(){
             textB = "";
         }
 
-        text = CombineText(textA, textB, align);
+        String text = CombineText(textA, textB, align);
     
         if (prevtext != text){
             prevtext = text;
             
             delay(1000);
-            splitflaps.enableAll();
-            Serial.println("sending " + text + " to the display... ");
+            if (DEBUG) Serial.println("sending " + text + " to the display... ");
             splitflaps.Send(text, icon, hours, minutes);
-            splitflaps.disableAll();
-            Serial.println("done.");
+            if (DEBUG) Serial.println("done.");
         } else {
-            Serial.println("nothing new to display");
+            if (DEBUG) Serial.println("nothing new to display");
         }
     } else {
         if (prevtext != "no trains"){ 
             prevtext = "no trains";
-            splitflaps.enableAll();
-            splitflaps.Send(fill(28), 0, 0, 0);
-            splitflaps.disableAll();
+            splitflaps.Send(fill(28),0,-1,-1);
         }
     }
+    pollTimer.start();
 }
 
 void updateVariables(){
@@ -160,6 +171,10 @@ void updateVariables(){
 
 void updatePeripherals(){
     updateVariables();
+
+    Serial.println(RGBStripColor);
+    Serial.println(RGBStripMode);
+    UpdateRGBStrip();
     
     analogWrite(FAN, fanSpeed);
     analogWrite(WHITE_LED_EN, whiteLED);
@@ -170,9 +185,9 @@ void updatePeripherals(){
 
 void printSensorStatus(){
     for (int i=0; i<32; i++){
-        Serial.print(digitalRead(sensPins[i]));
+        if (DEBUG) Serial.print(digitalRead(sensPins[i]));
     }
-    Serial.println();
+    if (DEBUG) Serial.println();
     delay(100);
 }
 
@@ -209,16 +224,18 @@ void RGBLed(int r, int g, int b){
 }
 
 void showAllCharakters(){
-    const char alphabet[56] = {"abcdefghijklmnopqrstuvwxyz-_/ ABCDEFGHIJKLMNOPQRSTUVWXYZ?"};
-    for (int i=0; i<52; i++){
+    String alphabet = "abcdefghijklmnopqrstuvwxyz-_/ ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
+    for (int i=0; i<58; i++){
+        
         String text = "";
         for (int j=0; j<28; j++){
-            text[j] = alphabet[i];
+            text += String(alphabet[i]);
         }
+
         Serial.print("showing: ");
-        Serial.println(text);
+        Serial.println(String(text));
         splitflaps.Send(text, 0, 0, 0);
-        delay(10000);
+        delay(15000);
     }
 }
 
@@ -231,122 +248,132 @@ String fill(int amount){
 }
 
 void initEthernet() {
-    Serial.print("initializing Ethernet... ");
+    if (DEBUG) Serial.print("initializing Ethernet... ");
     delay(1000);
     Ethernet.init(53);
     Ethernet.begin(mac);
     delay(2000);
-    Serial.println("done.");
+    if (DEBUG) Serial.println("done.");
+}
+
+char *stringToCharArray(String string){
+    char Array[string.length()];
+    string.toCharArray(Array, string.length());
+    return Array;
 }
 
 DynamicJsonDocument fetchFromApi(){
-    Serial.println("fetching data from api...");
-    Serial.print("\tconnecting... ");
+    if (DEBUG) Serial.println("fetching data from api...");
+    if (DEBUG) Serial.print("\tconnecting... ");
     client.setTimeout(1000);
     int numReconnect = 0;
-    while (!client.connect("api.scm-team.be", 80)){
+    while (!client.connect(HOSTNAME, 80)){
         numReconnect += 1;
-        Serial.println(F("\tConnection failed"));
+        if (DEBUG) Serial.println(F("\tConnection failed"));
         delay(500);
-        Serial.println(F("\tTrying again..."));
+        if (DEBUG) Serial.println(F("\tTrying again..."));
         delay(1000);
         if (numReconnect >= 10){
+            error = "Unable to connect";
             return;
         }
     }
 
-    Serial.println("\tconnected!");
+    if (DEBUG) Serial.println("\tconnected!");
     
-    /*if (!client.connect("api.scm-team.be", 80)) {
-        Serial.println(F("\tConnection failed"));
-        
-        // attempt to reconnect
-        Ethernet.begin(mac);
-        delay(2000);
-        if (!client.connect("api.scm-team.be", 80)) {
-            Serial.println(F("\tcouldn't reconnect"));
-            return;
-        }
-    }else{
-        Serial.println("\tconnected!");
-    }*/
-
     // Send HTTP request
-    Serial.print("\tsending request and awaiting... ");
-    
-    client.println("GET /index.php HTTP/1.1");
-    client.println("Host: api.scm-team.be");
+    if (DEBUG) Serial.println("\tsending request and awaiting... ");
+
+    char *reqHeader = stringToCharArray(String("GET ") + ROUTE + String(" HTTP/1.1"));
+    client.println(reqHeader);
+    //client.println("GET /index.php HTTP/1.1");
+
+    char *hostheader = stringToCharArray(String("Host: ") + HOSTNAME);
+    client.println(hostheader);
+    //client.println("Host: api.scm-team.be")
+
     client.println("User-Agent: arduino-ethernet");
+
+    char *boardheader = stringToCharArray(String("board: ") + BOARD);
+    client.println(boardheader);
+    //client.println("board:B");
     
-    String boardh = (String)"board:" + (String)BOARD;
-    char boardHeader[boardh.length()];
-    boardh.toCharArray(boardHeader, boardh.length());
-    client.println(boardHeader);
-    //client.println("board:A");
-    
-    String temph = (String)"temperature:" + String(temperature);
+    String temph = String("temperature:") + String(temperature);
     char tempHeader[temph.length()];
     temph.toCharArray(tempHeader, temph.length());
     client.println(tempHeader);
-    //client.print("temperature:123");
+    if (DEBUG) Serial.println(tempHeader);
+    //client.println("temperature:123");
     
-    String humidh = (String)"humidity:" + String(humidity);
+    String humidh = String("humidity:") + String(humidity);
     char humidHeader[humidh.length()];
     humidh.toCharArray(humidHeader, humidh.length());
     client.println(humidHeader);
+    if (DEBUG) Serial.println(humidHeader);
     //client.println("humidity:456");
 
     float light = getLightLevel();
-    String lighth = (String)"humidity:" + String(light);
+    String lighth = String("lightLevel:") + String(light);
     char lightHeader[lighth.length()];
     lighth.toCharArray(lightHeader, lighth.length());
     client.println(lightHeader);
+    if (DEBUG) Serial.println(lightHeader);
     //client.println("lightLevel:789");
 
-    client.println("error:No_Error");
+    client.println("error: No_Error");
     client.println("ledIntensity:123");
-    client.println("RGBColor:00ff00");
+    client.println("RGBColor:hhh");
+
+        
+    /*
+     * board:A
+     * temperature:24.5
+     * humidity:60
+     * error:No_Error
+     * lightLevel:789
+     * ledIntensity:128
+     */
     
     client.println("Connection: close");
     if (client.println() == 0) {
-        Serial.println(F("Failed to send request"));
+        if (DEBUG) Serial.println(F("Failed to send request"));
         return;
     } else {
-        Serial.println("done.");
+        if (DEBUG) Serial.println("done.");
     }
     
     // Check HTTP status
     char status[32] = {0};
     client.readBytesUntil('\r', status, sizeof(status));
     if (strcmp(status, "HTTP/1.1 200 OK") != 0) {
-        Serial.print(F("\tUnexpected response: "));
-        Serial.println(status);
+        if (DEBUG) Serial.print(F("\tUnexpected response: "));
+        if (DEBUG) Serial.println(status);
         return;
     } else {
-        Serial.println("\tstatus: 200 OK");
+        if (DEBUG) Serial.println("\tstatus: 200 OK");
     }
     
     // Skip HTTP headers
     char endOfHeaders[] = "\r\n\r\n";
     if (!client.find(endOfHeaders)) {
-        Serial.println(F("\tInvalid response"));
+        if (DEBUG) Serial.println(F("\tInvalid response"));
         return;
     }
 
     // Allocate the JSON document
     // Use arduinojson.org/v6/assistant to compute the capacity.
-    Serial.print("\tparsing json data... ");
+    if (DEBUG) Serial.print("\tparsing json data... ");
     const size_t capacity = JSON_OBJECT_SIZE(20) + JSON_ARRAY_SIZE(2) + 500;
     DynamicJsonDocument doc(capacity);
 
     // Parse JSON object
     DeserializationError error = deserializeJson(doc, client);
     if (error) {
-        Serial.print(F("\tdeserializeJson() failed: "));
-        Serial.println(error.c_str());
+        if (DEBUG) Serial.print(F("\tdeserializeJson() failed: "));
+        if (DEBUG) Serial.println(error.c_str());
         return;
     }
-    Serial.println("done.");
+    if (DEBUG) Serial.println("done.");
     return doc;
 }
 

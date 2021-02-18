@@ -7,6 +7,7 @@ Splitflap::Splitflap(int *sensPins,  int updateDelayMs, int *serialPins){
 
     for (int i=0; i<32; i++){
         APins[i] = sensPins[i];
+        currentIndices[i] = 999; // the 999 means that the positions are undetermined
         if (sensPins[i] != 0){
             pinMode(APins[i], INPUT);
         }
@@ -31,9 +32,9 @@ Splitflap::Splitflap(int *sensPins,  int updateDelayMs, int *serialPins){
     stateEnable = 0x00000000;
 };
 
-bool Splitflap::Send(String text, int icon_index, int hours, int minutes)
+void Splitflap::Send(String text, int icon_index, int hours, int minutes)
 {
-    if (text.length() <= 28 && hours <= 23 && hours >= 0 && minutes <= 59 && minutes >= 0){
+    if (text.length() <= 28){
         enableAll();
 
         int indices[32] = {};
@@ -45,82 +46,101 @@ bool Splitflap::Send(String text, int icon_index, int hours, int minutes)
             }else{
                 indices[i] = lookup(text[i],false);
             }
-            //Serial.print(String(indices[i]) + " ");
         }
 
         indices[28] = icon_index;
 
         if (hours == 0){
             indices[29] = 30;
+        } else if (hours == -1){
+            indices[29] = 0;
         } else {
             indices[29] = hours;
         }
 
-        int minutesA = minutes%10;
-        int minutesB = (minutes/10)%10;
-
-        if (minutesB == 0){
-            indices[30] = 10;
+        if (minutes == -1){
+            indices[31] = 0;
+            indices[30] = 0;
         } else {
-            indices[30] = minutesB;
-        }
-
-        if (minutesA == 0){
-            indices[31] = 10;
-        } else {
-            indices[31] = minutesA;
+            int minutesA = minutes%10;
+            int minutesB = (minutes/10)%10;
+    
+            if (minutesB == 0){
+                indices[30] = 10;
+            } else {
+                indices[30] = minutesB;
+            }
+    
+            if (minutesA == 0){
+                indices[31] = 10;
+            } else {
+                indices[31] = minutesA;
+            }
         }
         
-
-        delay(updateDelay);
-
-        int hasBeenZerod[32] = {};
-        int flapProgress[32] = {};
-
-        for (int i=0; i<32; i++) {
-            if (APins[i] != 0){
-                hasBeenZerod[i] = digitalRead(APins[i]);
-                flapProgress[i] = 0;
-            }
-        }
-
-        while (stopflapping(indices, flapProgress)) {
-            for (int i=0; i<32; i++)  {
-                if (currentIndices[i] == NULL || currentIndices[i] != indices[i]) {
-                    // flap to zero and then flap until it reaches the desired position if the new position is smaller than the current position
-
-                    // flap to the desired position if it has been zeord
-                    if (hasBeenZerod[i] && (indices[i] - (flapProgress[i])) > 0) {
-                        flapProgress[i] += 1;
-                        flipSegment(i);
-                    }
-
-                    // flap to zero
-                    if (!digitalRead(APins[i]) && !hasBeenZerod[i]){
-                        flipSegment(i);
-                        hasBeenZerod[i] = 0;
-                    } else {
-                        hasBeenZerod[i] = 1;
-                    }
-                } else {
-                    flapProgress[i] = indices[i];
-                }
-
-                delay(updateDelay/32);
-            }
-        }
-
-        for (int i=0; i<32; i++) {
-            currentIndices[i] = indices[i];
-        }
-
-        disableAll();
-        return true;
+        sendIndices(indices);
     } else {
         Serial.println("ERR: trying to display "+String(text.length())+" charakters, but you can only display 28");
-        return false;
     }
 };
+
+bool Splitflap::sendIndices(int indices[32]){
+    delay(updateDelay);
+    
+    int numFinished[32] = {};
+    int hasBeenZerod[32] = {};
+    int flapProgress[32] = {};
+
+    for (int i=0; i<32; i++) {
+        if (APins[i] != 0){
+            hasBeenZerod[i] = digitalRead(APins[i]);
+            flapProgress[i] = 0;
+            numFinished[i] = 0;
+        }
+    }
+
+    
+    while (!isAllOne(numFinished)) {
+        for (int i=0; i<32; i++)  {
+
+            if (indices[i] == flapProgress[i]){
+                numFinished[i] = 1;
+            }
+
+            if (currentIndices[i] < indices[i]){
+                if ((indices[i] - (flapProgress[i] + currentIndices[i])) > 0){
+                    flipSegment(i);
+                    flapProgress[i] += 1;
+                } else {
+                    numFinished[i] = 1;
+                }
+            } else if (currentIndices[i] > indices[i]){
+                if (hasBeenZerod[i] && (indices[i] - flapProgress[i]) > 0) {
+                    flapProgress[i] += 1;
+                    flipSegment(i);
+                }
+                
+                if (!digitalRead(APins[i]) && !hasBeenZerod[i]){
+                    flipSegment(i);
+                    hasBeenZerod[i] = false;
+                } else {
+                    hasBeenZerod[i] = true;
+                    currentIndices[i] = 0;
+                }
+            } else {
+                flapProgress[i] = indices[i];
+            }
+
+            delay(updateDelay/32);
+        }
+    }
+
+    for (int i=0; i<32; i++) {
+        currentIndices[i] = indices[i];
+    }
+    
+    disableAll();
+}
 
 bool Splitflap::stopflapping(int *a, int *b) {
      bool zero = 0;
@@ -184,7 +204,7 @@ int Splitflap::lookup(char input, boolean red){
     case 'y':   output = 25;    break;
     case 'z':   output = 26;    break;
     case '-':   output = 27;    break;
-    case '_':   output = 58;    break;
+    case '―':   output = 28;    break;
     case '/':   output = 29;    break;
     case ' ':   output = 30;    break;
     default:    output = 57;    break; //unknown character gets replaced with an "Ö"
@@ -205,6 +225,14 @@ bool Splitflap::isAllOne(int *arr){
     bool zero = 0;
     for (int i=0; i<32; i++){
         zero += !arr[i];
+    }
+    return zero == 0;
+};
+
+bool isAllZero(int *arr){
+    bool zero = 0;
+    for (int i=0; i<32; i++){
+        zero += arr[i];
     }
     return zero == 0;
 };
