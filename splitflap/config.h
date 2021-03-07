@@ -1,5 +1,5 @@
 // parameters
-#define BOARD           "A"
+#define BOARD           "B"
 #define DEBUG           true
 #define FLAP_DELAY      150 //ms
 #define POLL_DELAY      10000 //ms
@@ -10,6 +10,7 @@
 #define HOSTNAME        "api.scm-team.be"
 #define ROUTE           "/index.php"
 #define PORT            80
+#define MAC             {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEB}
 
 // pins
 #define RGB_LED_PIN     47

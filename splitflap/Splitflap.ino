@@ -5,7 +5,6 @@
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
-#include <ArduinoJson.h>
 #include <Ethernet.h>
 #include <SPI.h>
 
@@ -45,7 +44,7 @@ String prevtext = "";
 void updateDisplay();
 
 Splitflap splitflaps(sensPins, FLAP_DELAY, serialPins);        // make an object from the class
-byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};      // mac-address of the ethernet module (must be unique)
+byte mac[] = MAC;      // mac-address of the ethernet module (must be unique)
 IPAddress myDns(192, 168, 0, 1);                        // dns server. This is likely your home router
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_RGB_PIXELS, RGB_LED_PIN, NEO_GRB + NEO_KHZ800);
 DHT dht(DHT_PIN, DHT22);
@@ -284,55 +283,48 @@ DynamicJsonDocument fetchFromApi(){
     // Send HTTP request
     if (DEBUG) Serial.println("\tsending request and awaiting... ");
 
-    char *reqHeader = stringToCharArray(String("GET ") + ROUTE + String(" HTTP/1.1"));
-    client.println(reqHeader);
-    //client.println("GET /index.php HTTP/1.1");
+    client.print("GET ");
+    client.print(ROUTE);
+    client.println(" HTTP/1.1");
 
-    char *hostheader = stringToCharArray(String("Host: ") + HOSTNAME);
-    client.println(hostheader);
-    //client.println("Host: api.scm-team.be")
+    client.print("Host: ");
+    client.println(HOSTNAME);
 
-    client.println("User-Agent: arduino-ethernet");
-
-    char *boardheader = stringToCharArray(String("board: ") + BOARD);
-    client.println(boardheader);
-    //client.println("board:B");
+    client.print("User-Agent: ");
+    client.println("arduino-ethernet");
     
-    String temph = String("temperature:") + String(temperature);
-    char tempHeader[temph.length()];
-    temph.toCharArray(tempHeader, temph.length());
-    client.println(tempHeader);
-    if (DEBUG) Serial.println(tempHeader);
-    //client.println("temperature:123");
+    client.print("board: ");
+    client.println(BOARD);
     
-    String humidh = String("humidity:") + String(humidity);
-    char humidHeader[humidh.length()];
-    humidh.toCharArray(humidHeader, humidh.length());
-    client.println(humidHeader);
-    if (DEBUG) Serial.println(humidHeader);
-    //client.println("humidity:456");
+    client.print("temperature: ");
+    client.println(temperature);
+    
+    client.print("humidity: ");
+    client.println(humidity);
 
-    float light = getLightLevel();
-    String lighth = String("lightLevel:") + String(light);
-    char lightHeader[lighth.length()];
-    lighth.toCharArray(lightHeader, lighth.length());
-    client.println(lightHeader);
-    if (DEBUG) Serial.println(lightHeader);
-    //client.println("lightLevel:789");
+    client.print("lightLevel: ");
+    client.println(getLightLevel());
 
-    client.println("error: No_Error");
-    client.println("ledIntensity:123");
-    client.println("RGBColor:hhh");
+    client.print("error: ");
+    client.println("No");
 
-        
-    /*
-     * board:A
-     * temperature:24.5
-     * humidity:60
-     * error:No_Error
-     * lightLevel:789
-     * ledIntensity:128
-     */
+    client.print("RGBColor: ");
+    client.println("ffffff");
+    
+    client.print("ledIntensity: ");
+    client.println("255");
+
+
+    /*client.println("GET /index.php HTTP/1.1");
+    client.println("Host: api.scm-team.be");
+    client.println("board: A");
+    client.println("temperature: 19");
+    client.println("humidity: 0");
+    client.println("lightLevel: 500");
+    
+    client.println("error: No");
+    client.println("RGBColor: ffffff");
+    client.println("ledIntensity: 255");*/
     
     client.println("Connection: close");
     if (client.println() == 0) {

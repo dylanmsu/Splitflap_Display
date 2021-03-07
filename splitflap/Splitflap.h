@@ -2,6 +2,7 @@
 #define Splitflap_h
 
 #include "Arduino.h"
+#include <ArduinoJson.h>
 
 class Splitflap {
     public:
