@@ -7,12 +7,12 @@ This project is still in development and requires major improvements and code cl
 * kicad schematic and pcb desgin
 * basic documentation about the splitflap display modules
 
-## The Arduino Library
-The included Arduino library is designed to drive a complete split flap display board with 32 individual modules. There are also methods included to drive the individual split flaps with great control. You can for example call the method:
+## The Arduino compatible Library
+The included Arduino compatible library is designed to drive a complete split flap display board with 32 individual modules. There are also methods included to drive the individual split flaps with great control. You can for example call the method:
 ```c++
 splitflaps.flipSegment(int segment);
 ```
-That segment will then flap once. Or if you want more control, there is the method: 
+That line of code will flip the segment once. Or if you want more control, there is the method: 
 ```c++
 splitflaps.writeSegment(int segment, int state);
 ```
